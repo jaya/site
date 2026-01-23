@@ -2,8 +2,6 @@ import { ActionError, defineAction } from 'astro:actions'
 import { z } from 'astro:schema'
 import { Resend } from 'resend'
 
-const resend = new Resend(import.meta.env.RESEND_API_KEY)
-
 export const server = {
 	send: defineAction({
 		accept: 'form',
@@ -14,6 +12,15 @@ export const server = {
 		}),
 		handler: async (input) => {
 			const { name, email, message } = input
+
+			const apiKey = import.meta.env.RESEND_API_KEY
+			if (!apiKey) {
+				console.warn('RESEND_API_KEY is not set. Email will not be sent.')
+				// Returning mock success for dev/preview without keys
+				return { id: 'mock-id', message: 'Email not sent (missing key)' }
+			}
+
+			const resend = new Resend(apiKey)
 
 			// Get email configuration from environment variables
 			// resend test from: onboarding@resend.dev
