@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { withBase } from '@/utils/url'
+
+interface Props {
+	post: CollectionEntry<'blog'>
+}
+
+const { post } = Astro.props
+---
+
+<a href={withBase(`blog/${post.id}`)} class="group">
+	<article class="h-full overflow-hidden rounded-2xl bg-base-100 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+		{
+			post.data.image && (
+				<div class="aspect-video w-full overflow-hidden">
+					<img
+						src={post.data.image}
+						alt={post.data.title}
+						class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+					/>
+				</div>
+			)
+		}
+		<div class="p-6">
+			<div class="flex items-center gap-2 mb-3">
+				{post.data.tags.map((tag: string) => (
+					<span class="badge badge-primary badge-outline text-xs capitalize">{tag}</span>
+				))}
+			</div>
+			<h2 class="mb-2 text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+				{post.data.title}
+			</h2>
+			<p class="mb-4 text-sm text-base-content/70 line-clamp-3">
+				{post.data.description}
+			</p>
+			<div class="flex items-center justify-between text-xs text-base-content/50">
+				<span>{new Date(post.data.pubDate).toLocaleDateString('en-US', { dateStyle: 'long' })}</span>
+				<span>{post.data.author}</span>
+			</div>
+		</div>
+	</article>
+</a>
