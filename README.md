@@ -25,50 +25,142 @@ This project is built with modern web technologies:
 ## 📁 Project Structure
 
 ```
-/
-├── .cursor/
-│   └── rules/              # Cursor AI rules for code consistency
-├── public/
-│   ├── fonts/              # Custom fonts
-│   └── favicon.svg
-├── src/
-│   ├── assets/             # Images organized by section
-│   │   ├── home/
-│   │   ├── icons/
-│   │   ├── fintech/
-│   │   ├── healthtech/
-│   │   ├── retail/
-│   │   └── saas/
-│   ├── components/
-│   │   ├── about/          # About page components
-│   │   ├── clients/        # Client showcase
-│   │   ├── home/           # Homepage sections
-│   │   ├── impact/         # Impact/solutions section
-│   │   ├── layout/         # Header, Footer, Navigation
-│   │   ├── services/       # Service pages components
-│   │   └── team/           # Team section
-│   ├── data/
-│   │   └── social-links.ts # Centralized social media links
-│   ├── layouts/
-│   │   └── Layout.astro    # Main layout template
-│   ├── pages/              # File-based routing
-│   │   ├── index.astro     # Homepage
-│   │   ├── about.astro     # About page
-│   │   ├── cases.astro     # Case studies
-│   │   ├── contact.astro   # Contact page
-│   │   ├── services.astro  # Services overview
-│   │   ├── fintech.astro   # FinTech services
-│   │   ├── healthtech.astro # HealthTech services
-│   │   ├── retail.astro    # Retail services
-│   │   ├── saas.astro      # SaaS services
-│   │   └── 404.astro       # 404 error page
-│   ├── styles/
-│   │   ├── global.css      # Global styles & CSS variables
-│   │   └── index.css       # Homepage specific styles
-│   └── utils/
-│       └── url.ts          # URL utilities (withBase)
-├── astro.config.mjs        # Astro configuration
-└── tsconfig.json           # TypeScript configuration
+src
+├── actions
+│   └── index.ts
+├── assets
+│   ├── fintech
+│   │   ├── fintech-clients.png
+│   │   ├── fintech-experience.png
+│   │   └── fintech.png
+│   ├── healthtech
+│   │   ├── healthtech-clients.png
+│   │   ├── healthtech-experience.png
+│   │   └── healthtech.png
+│   ├── home
+│   │   ├── brasil-flag.png
+│   │   ├── clients
+│   │   │   ├── br
+│   │   │   │   ├── amaro.png
+│   │   │   │   ├── bidu.png
+│   │   │   │   ├── c6-bank.png
+│   │   │   │   ├── cerco.png
+│   │   │   │   ├── cuponomia.png
+│   │   │   │   ├── envvio.png
+│   │   │   │   ├── guiabolso.png
+│   │   │   │   ├── magalu.png
+│   │   │   │   ├── marvin.png
+│   │   │   │   ├── mercado-livre.png
+│   │   │   │   ├── mercado-pago.png
+│   │   │   │   ├── mindlab.png
+│   │   │   │   ├── net-movies.png
+│   │   │   │   ├── pipefy.png
+│   │   │   │   ├── rede.png
+│   │   │   │   ├── smartfit.png
+│   │   │   │   ├── swap.png
+│   │   │   │   ├── syngenta.png
+│   │   │   │   ├── tmov.png
+│   │   │   │   └── vagas.png
+│   │   │   └── usa
+│   │   │       ├── acadia.png
+│   │   │       ├── care-academy.png
+│   │   │       ├── datassential.png
+│   │   │       ├── everly-health.png
+│   │   │       ├── exos.png
+│   │   │       ├── family-well.png
+│   │   │       ├── legion-health.png
+│   │   │       ├── little-otter.png
+│   │   │       ├── lwn-health.png
+│   │   │       ├── pipefy.png
+│   │   │       ├── syngenta.png
+│   │   │       └── the-zebra.png
+│   │   ├── clients-brasil.png
+│   │   ├── clients-usa.png
+│   │   ├── fintech.png
+│   │   ├── healthtech.png
+│   │   ├── hero-left.png
+│   │   ├── hero-right.png
+│   │   ├── impact.png
+│   │   ├── retail.png
+│   │   ├── saas.png
+│   │   ├── services.png
+│   │   ├── team.png
+│   │   └── usa-flag.png
+│   ├── icons
+│   │   ├── github.svg
+│   │   ├── linkedin.svg
+│   │   └── medium.svg
+│   ├── logo.svg
+│   ├── retail
+│   │   ├── retail-clients.png
+│   │   ├── retail-experience.png
+│   │   └── retail.png
+│   └── saas
+│       ├── saas-clients.png
+│       ├── saas-experience.png
+│       └── saas.png
+├── components
+│   ├── about
+│   │   ├── hero
+│   │   │   └── hero.astro
+│   │   ├── reviews
+│   │   │   └── Reviews.astro
+│   │   ├── what-drives-us
+│   │   │   └── WhatDrivesUs.astro
+│   │   └── why-choose-jaya
+│   │       └── WhyChooseJaya.astro
+│   ├── blog
+│   │   └── PostCard.astro
+│   ├── clients
+│   │   └── Clients.astro
+│   ├── home
+│   │   ├── hero
+│   │   │   └── Hero.astro
+│   │   ├── map
+│   │   │   ├── Map.astro
+│   │   │   └── MapElement.astro
+│   │   └── services
+│   │       └── Services.astro
+│   ├── impact
+│   │   └── Impact.astro
+│   ├── layout
+│   │   ├── Footer.astro
+│   │   ├── Header.astro
+│   │   └── Navigation.astro
+│   ├── services
+│   │   ├── ServiceClients.astro
+│   │   ├── ServiceExperience.astro
+│   │   └── ServiceHero.astro
+│   └── team
+│       └── Team.astro
+├── content
+│   └── blog
+│       └── _template.md
+├── content.config.ts
+├── data
+│   └── social-links.ts
+├── env.d.ts
+├── layouts
+│   └── Layout.astro
+├── pages
+│   ├── 404.astro
+│   ├── about.astro
+│   ├── blog
+│   │   ├── [slug].astro
+│   │   └── index.astro
+│   ├── cases.astro
+│   ├── contact.astro
+│   ├── fintech.astro
+│   ├── healthtech.astro
+│   ├── index.astro
+│   ├── retail.astro
+│   ├── rss.xml.js
+│   └── saas.astro
+├── styles
+│   └── global.css
+└── utils
+    ├── animations.ts
+    └── url.ts
 ```
 
 ## 🎨 Design System

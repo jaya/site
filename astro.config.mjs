@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap'
 import robotsTxt from 'astro-robots-txt'
 import node from '@astrojs/node'
 import partytown from '@astrojs/partytown'
+import mermaid from 'astro-mermaid'
 
 function normalizeBase(v) {
 	if (!v) return undefined
@@ -39,7 +40,8 @@ export default defineConfig({
 		react(),
 		sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en-US', pt: 'pt-BR' } } }),
 		robotsTxt(),
-		partytown()
+		partytown(),
+		mermaid()
 	],
 	vite: {
 		plugins: [tailwindcss()],

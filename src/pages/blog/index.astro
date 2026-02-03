@@ -1,0 +1,158 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { getCollection } from 'astro:content'
+import PostCard from '@/components/blog/PostCard.astro'
+
+const posts = (await getCollection('blog'))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+
+const title = "Blog Overview"
+const description = "Exploring the frontiers of technology and innovation with the Jaya team."
+---
+
+<Layout title={title} description={description}>
+	<main class="nav-padding min-h-screen bg-base-100 pb-20">
+		<div class="container mx-auto px-4 py-12">
+			<div class="mb-16 text-center">
+				<h1 class="mb-4 text-4xl font-bold md:text-5xl lg:text-6xl">
+					Our <span class="text-primary">Stories</span>
+				</h1>
+				<p class="mx-auto max-w-2xl text-xl text-base-content/70">
+					{description}
+				</p>
+			</div>
+
+			<!-- Search and Filter -->
+			<div class="mb-12 flex flex-col items-center gap-4">
+				<div class="relative w-full max-w-md">
+					<input
+						type="text"
+						id="search-input"
+						placeholder="Search posts..."
+						class="input input-bordered w-full pr-10 focus:input-primary"
+					/>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-base-content/50"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+						/>
+					</svg>
+				</div>
+				
+				<!-- Unique Tags Cloud -->
+				<div class="flex flex-wrap justify-center gap-2" id="tags-container">
+					<button class="btn btn-sm btn-outline gap-2" data-tag="all">
+						All
+					</button>
+					{[...new Set(posts.flatMap(p => p.data.tags))].map(tag => (
+						<button class="btn btn-sm btn-outline gap-2 capitalize" data-tag={tag}>
+							{tag}
+						</button>
+					))}
+				</div>
+			</div>
+
+			<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3" id="posts-grid">
+				{posts.map((post) => (
+					<div class="post-item" data-title={post.data.title.toLowerCase()} data-tags={post.data.tags.join(',')} style="display: block;">
+						<PostCard post={post} />
+					</div>
+				))}
+			</div>
+
+            <div id="no-results" class="hidden text-center py-20">
+                <p class="text-xl opacity-70">No stories found matching your criteria.</p>
+            </div>
+
+            {posts.length === 0 && (
+                <div class="text-center py-20">
+                    <p class="text-xl opacity-70">Coming soon...</p>
+                </div>
+            )}
+		</div>
+	</main>
+
+	<script>
+		document.addEventListener('astro:page-load', () => {
+			const searchInput = document.getElementById('search-input') as HTMLInputElement
+			const postsGrid = document.getElementById('posts-grid')
+			const noResults = document.getElementById('no-results')
+			const tagButtons = document.querySelectorAll('#tags-container button')
+			const postItems = document.querySelectorAll('.post-item')
+
+			let currentTag = 'all'
+			let currentSearch = ''
+
+			function filterPosts() {
+				let visibleCount = 0
+
+				postItems.forEach((item) => {
+					const title = (item as HTMLElement).dataset.title || ''
+					const tags = (item as HTMLElement).dataset.tags?.split(',') || []
+					
+					const matchesSearch = title.includes(currentSearch.toLowerCase())
+					const matchesTag = currentTag === 'all' || tags.includes(currentTag)
+
+					if (matchesSearch && matchesTag) {
+						(item as HTMLElement).style.display = 'block'
+						visibleCount++
+					} else {
+						(item as HTMLElement).style.display = 'none'
+					}
+				})
+
+				if (visibleCount === 0 && postItems.length > 0) {
+					noResults?.classList.remove('hidden')
+				} else {
+					noResults?.classList.add('hidden')
+				}
+			}
+
+			// Search Event
+			searchInput?.addEventListener('input', (e) => {
+				currentSearch = (e.target as HTMLInputElement).value
+				filterPosts()
+			})
+
+			// Tag Click Event
+			tagButtons.forEach(btn => {
+				btn.addEventListener('click', () => {
+					const tag = (btn as HTMLElement).dataset.tag || 'all'
+					
+					// Toggle active class
+					tagButtons.forEach(b => b.classList.remove('btn-primary'))
+					if (tag !== 'all') {
+						tagButtons.forEach(b => b.classList.add('btn-outline'))
+						btn.classList.remove('btn-outline')
+						btn.classList.add('btn-primary')
+					} else {
+						// Reset 'All' button style specific logic if needed, 
+						// for now simplest is just highlight the clicked one
+						btn.classList.remove('btn-outline')
+						btn.classList.add('btn-primary')
+					}
+					
+					currentTag = tag
+					filterPosts()
+				})
+			})
+
+			// Check URL params for initial tag
+			const params = new URLSearchParams(window.location.search)
+			const tagParam = params.get('tag')
+			if (tagParam) {
+				const btn = document.querySelector(`button[data-tag="${tagParam}"]`)
+				if (btn) (btn as HTMLElement).click()
+			}
+		})
+	</script>
+</Layout>
