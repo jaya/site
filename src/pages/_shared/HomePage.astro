@@ -7,7 +7,7 @@ import Impact from '@/components/impact/Impact.astro'
 import Clients from '@/components/clients/Clients.astro'
 import Team from '@/components/team/Team.astro'
 import { getTranslations, t } from '@/i18n/translations'
-import type { Locale } from '@/i18n/utils'
+import { localeEn, type Locale } from '@/i18n/utils'
 
 interface Props {
 	locale: Locale
@@ -25,7 +25,7 @@ const pageContent = {
 <Layout title={pageContent.title} description={pageContent.description}>
 	<main class="nav-padding">
 		<Hero />
-		<Map />
+		{locale === localeEn && <Map />}
 		<Services />
 		<Impact />
 		<Clients />

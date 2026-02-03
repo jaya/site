@@ -3,8 +3,10 @@ import { getRouteForLocale } from '@/i18n/routes'
 
 export type Locale = 'en' | 'pt'
 
-export const defaultLocale: Locale = 'en'
-export const locales: Locale[] = ['en', 'pt']
+export const localeEn: Locale = 'en'
+export const localePt: Locale = 'pt'
+export const defaultLocale: Locale = localeEn
+export const locales: Locale[] = [localeEn, localePt]
 
 /**
  * Strip the base path from the pathname

@@ -27,7 +27,7 @@
 	},
 	"home": {
 		"hero": {
-			"title1": "desenvolvedores nearshore confiáveis",
+			"title1": "desenvolvedores remotos confiáveis",
 			"title2": "para parcerias de longo prazo",
 			"description": "A Jaya é uma empresa de consultoria de software totalmente remota especializada em <b>staff augmentation nearshore, outsourcing e desenvolvimento de IA.</b><br />Desde 2012, ajudamos empresas a escalar com talentos de engenharia selecionados e equipes estáveis e de alto desempenho. De fintech e healthtech a varejo, SaaS... e além.<br /><b>Nossas equipes entregam com velocidade, alinhamento cultural e mentalidade de longo prazo.</b>",
 			"stat1": "anos de<br /> <b>experiência<br /> nearshore</b>",
@@ -58,7 +58,7 @@
 			"title2": "presença",
 			"title3": "em toda",
 			"title4": "a américa",
-			"text1": "As equipes nearshore da Jaya já estão gerando impacto em todo os EUA, da Califórnia a Nova York.",
+			"text1": "As equipes remotas da Jaya já estão gerando impacto em todo os EUA, da Califórnia a Nova York.",
 			"text2": "Nosso modelo nativo remoto garante entrega alinhada ao fuso horário, colaboração perfeita e valor de longo prazo, independentemente de onde sua equipe esteja baseada."
 		},
 		"impact": {
@@ -104,10 +104,10 @@
 			"title3": "ecossistema fintech",
 			"text": "Na última década, fizemos parceria com bancos digitais líderes, processadores de pagamento e provedores de infraestrutura financeira no Brasil e na América Latina. Nossas equipes trabalharam em bancos centrais, crédito, pagamentos, integrações de e-commerce, plataformas de investimento e sistemas de transação em larga escala, impactando mais de 100 milhões de usuários finais.<br /><br />Desde a construção de recursos de conta digital e capacidades PIX até o design de sistemas de aquisição e liquidação de alto volume, nossas equipes trazem profundidade técnica e consciência regulatória. Sabemos o que é necessário para entregar soluções fintech seguras, compatíveis e escaláveis, e fazemos isso junto com suas equipes com velocidade e confiabilidade.",
 			"whyTitle": "por que fintechs escolhem a Jaya",
-			"why1": "Equipes alinhadas e confiáveis equipes nearshore no seu fuso horário, totalmente integradas aos seus fluxos de trabalho.",
-			"why2": "Experiência profunda em fintech Experiência prática em pagamentos, crédito, open finance, aquisição e conformidade.",
-			"why3": "Qualidade através da precisão Equipes cuidadosamente montadas, padrões rigorosos de engenharia e soluções construídas para durar.",
-			"why4": "Consistência que perdura Baixa rotatividade e equipes estáveis, garantindo retenção de conhecimento e entrega de longo prazo."
+			"why1": "<b>Equipes alinhadas e confiáveis</b><br/> equipes nearshore no seu fuso horário, totalmente integradas aos seus fluxos de trabalho.",
+			"why2": "<b>Experiência profunda em fintech</b><br/> Experiência prática em pagamentos, crédito, open finance, aquisição e conformidade.",
+			"why3": "<b>Qualidade através da precisão</b><br/> Equipes cuidadosamente montadas, padrões rigorosos de engenharia e soluções construídas para durar.",
+			"why4": "<b>Consistência que perdura</b><br/> Baixa rotatividade e equipes estáveis, garantindo retenção de conhecimento e entrega de longo prazo."
 		}
 	},
 	"healthtech": {
