@@ -83,6 +83,13 @@
 			"cta": "Meet our culture"
 		}
 	},
+	"culture": {
+		"title": "at <b>Jaya, we develop people</b> while <b>they develop software</b>",
+		"pill1": "FULLY REMOTE",
+		"pill2": "PEOPLE-FIRST",
+		"pill3": "DRIVEN BY IMPACT",
+		"description": "At Jaya, <b>culture is not a buzzword</b>, it's what shapes how we think, deliver, and grow together. <b>build your next version with us</b>"
+	},
 	"fintech": {
 		"title": "Fintech Solutions - Jaya Tech",
 		"description": "Building the future of finance with secure, scalable fintech solutions",

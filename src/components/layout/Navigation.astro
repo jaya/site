@@ -1,6 +1,5 @@
 ---
 import { withBase } from '@/utils/url'
-import { socialLinks } from '@/data/social-links'
 import { getTranslations, t } from '@/i18n/translations'
 import { getLocale, getLocalizedPath } from '@/i18n/utils'
 
@@ -47,8 +46,7 @@ const navigationItems = [
 	},
 	{
 		label: t(translations, 'nav.culture'),
-		href: socialLinks.linkedin,
-		target: '_blank'
+		href: withBase(getLocalizedPath('culture', locale))
 	},
 	{
 		label: t(translations, 'nav.contact'),

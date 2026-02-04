@@ -1,0 +1,15 @@
+---
+import type { Locale } from '@/i18n/utils'
+import CulturePage from '../_shared/CulturePage.astro'
+
+export function getStaticPaths() {
+	return [{ params: { lang: 'pt' } }]
+}
+
+const lang = Astro.params.lang as Locale
+if (lang !== 'pt') {
+	return new Response(null, { status: 404 })
+}
+---
+
+<CulturePage locale={lang} />

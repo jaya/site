@@ -16,7 +16,8 @@ export const routeMap: Record<string, Record<Locale, string>> = {
 	'/fintech': { en: '/fintech', pt: '/fintech' },
 	'/healthtech': { en: '/healthtech', pt: '/healthtech' },
 	'/retail': { en: '/retail', pt: '/varejo' },
-	'/saas': { en: '/saas', pt: '/saas' }
+	'/saas': { en: '/saas', pt: '/saas' },
+	'/culture': { en: '/culture', pt: '/cultura' }
 }
 
 const resolveRouteKey = (path: string): string => {

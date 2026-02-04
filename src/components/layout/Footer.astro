@@ -145,7 +145,7 @@ const isContactPage = currentPath.includes(getLocalizedPath('contact', locale))
 						<a href={socialLinks.medium} target="_blank">{t(translations, 'footer.blog')}</a>
 					</li>
 					<li>
-						<a href={socialLinks.linkedin} target="_blank">{t(translations, 'footer.culture')}</a>
+						<a href={withBase(getLocalizedPath('culture', locale))}>{t(translations, 'footer.culture')}</a>
 					</li>
 					<li>
 						<a href={withBase(getLocalizedPath('contact', locale))}>

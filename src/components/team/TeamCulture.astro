@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets'
+import teamImg from '@/assets/home/team.png'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale } from '@/i18n/utils'
+
+const locale = getLocale(Astro)
+const translations = await getTranslations(locale)
+---
+
+<style>
+	@reference '@/styles/global.css';
+
+	.team-section {
+		@apply relative pt-20;
+		@apply bg-blue-light;
+		@apply text-white;
+
+		.teal-curve {
+			@apply absolute left-0 top-0;
+			@apply w-40 h-40 lg:w-60 lg:h-60;
+			@apply bg-teal;
+			@apply rounded-br-[100px];
+		}
+
+		.content {
+			@apply relative container;
+			@apply px-10 py-16;
+
+			.culture-title {
+				@apply text-center text-4xl leading-tight tracking-[-1px] lg:text-5xl;
+				@apply max-w-[700px] mx-auto;
+			}
+
+			.pills {
+				@apply flex flex-wrap justify-center;
+				@apply gap-4;
+				@apply my-12;
+			}
+
+			.pill {
+				@apply bg-white;
+				@apply text-primary-light font-medium uppercase text-lg;
+				@apply h-[92px] w-[250px] rounded-tl-xl rounded-br-xl;
+				@apply flex items-center justify-center;
+			}
+
+			.culture-description {
+				@apply max-w-[700px] mx-auto text-center text-base leading-relaxed lg:text-xl;
+			}
+		}
+
+		.team-grid {
+			@apply relative;
+			@apply lg:max-h-[220px];
+			@apply mt-30 px-2;
+			@apply bg-neutral-light;
+			@apply rounded-tl-[50px] rounded-tr-[50px];
+
+			img {
+				@apply left-0;
+				@apply px-5;
+				@apply -translate-y-1/2 transform;
+			}
+		}
+	}
+</style>
+
+<section class="team-section">
+	<div class="content">
+		<h2 class="culture-title"><Fragment set:html={t(translations, 'culture.title')} /></h2>
+		<div class="pills">
+			<span class="pill"><Fragment set:html={t(translations, 'culture.pill1')} /></span>
+			<span class="pill"><Fragment set:html={t(translations, 'culture.pill2')} /></span>
+			<span class="pill"><Fragment set:html={t(translations, 'culture.pill3')} /></span>
+		</div>
+		<p class="culture-description">
+			<Fragment set:html={t(translations, 'culture.description')} />
+		</p>
+	</div>
+	<div class="team-grid lg:container">
+		<Image src={teamImg} alt="Team Image" class="team-image" />
+	</div>
+</section>

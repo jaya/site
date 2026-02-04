@@ -29,7 +29,7 @@
 		"hero": {
 			"title1": "desenvolvedores remotos confiáveis",
 			"title2": "para parcerias de longo prazo",
-			"description": "A Jaya é uma empresa de consultoria de software totalmente remota especializada em <b>staff augmentation nearshore, outsourcing e desenvolvimento de IA.</b><br />Desde 2012, ajudamos empresas a escalar com talentos de engenharia selecionados e equipes estáveis e de alto desempenho. De fintech e healthtech a varejo, SaaS... e além.<br /><b>Nossas equipes entregam com velocidade, alinhamento cultural e mentalidade de longo prazo.</b>",
+			"description": "A Jaya é uma empresa de consultoria de software totalmente remota especializada em <b>staff augmentation, outsourcing e desenvolvimento de IA.</b><br />Desde 2012, ajudamos empresas a escalar com talentos de engenharia selecionados e equipes estáveis e de alto desempenho. De fintech e healthtech a varejo, SaaS... e além.<br /><b>Nossas equipes entregam com velocidade, alinhamento cultural e mentalidade de longo prazo.</b>",
 			"stat1": "anos de<br /> <b>experiência<br /> nearshore</b>",
 			"stat2": "<b>clientes dos EUA</b><br />atendidos",
 			"stat3": "<b>engenheiros alocados</b><br /> para equipes de produto<br />dos EUA",
@@ -82,6 +82,13 @@
 			"description": "Conheça como nossa cultura focada em pessoas impulsiona o desempenho, criando equipes comprometidas e resilientes com baixa rotatividade e alta consistência de entrega.",
 			"cta": "Conheça nossa cultura"
 		}
+	},
+	"culture": {
+		"title": "na Jaya, desenvolvemos pessoas enquanto elas desenvolvem software",
+		"pill1": "TOTALMENTE REMOTO",
+		"pill2": "PESSOAS EM PRIMEIRO",
+		"pill3": "ORIENTADOS POR IMPACTO",
+		"description": "Na Jaya, <b>cultura não é modismo</b>, é o que molda como pensamos, entregamos e crescemos juntos. <b>construa sua próxima versão conosco</b>"
 	},
 	"fintech": {
 		"title": "Soluções Fintech - Jaya Tech",
