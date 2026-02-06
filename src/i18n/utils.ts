@@ -1,12 +1,17 @@
 import type { AstroGlobal } from 'astro'
 import { getRouteForLocale } from '@/i18n/routes'
+import { defaultLocale, localeBr, localeEn, locales, type Locale } from '@/i18n/constants'
 
-export type Locale = 'en' | 'pt'
+export { defaultLocale, localeBr, localeEn, locales, type Locale }
 
-export const localeEn: Locale = 'en'
-export const localePt: Locale = 'pt'
-export const defaultLocale: Locale = localeEn
-export const locales: Locale[] = [localeEn, localePt]
+export function getLocaleParam(
+	param: string | undefined,
+	allowedLocales: readonly Locale[] = locales
+): Locale | null {
+	if (!param) return null
+	const locale = param as Locale
+	return allowedLocales.includes(locale) ? locale : null
+}
 
 /**
  * Strip the base path from the pathname

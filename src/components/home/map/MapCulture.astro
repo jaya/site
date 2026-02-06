@@ -1,0 +1,117 @@
+---
+import MapElement from './MapElement.astro'
+import { withBase } from '@/utils/url'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, getLocalizedPath, type Locale } from '@/i18n/utils'
+
+const { locale: propLocale } = Astro.props as { locale?: Locale }
+const locale = propLocale ?? getLocale(Astro)
+const translations = await getTranslations(locale)
+---
+
+<style>
+	@reference '@/styles/global.css';
+
+	@keyframes bg-pan-top {
+		0% {
+			background-position: 50% 0%;
+		}
+		100% {
+			background-position: 50% 100%;
+		}
+	}
+
+	.bg-pan-top {
+		-webkit-animation: bg-pan-top 8s both;
+		animation: bg-pan-top 8s both;
+	}
+	.map-section {
+		@apply pt-20 pb-10;
+		@apply bg-[linear-gradient(0deg, #007590, #3b7881, #27bad1)];
+		@apply bg-[size:100%_600%];
+		background-position: 50% 0%; /* Initial state matches animation start */
+
+		.driving-subtitle {
+			@apply font-space-grotesk uppercase;
+		}
+
+		.driving-title {
+			@apply my-10;
+			@apply text-3xl leading-[0.99];
+		}
+
+		.driving-text {
+			@apply leading-[1.3];
+		}
+
+		.btn-get-in-touch {
+			@apply btn btn-outline btn-wide;
+			@apply hidden lg:flex;
+			@apply mx-auto my-10;
+			@apply text-white;
+			@apply rounded-full;
+
+			&.btn-mobile {
+				@apply flex lg:hidden;
+			}
+		}
+
+		.content {
+			@apply w-full lg:w-1/3;
+			@apply px-8;
+			@apply text-white;
+		}
+
+		.map-container {
+			@apply relative;
+			@apply w-full lg:w-2/3;
+			@apply mt-10;
+		}
+
+		.layout {
+			@apply flex flex-col lg:flex-row;
+			@apply lg:px-8;
+		}
+	}
+</style>
+
+<section class="map-section" id="map-section">
+	<div class="container">
+		<div class="layout">
+			<div class="content">
+				<h2 class="driving-subtitle">{t(translations, 'home.map.subtitle')}</h2>
+				<h3 class="driving-title">
+					<b>{t(translations, 'home.map.title1')}</b>
+					<i>{t(translations, 'home.map.title2')}</i><br />
+					<i>{t(translations, 'home.map.title3')}</i>
+					<b>{t(translations, 'home.map.title4')}</b>
+				</h3>
+				<p class="driving-text">
+					{t(translations, 'home.map.text1')}
+				</p>
+
+				<p class="driving-text mt-5">
+					{t(translations, 'home.map.text2')}
+				</p>
+
+				<a class="btn-get-in-touch" href={withBase(getLocalizedPath('contact', locale))}>
+					{t(translations, 'common.getInTouch')}
+				</a>
+			</div>
+			<div class="map-container">
+				<MapElement />
+			</div>
+			<a class="btn-get-in-touch btn-mobile" href={withBase(getLocalizedPath('contact', locale))}>
+				{t(translations, 'common.getInTouch')}
+			</a>
+		</div>
+	</div>
+
+	<script>
+		import { animateOnSectionVisible } from '@/utils/animations'
+
+		document.addEventListener('astro:page-load', () => {
+			animateOnSectionVisible('#map-section', 'map-section', { threshold: 0.3 }, 'bg-pan-top')
+		})
+	</script>
+</section>

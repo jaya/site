@@ -1,7 +1,8 @@
 ---
 import { withBase } from '@/utils/url'
+import { socialLinks } from '@/data/social-links'
 import { getTranslations, t } from '@/i18n/translations'
-import { getLocale, getLocalizedPath } from '@/i18n/utils'
+import { getLocale, getLocalizedPath, localeBr } from '@/i18n/utils'
 
 export interface Props {
 	type: 'mobile' | 'desktop'
@@ -51,7 +52,10 @@ const navigationItems = [
 	{
 		label: t(translations, 'nav.contact'),
 		href: withBase(getLocalizedPath('contact', locale))
-	}
+	},
+	...(locale === localeBr
+		? [{ label: 'Work with Us', target: '_blank', href: socialLinks.linkedin, className: 'font-bold' }]
+		: [])
 ]
 ---
 
@@ -75,7 +79,11 @@ const navigationItems = [
 							</ul>
 						</>
 					) : (
-						<a href={item.href} class={isActive(item.href || '')} target={item.target}>
+						<a
+							href={item.href}
+							class={[isActive(item.href || ''), item.className].filter(Boolean).join(' ')}
+							target={item.target}
+						>
 							{item.label}
 						</a>
 					)}
@@ -101,7 +109,11 @@ const navigationItems = [
 							</ul>
 						</details>
 					) : (
-						<a href={item.href} class={isActive(item.href || '')} target={item.target}>
+						<a
+							href={item.href}
+							class={[isActive(item.href || ''), item.className].filter(Boolean).join(' ')}
+							target={item.target}
+						>
 							{item.label}
 						</a>
 					)}

@@ -30,7 +30,7 @@ export default defineConfig({
 	...(BASE ? { base: BASE } : {}),
 	i18n: {
 		defaultLocale: 'en',
-		locales: ['en', 'pt'],
+		locales: ['en', 'br'],
 		routing: {
 			prefixDefaultLocale: true,
 			redirectToDefaultLocale: false
@@ -38,7 +38,7 @@ export default defineConfig({
 	},
 	integrations: [
 		react(),
-		sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en-US', pt: 'pt-BR' } } }),
+		sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en-US', br: 'pt-BR' } } }),
 		robotsTxt(),
 		partytown(),
 		mermaid()

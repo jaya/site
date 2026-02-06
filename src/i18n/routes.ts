@@ -1,4 +1,4 @@
-import type { Locale } from './utils'
+import { localeBr, localeEn, type Locale } from './constants'
 
 const normalizePath = (path: string): string => {
 	let normalized = path.startsWith('/') ? path : '/' + path
@@ -9,15 +9,15 @@ const normalizePath = (path: string): string => {
 }
 
 export const routeMap: Record<string, Record<Locale, string>> = {
-	'/': { en: '/', pt: '/' },
-	'/about': { en: '/about', pt: '/about' },
-	'/cases': { en: '/cases', pt: '/cases' },
-	'/contact': { en: '/contact', pt: '/contato' },
-	'/fintech': { en: '/fintech', pt: '/fintech' },
-	'/healthtech': { en: '/healthtech', pt: '/healthtech' },
-	'/retail': { en: '/retail', pt: '/varejo' },
-	'/saas': { en: '/saas', pt: '/saas' },
-	'/culture': { en: '/culture', pt: '/cultura' }
+	'/': { [localeEn]: '/', [localeBr]: '/' },
+	'/about': { [localeEn]: '/about', [localeBr]: '/about' },
+	'/cases': { [localeEn]: '/cases', [localeBr]: '/cases' },
+	'/contact': { [localeEn]: '/contact', [localeBr]: '/contato' },
+	'/fintech': { [localeEn]: '/fintech', [localeBr]: '/fintech' },
+	'/healthtech': { [localeEn]: '/healthtech', [localeBr]: '/healthtech' },
+	'/retail': { [localeEn]: '/retail', [localeBr]: '/retail' },
+	'/saas': { [localeEn]: '/saas', [localeBr]: '/saas' },
+	'/culture': { [localeEn]: '/culture', [localeBr]: '/culture' }
 }
 
 const resolveRouteKey = (path: string): string => {

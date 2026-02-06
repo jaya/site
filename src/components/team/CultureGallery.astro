@@ -1,0 +1,153 @@
+---
+import { Image } from 'astro:assets'
+import teamImg from '@/assets/home/team.png'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, type Locale } from '@/i18n/utils'
+
+const { locale: propLocale } = Astro.props as { locale?: Locale }
+const locale = propLocale ?? getLocale(Astro)
+const translations = await getTranslations(locale)
+
+const galleryImages = Array.from({ length: 8 }, () => teamImg)
+---
+
+<style>
+	@reference '@/styles/global.css';
+
+	.culture-gallery {
+		@apply relative;
+		@apply pt-20 pb-16;
+		@apply bg-blue-light;
+		@apply text-white;
+	}
+
+	.gallery-header {
+		@apply text-center;
+		@apply max-w-[720px] mx-auto;
+	}
+
+	.gallery-eyebrow {
+		@apply text-xs font-bold tracking-[0.25em] uppercase;
+	}
+
+	.gallery-title {
+		@apply mt-4;
+		@apply text-3xl font-bold leading-tight lg:text-5xl;
+	}
+
+	.gallery-text {
+		@apply mt-4;
+		@apply text-sm leading-relaxed lg:text-base;
+	}
+
+	.gallery-track {
+		@apply relative;
+		@apply mt-12;
+	}
+
+	.gallery-scroll {
+		@apply flex;
+		@apply gap-4;
+		@apply px-6;
+		@apply overflow-x-auto;
+		@apply scroll-smooth;
+		@apply pb-6;
+	}
+
+	.gallery-card {
+		@apply flex-shrink-0;
+		@apply w-[240px] md:w-[280px] lg:w-[320px];
+		@apply bg-neutral-light;
+		@apply rounded-xl;
+		@apply overflow-hidden;
+
+		img {
+			@apply w-full h-full;
+			@apply object-cover;
+		}
+	}
+
+	.gallery-controls {
+		@apply flex items-center justify-center;
+		@apply gap-6;
+	}
+
+	.gallery-btn {
+		@apply flex items-center justify-center;
+		@apply h-10 w-10;
+		@apply bg-transparent;
+		@apply text-white;
+		@apply border border-white rounded-full;
+		@apply transition-transform;
+
+		&:hover {
+			@apply scale-105;
+		}
+	}
+</style>
+
+<section class="culture-gallery" id="culture-gallery">
+	<div class="container">
+		<div class="gallery-header">
+			<p class="gallery-eyebrow">{t(translations, 'culture.gallery.eyebrow')}</p>
+			<h2 class="gallery-title">
+				<Fragment set:html={t(translations, 'culture.gallery.title')} />
+			</h2>
+			<p class="gallery-text">{t(translations, 'culture.gallery.description')}</p>
+		</div>
+	</div>
+
+	<div class="gallery-track">
+		<div class="gallery-scroll" data-gallery-scroll>
+			{galleryImages.map((img, index) => (
+				<div class="gallery-card">
+					<Image
+						src={img}
+						alt={`${t(translations, 'culture.gallery.imageAlt')} ${index + 1}`}
+						loading="lazy"
+					/>
+				</div>
+			))}
+		</div>
+		<div class="gallery-controls">
+			<button class="gallery-btn" type="button" data-gallery-prev aria-label="Previous photos">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+					<path
+						d="M15 6L9 12L15 18"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				</svg>
+			</button>
+			<button class="gallery-btn" type="button" data-gallery-next aria-label="Next photos">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+					<path
+						d="M9 6L15 12L9 18"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				</svg>
+			</button>
+		</div>
+	</div>
+
+	<script>
+		const scrollContainer = document.querySelector('[data-gallery-scroll]')
+		const prevBtn = document.querySelector('[data-gallery-prev]')
+		const nextBtn = document.querySelector('[data-gallery-next]')
+
+		const scrollByAmount = () => (scrollContainer?.clientWidth ?? 0) * 0.8
+
+		prevBtn?.addEventListener('click', () => {
+			scrollContainer?.scrollBy({ left: -scrollByAmount(), behavior: 'smooth' })
+		})
+
+		nextBtn?.addEventListener('click', () => {
+			scrollContainer?.scrollBy({ left: scrollByAmount(), behavior: 'smooth' })
+		})
+	</script>
+</section>

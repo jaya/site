@@ -1,0 +1,192 @@
+---
+import { Image } from 'astro:assets'
+import teamImg1 from '@/assets/culture/team-img-1.png'
+import teamImg2 from '@/assets/culture/team-img-2.png'
+import { withBase } from '@/utils/url'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, type Locale } from '@/i18n/utils'
+
+const { locale: propLocale } = Astro.props as { locale?: Locale }
+const locale = propLocale ?? getLocale(Astro)
+const translations = await getTranslations(locale)
+---
+
+<style>
+	@reference '@/styles/global.css';
+
+	.culture-values {
+		@apply relative;
+		@apply pt-20 pb-24;
+		@apply bg-neutral-light;
+		@apply text-text-dark;
+	}
+
+	.intro-grid {
+		@apply grid;
+		@apply gap-12 lg:gap-16;
+	}
+
+	.intro-row {
+		@apply grid;
+		@apply gap-10 lg:gap-16;
+		@apply lg:grid-cols-[1.2fr_0.8fr];
+		@apply items-center;
+	}
+
+	.intro-title {
+		@apply text-primary text-2xl leading-tight lg:text-3xl;
+		@apply mb-4;
+	}
+
+	.intro-text {
+		@apply text-primary text-base leading-relaxed lg:text-lg;
+	}
+
+	.photo {
+		@apply relative;
+		@apply mt-6 lg:mt-0;
+		@apply rounded-xl;
+		@apply overflow-hidden;
+
+		img {
+			@apply w-full h-full;
+			@apply object-cover;
+		}
+	}
+
+	.photo-large {
+		/* @apply h-[260px] lg:h-[320px]; */
+	}
+
+	.photo-small {
+		/* @apply h-[180px] lg:h-[200px]; */
+	}
+
+	.guides-title {
+		@apply text-primary text-2xl leading-tight lg:text-3xl;
+		@apply text-right;
+		@apply mb-4;
+	}
+
+	.guides-text {
+		@apply text-base leading-relaxed lg:text-lg;
+		@apply text-primary text-right;
+	}
+
+	.values-block {
+		@apply mt-16;
+	}
+
+	.values-eyebrow {
+		@apply text-primary text-center text-sm font-bold tracking-[0.2em];
+	}
+
+	.values-grid {
+		@apply grid;
+		@apply gap-6;
+		@apply mt-10;
+		@apply grid-cols-1 lg:grid-cols-4;
+	}
+
+	.value-card {
+		@apply flex flex-col;
+		@apply min-h-[220px];
+		@apply p-6;
+		@apply bg-blue-light;
+		@apply text-white;
+		@apply rounded-2xl;
+	}
+
+	.value-title {
+		@apply text-4xl font-bold leading-tight;
+	}
+
+	.value-text {
+		@apply mt-4;
+		@apply text-sm leading-relaxed;
+	}
+
+	.values-action {
+		@apply flex flex-col items-center;
+		@apply gap-6;
+		@apply mt-12;
+	}
+
+	.values-action-label {
+		@apply text-primary text-center text-xs font-bold tracking-[0.2em];
+	}
+
+	.values-action-btn {
+		@apply btn;
+		@apply px-8 py-3;
+		@apply bg-transparent;
+		@apply text-primary text-sm font-semibold;
+		@apply border border-primary rounded-full;
+	}
+</style>
+
+<section class="culture-values">
+	<div class="container">
+		<div class="intro-grid">
+			<div class="intro-row">
+				<div>
+					<h2 class="intro-title">
+						<Fragment set:html={t(translations, 'culture.valuesSection.purposeTitle')} />
+					</h2>
+					<p class="intro-text">{t(translations, 'culture.valuesSection.purposeText')}</p>
+				</div>
+				<div class="photo photo-small">
+					<Image src={teamImg1} alt={t(translations, 'culture.valuesSection.guidesImageAlt')} />
+				</div>
+			</div>
+			<div class="intro-row">
+				<div class="photo photo-large">
+					<Image src={teamImg2} alt={t(translations, 'culture.valuesSection.purposeImageAlt')} />
+				</div>
+				<div>
+					<h3 class="guides-title">
+						<Fragment set:html={t(translations, 'culture.valuesSection.guidesTitle')} />
+					</h3>
+					<p class="guides-text">{t(translations, 'culture.valuesSection.guidesText')}</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="values-block">
+			<p class="values-eyebrow">{t(translations, 'culture.valuesSection.valuesEyebrow')}</p>
+			<div class="values-grid">
+				<div class="value-card">
+					<div class="value-title">
+						<Fragment set:html={t(translations, 'culture.valuesSection.cards.loveTitle')} />
+					</div>
+					<p class="value-text">{t(translations, 'culture.valuesSection.cards.loveText')}</p>
+				</div>
+				<div class="value-card">
+					<div class="value-title">
+						<Fragment set:html={t(translations, 'culture.valuesSection.cards.developTitle')} />
+					</div>
+					<p class="value-text">{t(translations, 'culture.valuesSection.cards.developText')}</p>
+				</div>
+				<div class="value-card">
+					<div class="value-title">
+						<Fragment set:html={t(translations, 'culture.valuesSection.cards.buildTitle')} />
+					</div>
+					<p class="value-text">{t(translations, 'culture.valuesSection.cards.buildText')}</p>
+				</div>
+				<div class="value-card">
+					<div class="value-title">
+						<Fragment set:html={t(translations, 'culture.valuesSection.cards.connectTitle')} />
+					</div>
+					<p class="value-text">{t(translations, 'culture.valuesSection.cards.connectText')}</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="values-action">
+			<p class="values-action-label">{t(translations, 'culture.valuesSection.actionLabel')}</p>
+			<a class="values-action-btn" href={withBase('blog')}>
+				{t(translations, 'culture.valuesSection.actionCta')}
+			</a>
+		</div>
+	</div>
+</section>

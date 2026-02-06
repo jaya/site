@@ -1,16 +1,16 @@
 ---
-import type { Locale } from '@/i18n/utils'
+import { getLocaleParam, localeEn } from '@/i18n/utils'
 import { actions } from 'astro:actions'
 import ContactPage from '../_shared/ContactPage.astro'
 
 export const prerender = false // This page will be SSR (required for Actions)
 
 export function getStaticPaths() {
-	return [{ params: { lang: 'en' } }]
+	return [{ params: { lang: localeEn } }]
 }
 
-const lang = Astro.params.lang as Locale
-if (lang !== 'en') {
+const lang = getLocaleParam(Astro.params.lang, [localeEn])
+if (!lang) {
 	return new Response(null, { status: 404 })
 }
 

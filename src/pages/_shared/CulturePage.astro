@@ -1,11 +1,14 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 import Hero from '@/components/home/hero/Hero.astro'
-import Map from '@/components/home/map/Map.astro'
+import MapCulture from '@/components/home/map/MapCulture.astro'
 import Services from '@/components/home/services/Services.astro'
 import Impact from '@/components/impact/Impact.astro'
 import Clients from '@/components/clients/Clients.astro'
 import TeamCulture from '@/components/team/TeamCulture.astro'
+import CultureValues from '@/components/team/CultureValues.astro'
+import CultureGallery from '@/components/team/CultureGallery.astro'
+import CulturePeople from '@/components/team/CulturePeople.astro'
 import { getTranslations, t } from '@/i18n/translations'
 import { localeEn, type Locale } from '@/i18n/utils'
 
@@ -30,6 +33,10 @@ const pageContent = {
 		<Impact />
 		<Clients />
 		<Team /> -->
-		<TeamCulture />
+		<TeamCulture locale={locale} />
+		<CultureValues locale={locale} />
+		<MapCulture locale={locale} />
+		<CultureGallery locale={locale} />
+		<CulturePeople locale={locale} />
 	</main>
 </Layout>

@@ -1,9 +1,12 @@
 ---
+import { localeBr, localeEn } from '@/i18n/utils'
+
 export const prerender = false
 
 // Detect language preference from cookie first to keep user choice stable.
 const cookie = Astro.request.headers.get('cookie') ?? ''
-const match = cookie.match(/(?:^|;\s*)lang=(pt|en)(?:;|$)/)
+const langCookieRegex = new RegExp(`(?:^|;\\s*)lang=(${localeBr}|${localeEn})(?:;|$)`)
+const match = cookie.match(langCookieRegex)
 
 // If cookie is set, redirect immediately to the matching locale path.
 if (match?.[1]) {
@@ -12,8 +15,8 @@ if (match?.[1]) {
 
 // Fall back to Accept-Language when no cookie is present.
 const acceptLanguage = (Astro.request.headers.get('accept-language') ?? '').toLowerCase()
-const prefersPt = acceptLanguage.includes('pt')
-const lang = prefersPt ? 'pt' : 'en'
+const prefersBr = acceptLanguage.includes('pt')
+const lang = prefersBr ? localeBr : localeEn
 
 // Persist the decision in a cookie and use a non-permanent redirect.
 return new Response(null, {

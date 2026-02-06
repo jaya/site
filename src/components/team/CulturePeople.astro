@@ -1,0 +1,203 @@
+---
+import { Image } from 'astro:assets'
+import teamImg from '@/assets/home/team.png'
+import { socialLinks } from '@/data/social-links'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, type Locale } from '@/i18n/utils'
+
+const { locale: propLocale } = Astro.props as { locale?: Locale }
+const locale = propLocale ?? getLocale(Astro)
+const translations = await getTranslations(locale)
+
+const people = [
+	{ name: 'Abraao Rosseto', role: '' },
+	{ name: 'Adriana Tateno', role: 'Human Resources' },
+	{ name: 'Alexandre Queiroz', role: '' },
+	{ name: 'Allan Motroni', role: '' },
+	{ name: 'Andre Fernandes', role: '' },
+	{ name: 'Andreia Berto', role: '' },
+	{ name: 'Artur Paes', role: '' },
+	{ name: 'Bianca Guzenski', role: '' },
+	{ name: 'Bruna Soares', role: 'SpreadSheets Woman' },
+	{ name: 'Bruno Marins', role: '' },
+	{ name: 'Bruno Tatsumi', role: 'Developer' },
+	{ name: 'Caio Melo', role: '' }
+]
+---
+
+<style>
+	@reference '@/styles/global.css';
+
+	.culture-people {
+		@apply relative;
+		@apply py-20;
+		@apply bg-neutral-light;
+		@apply text-text-dark;
+	}
+
+	.people-header {
+		@apply text-center;
+		@apply max-w-[720px] mx-auto;
+	}
+
+	.people-title {
+		@apply text-primary text-3xl font-bold leading-tight lg:text-5xl;
+	}
+
+	.people-text {
+		@apply mt-4;
+		@apply text-base leading-relaxed lg:text-lg;
+	}
+
+	.people-carousel {
+		@apply mt-10;
+	}
+
+	.people-scroll {
+		@apply flex;
+		@apply gap-6;
+		@apply px-6;
+		@apply overflow-x-auto;
+		@apply scroll-smooth;
+		@apply pb-6;
+	}
+
+	.person-card {
+		@apply flex flex-col items-center;
+		@apply flex-shrink-0;
+		@apply w-[200px] md:w-[220px];
+	}
+
+	.person-avatar {
+		@apply w-full;
+		@apply aspect-square;
+		@apply bg-blue-light;
+		@apply rounded-2xl;
+		@apply overflow-hidden;
+
+		img {
+			@apply w-full h-full;
+			@apply object-cover;
+		}
+	}
+
+	.person-name {
+		@apply mt-3;
+		@apply text-primary text-sm font-bold text-center;
+	}
+
+	.person-role {
+		@apply mt-1;
+		@apply text-primary text-xs tracking-[0.15em] uppercase text-center;
+	}
+
+	.people-controls {
+		@apply flex items-center justify-center;
+		@apply gap-4;
+		@apply mt-4;
+	}
+
+	.people-btn {
+		@apply flex items-center justify-center;
+		@apply h-10 w-10;
+		@apply bg-transparent;
+		@apply text-primary;
+		@apply border border-primary rounded-full;
+		@apply transition-transform;
+
+		&:hover {
+			@apply scale-105;
+		}
+	}
+
+	.people-footer {
+		@apply mt-16;
+		@apply text-center;
+	}
+
+	.people-footer-text {
+		@apply text-primary text-2xl leading-tight lg:text-4xl;
+	}
+
+	.people-footer-btn {
+		@apply btn;
+		@apply mt-8 px-8 py-3;
+		@apply bg-transparent;
+		@apply text-primary text-sm font-semibold;
+		@apply border border-primary rounded-full;
+	}
+</style>
+
+<section class="culture-people" id="culture-people">
+	<div class="container">
+		<div class="people-header">
+			<h2 class="people-title">
+				<Fragment set:html={t(translations, 'culture.people.title')} />
+			</h2>
+			<p class="people-text">{t(translations, 'culture.people.description')}</p>
+		</div>
+	</div>
+
+	<div class="people-carousel">
+		<div class="people-scroll" data-people-scroll>
+			{people.map((person) => (
+				<div class="person-card">
+					<div class="person-avatar">
+						<Image src={teamImg} alt={person.name} loading="lazy" />
+					</div>
+					<p class="person-name">{person.name}</p>
+					{person.role && <p class="person-role">{person.role}</p>}
+				</div>
+			))}
+		</div>
+		<div class="people-controls">
+			<button class="people-btn" type="button" data-people-prev aria-label="Previous people">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+					<path
+						d="M15 6L9 12L15 18"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				</svg>
+			</button>
+			<button class="people-btn" type="button" data-people-next aria-label="Next people">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+					<path
+						d="M9 6L15 12L9 18"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				</svg>
+			</button>
+		</div>
+	</div>
+
+	<div class="people-footer">
+		<p class="people-footer-text">
+			<Fragment set:html={t(translations, 'culture.people.footerText')} />
+		</p>
+		<a class="people-footer-btn" href={socialLinks.linkedin} target="_blank">
+			{t(translations, 'culture.people.footerCta')}
+		</a>
+	</div>
+
+	<script>
+		const scrollContainer = document.querySelector('[data-people-scroll]')
+		const prevBtn = document.querySelector('[data-people-prev]')
+		const nextBtn = document.querySelector('[data-people-next]')
+
+		const scrollByAmount = () => (scrollContainer?.clientWidth ?? 0) * 0.8
+
+		prevBtn?.addEventListener('click', () => {
+			scrollContainer?.scrollBy({ left: -scrollByAmount(), behavior: 'smooth' })
+		})
+
+		nextBtn?.addEventListener('click', () => {
+			scrollContainer?.scrollBy({ left: scrollByAmount(), behavior: 'smooth' })
+		})
+	</script>
+</section>
