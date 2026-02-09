@@ -1,0 +1,64 @@
+---
+import MapBr from '@/assets/culture/map-br.svg'
+
+const viewBox = {
+	width: 493.5,
+	height: 493.499999,
+}
+
+const pins = [
+	// Coordinates are in the SVG viewBox units.
+	{ name: 'Porto Alegre', x: 215, y: 420 },
+	{ name: 'Sao Paulo', x: 260, y: 330 },
+	{ name: 'Rio de Janeiro', x: 285, y: 330 },
+	{ name: 'Brasilia', x: 255, y: 250 },
+]
+---
+
+<style>
+	@reference '@/styles/global.css';
+
+	.map-wrapper {
+		position: relative;
+		width: 100%;
+	}
+
+	.map-image {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.map-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+	}
+
+	.map-pin-dot {
+		fill: var(--color-primary-light);
+		stroke: var(--color-neutral-light);
+		stroke-width: 2;
+	}
+
+	.map-pin-label {
+		fill: var(--color-neutral-light);
+		font-size: 12px;
+		font-weight: 600;
+		text-anchor: middle;
+	}
+
+	.map-pin-label-shadow {
+		fill: var(--color-text-dark);
+		font-size: 12px;
+		font-weight: 600;
+		text-anchor: middle;
+	}
+</style>
+
+<div class="map-wrapper">
+	<MapBr class="map-image" />
+</div>

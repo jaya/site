@@ -1,6 +1,4 @@
 ---
-import { Image } from 'astro:assets'
-import teamImg from '@/assets/home/team.png'
 import { getTranslations, t } from '@/i18n/translations'
 import { getLocale, type Locale } from '@/i18n/utils'
 
@@ -8,7 +6,29 @@ const { locale: propLocale } = Astro.props as { locale?: Locale }
 const locale = propLocale ?? getLocale(Astro)
 const translations = await getTranslations(locale)
 
-const galleryImages = Array.from({ length: 8 }, () => teamImg)
+// Generate consistent random-like images for SSR
+const galleryImages = [
+	{ width: 600, height: 400 },
+	{ width: 400, height: 600 },
+	{ width: 500, height: 500 },
+	{ width: 600, height: 350 },
+	{ width: 400, height: 500 },
+	{ width: 550, height: 400 },
+	{ width: 400, height: 600 }, // Intentionally repeated styles for layout testing
+	{ width: 600, height: 400 },
+	{ width: 500, height: 700 },
+	{ width: 450, height: 300 },
+	{ width: 600, height: 450 },
+	{ width: 400, height: 400 },
+	{ width: 500, height: 600 },
+	{ width: 600, height: 300 },
+	{ width: 400, height: 500 },
+].map((dims, i) => ({
+	src: `https://picsum.photos/${dims.width}/${dims.height}?random=${i}`,
+	width: dims.width,
+	height: dims.height,
+	alt: `Culture image ${i + 1}`
+}))
 ---
 
 <style>
@@ -16,7 +36,7 @@ const galleryImages = Array.from({ length: 8 }, () => teamImg)
 
 	.culture-gallery {
 		@apply relative;
-		@apply pt-20 pb-16;
+		@apply py-20;
 		@apply bg-blue-light;
 		@apply text-white;
 	}
@@ -24,6 +44,7 @@ const galleryImages = Array.from({ length: 8 }, () => teamImg)
 	.gallery-header {
 		@apply text-center;
 		@apply max-w-[720px] mx-auto;
+		@apply px-6;
 	}
 
 	.gallery-eyebrow {
@@ -40,36 +61,61 @@ const galleryImages = Array.from({ length: 8 }, () => teamImg)
 		@apply text-sm leading-relaxed lg:text-base;
 	}
 
-	.gallery-track {
-		@apply relative;
+	.gallery-container {
 		@apply mt-12;
+		@apply relative;
+		@apply w-full;
 	}
 
-	.gallery-scroll {
-		@apply flex;
-		@apply gap-4;
-		@apply px-6;
+	.gallery-scroll-wrapper {
 		@apply overflow-x-auto;
-		@apply scroll-smooth;
+		@apply overflow-y-hidden;
 		@apply pb-6;
-	}
-
-	.gallery-card {
-		@apply flex-shrink-0;
-		@apply w-[240px] md:w-[280px] lg:w-[320px];
-		@apply bg-neutral-light;
-		@apply rounded-xl;
-		@apply overflow-hidden;
-
-		img {
-			@apply w-full h-full;
-			@apply object-cover;
+		@apply scroll-smooth;
+		/* Hide scrollbar for cleaner look but keep functionality */
+		scrollbar-width: none;
+		&::-webkit-scrollbar {
+			display: none;
 		}
 	}
 
+	.masonry-grid {
+		@apply flex flex-col flex-wrap;
+		@apply content-start;
+		@apply h-[600px] md:h-[800px]; /* Explicit height required for column wrapping */
+		@apply px-6;
+		@apply gap-4;
+	}
+
+	.gallery-item {
+		@apply relative;
+		@apply w-[280px] md:w-[320px]; /* Fixed width for columns */
+		@apply mb-4; /* Bottom margin for spacing in column flow */
+		@apply rounded-xl;
+		@apply overflow-hidden;
+		@apply cursor-pointer;
+		@apply transition-transform duration-300;
+		@apply border border-white/10;
+
+		/* Prevent break inside columns */
+		break-inside: avoid;
+		
+		&:hover {
+			@apply scale-[1.02];
+			@apply z-10;
+		}
+
+		img {
+			@apply w-full h-auto;
+			@apply block;
+		}
+	}
+
+	/* Controls */
 	.gallery-controls {
 		@apply flex items-center justify-center;
 		@apply gap-6;
+		@apply mt-8;
 	}
 
 	.gallery-btn {
@@ -78,10 +124,70 @@ const galleryImages = Array.from({ length: 8 }, () => teamImg)
 		@apply bg-transparent;
 		@apply text-white;
 		@apply border border-white rounded-full;
-		@apply transition-transform;
+		@apply transition-transform cursor-pointer;
 
 		&:hover {
-			@apply scale-105;
+			@apply scale-105 bg-white/10;
+		}
+	}
+
+	/* Modal */
+	.gallery-modal {
+		@apply fixed inset-0 z-50;
+		@apply flex items-center justify-center;
+		@apply bg-black/90;
+		@apply opacity-0 pointer-events-none;
+		@apply transition-opacity duration-300;
+		@apply p-4;
+
+		&.open {
+			@apply opacity-100 pointer-events-auto;
+		}
+	}
+
+	.modal-content {
+		@apply relative;
+		@apply max-w-full max-h-full;
+		@apply rounded-lg overflow-hidden;
+		
+		img {
+			@apply max-h-[90vh] max-w-[90vw];
+			@apply object-contain;
+		}
+	}
+
+	.modal-close {
+		@apply absolute top-4 right-4;
+		@apply text-white;
+		@apply w-10 h-10;
+		@apply bg-black/50 rounded-full;
+		@apply flex items-center justify-center;
+		@apply cursor-pointer;
+		@apply transition-colors;
+		@apply z-50;
+
+		&:hover {
+			@apply bg-white text-black;
+		}
+	}
+
+	.modal-nav-btn {
+		@apply absolute top-1/2 -translate-y-1/2;
+		@apply w-12 h-12;
+		@apply flex items-center justify-center;
+		@apply text-white/70 hover:text-white;
+		@apply bg-black/20 hover:bg-black/50;
+		@apply rounded-full;
+		@apply transition-all;
+		@apply z-50;
+		@apply cursor-pointer;
+
+		&.prev {
+			@apply left-4;
+		}
+
+		&.next {
+			@apply right-4;
 		}
 	}
 </style>
@@ -97,57 +203,154 @@ const galleryImages = Array.from({ length: 8 }, () => teamImg)
 		</div>
 	</div>
 
-	<div class="gallery-track">
-		<div class="gallery-scroll" data-gallery-scroll>
-			{galleryImages.map((img, index) => (
-				<div class="gallery-card">
-					<Image
-						src={img}
-						alt={`${t(translations, 'culture.gallery.imageAlt')} ${index + 1}`}
-						loading="lazy"
-					/>
-				</div>
-			))}
+	<div class="gallery-container">
+		<div class="gallery-scroll-wrapper" id="gallery-scroll">
+			<div class="masonry-grid">
+				{galleryImages.map((img, index) => (
+					<div class="gallery-item" data-index={index} data-full-src={img.src}>
+						<img
+							src={img.src}
+							alt={img.alt}
+							width={img.width}
+							height={img.height}
+							loading="lazy"
+						/>
+					</div>
+				))}
+			</div>
 		</div>
+
 		<div class="gallery-controls">
-			<button class="gallery-btn" type="button" data-gallery-prev aria-label="Previous photos">
+			<button class="gallery-btn" type="button" id="prev-btn" aria-label="Previous photos">
 				<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-					<path
-						d="M15 6L9 12L15 18"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
+					<path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 				</svg>
 			</button>
-			<button class="gallery-btn" type="button" data-gallery-next aria-label="Next photos">
+			<button class="gallery-btn" type="button" id="next-btn" aria-label="Next photos">
 				<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-					<path
-						d="M9 6L15 12L9 18"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
+					<path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 				</svg>
 			</button>
 		</div>
 	</div>
 
-	<script>
-		const scrollContainer = document.querySelector('[data-gallery-scroll]')
-		const prevBtn = document.querySelector('[data-gallery-prev]')
-		const nextBtn = document.querySelector('[data-gallery-next]')
+	<!-- Modal -->
+	<div class="gallery-modal" id="gallery-modal">
+		<button class="modal-close" id="modal-close" aria-label="Close modal">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<line x1="18" y1="6" x2="6" y2="18"></line>
+				<line x1="6" y1="6" x2="18" y2="18"></line>
+			</svg>
+		</button>
+		
+		<button class="modal-nav-btn prev" id="modal-prev" aria-label="Previous image">
+			<svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+				<path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+		</button>
 
-		const scrollByAmount = () => (scrollContainer?.clientWidth ?? 0) * 0.8
+		<button class="modal-nav-btn next" id="modal-next" aria-label="Next image">
+			<svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+				<path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+		</button>
 
-		prevBtn?.addEventListener('click', () => {
-			scrollContainer?.scrollBy({ left: -scrollByAmount(), behavior: 'smooth' })
-		})
-
-		nextBtn?.addEventListener('click', () => {
-			scrollContainer?.scrollBy({ left: scrollByAmount(), behavior: 'smooth' })
-		})
-	</script>
+		<div class="modal-content">
+			<img src="" alt="Gallery Preview" id="modal-image" />
+		</div>
+	</div>
 </section>
+
+<script>
+	// Scroll Logic
+	const scrollContainer = document.getElementById('gallery-scroll');
+	const prevBtn = document.getElementById('prev-btn');
+	const nextBtn = document.getElementById('next-btn');
+
+	const scrollAmount = 400;
+
+	prevBtn?.addEventListener('click', () => {
+		scrollContainer?.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+	});
+
+	nextBtn?.addEventListener('click', () => {
+		scrollContainer?.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+	});
+
+	// Modal Logic
+	const modal = document.getElementById('gallery-modal');
+	const modalImg = document.getElementById('modal-image') as HTMLImageElement;
+	const closeBtn = document.getElementById('modal-close');
+	const modalPrevBtn = document.getElementById('modal-prev');
+	const modalNextBtn = document.getElementById('modal-next');
+	const items = document.querySelectorAll('.gallery-item');
+	
+	let currentImageIndex = 0;
+	const totalImages = items.length;
+
+	const updateModalImage = (index: number) => {
+		const item = items[index];
+		const src = item?.getAttribute('data-full-src');
+		if (src && modalImg) {
+			modalImg.src = src;
+			currentImageIndex = index;
+		}
+	}
+
+	const openModal = (index: number) => {
+		if (modal) {
+			updateModalImage(index);
+			modal.classList.add('open');
+			document.body.style.overflow = 'hidden';
+		}
+	};
+
+	const closeModal = () => {
+		if (modal) {
+			modal.classList.remove('open');
+			document.body.style.overflow = '';
+			// Clear src after transition to prevent flicker on reopen
+			setTimeout(() => {
+				if (modalImg) modalImg.src = '';
+			}, 300);
+		}
+	};
+
+	const navPrev = (e?: Event) => {
+		e?.stopPropagation();
+		const newIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+		updateModalImage(newIndex);
+	};
+
+	const navNext = (e?: Event) => {
+		e?.stopPropagation();
+		const newIndex = (currentImageIndex + 1) % totalImages;
+		updateModalImage(newIndex);
+	};
+
+	items.forEach((item, index) => {
+		item.addEventListener('click', () => {
+			openModal(index);
+		});
+	});
+
+	closeBtn?.addEventListener('click', closeModal);
+	modalPrevBtn?.addEventListener('click', navPrev);
+	modalNextBtn?.addEventListener('click', navNext);
+
+	modal?.addEventListener('click', (e) => {
+		if (e.target === modal) closeModal();
+	});
+
+	document.addEventListener('keydown', (e) => {
+		if (!modal?.classList.contains('open')) return;
+
+		if (e.key === 'Escape') {
+			closeModal();
+		} else if (e.key === 'ArrowLeft') {
+			navPrev();
+		} else if (e.key === 'ArrowRight') {
+			navNext();
+		}
+	});
+</script>

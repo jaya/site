@@ -28,7 +28,7 @@ const translations = await getTranslations(locale)
 
 	.intro-row {
 		@apply grid;
-		@apply gap-10 lg:gap-16;
+		@apply gap-8 lg:gap-16;
 		@apply lg:grid-cols-[1.2fr_0.8fr];
 		@apply items-center;
 	}
@@ -64,13 +64,13 @@ const translations = await getTranslations(locale)
 
 	.guides-title {
 		@apply text-primary text-2xl leading-tight lg:text-3xl;
-		@apply text-right;
+		@apply text-current lg:text-right;
 		@apply mb-4;
 	}
 
 	.guides-text {
 		@apply text-base leading-relaxed lg:text-lg;
-		@apply text-primary text-right;
+		@apply text-primary text-current lg:text-right;
 	}
 
 	.values-block {
@@ -84,25 +84,27 @@ const translations = await getTranslations(locale)
 	.values-grid {
 		@apply grid;
 		@apply mt-10;
-		@apply grid-cols-1 lg:grid-cols-4;
+		@apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-4;
+		@apply gap-6 lg:gap-0;
 		@apply justify-items-center;
 	}
 
 	.value-card {
 		@apply flex flex-col;
-		@apply min-h-[220px];
+		@apply min-h-[200px] lg:min-h-[220px];
+		@apply w-full max-w-[320px] lg:w-auto;
 		@apply p-6;
 		@apply bg-primary-light;
 		@apply text-white;
-		@apply rounded-2xl;
+		@apply rounded-br-[50px];
 
 		&:nth-child(even) {
-			@apply max-w-[250px];
+			@apply lg:max-w-[250px];
 		}
 	}
 
 	.value-title {
-		@apply text-4xl font-bold leading-8;
+		@apply text-3xl lg:text-4xl font-bold leading-8;
 	}
 
 	.value-text {
@@ -111,14 +113,16 @@ const translations = await getTranslations(locale)
 	}
 
 	.values-action {
-		@apply flex flex-row items-center justify-center;
+		@apply flex flex-col lg:flex-row items-center justify-center;
 		@apply gap-6;
-		@apply mt-24;
+		@apply mt-16 lg:mt-24;
+		@apply text-center;
 	}
 
 	.values-action-label {
-		@apply text-primary text-center text-lg tracking-[0.2em];
+		@apply text-primary text-center text-base lg:text-lg tracking-[0.2em];
 		@apply font-space-grotesk uppercase;
+		@apply max-w-[300px] lg:max-w-none;
 	}
 
 	.values-action-btn {
@@ -127,6 +131,7 @@ const translations = await getTranslations(locale)
 		@apply bg-transparent;
 		@apply text-primary-light text-sm font-semibold;
 		@apply border border-primary-light rounded-full;
+		@apply hover:bg-primary-light hover:text-white transition-colors;
 	}
 </style>
 

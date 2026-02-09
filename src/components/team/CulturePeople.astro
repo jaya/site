@@ -1,6 +1,4 @@
 ---
-import { Image } from 'astro:assets'
-import teamImg from '@/assets/home/team.png'
 import { socialLinks } from '@/data/social-links'
 import { getTranslations, t } from '@/i18n/translations'
 import { getLocale, type Locale } from '@/i18n/utils'
@@ -9,20 +7,29 @@ const { locale: propLocale } = Astro.props as { locale?: Locale }
 const locale = propLocale ?? getLocale(Astro)
 const translations = await getTranslations(locale)
 
-const people = [
-	{ name: 'Abraao Rosseto', role: '' },
-	{ name: 'Adriana Tateno', role: 'Human Resources' },
-	{ name: 'Alexandre Queiroz', role: '' },
-	{ name: 'Allan Motroni', role: '' },
-	{ name: 'Andre Fernandes', role: '' },
-	{ name: 'Andreia Berto', role: '' },
-	{ name: 'Artur Paes', role: '' },
-	{ name: 'Bianca Guzenski', role: '' },
-	{ name: 'Bruna Soares', role: 'SpreadSheets Woman' },
-	{ name: 'Bruno Marins', role: '' },
-	{ name: 'Bruno Tatsumi', role: 'Developer' },
-	{ name: 'Caio Melo', role: '' }
+// Generate dummy data for the people grid
+const basePeople = [
+	{ name: 'Abraao Rosseto', role: 'Photographer', desc: 'Passionate about capturing moments.' },
+	{ name: 'Adriana Tateno', role: 'Human Resources', desc: 'Ensuring everyone feels at home.' },
+	{ name: 'Alexandre Queiroz', role: 'Tech Lead', desc: 'Coding the future.' },
+	{ name: 'Allan Motroni', role: 'Drummer / Dev', desc: 'Rhythm in code and life.' },
+	{ name: 'Andre Fernandes', role: 'Biker / Dev', desc: 'Fast code, faster wheels.' },
+	{ name: 'Andreia Berto', role: 'Designer', desc: 'Making things beautiful.' },
+	{ name: 'Artur Paes', role: 'Traveler', desc: 'Exploring the world, one commit at a time.' },
+	{ name: 'Bianca Guzenski', role: 'Cyclist', desc: 'Pedaling towards success.' },
+	{ name: 'Bruna Soares', role: 'SpreadSheets Woman', desc: 'Data driven decisions.' },
+	{ name: 'Bruno Marins', role: 'Gamer', desc: 'Leveling up skills daily.' },
+	{ name: 'Bruno Tatsumi', role: 'Developer', desc: 'Building robust solutions.' },
+	{ name: 'Caio Melo', role: 'Reader', desc: 'Knowledge is power.' },
 ]
+
+// Duplicate to create 24 items for testing pagination
+const people = [...basePeople, ...basePeople].map((p, i) => ({
+	...p,
+	id: i,
+	name: i >= 12 ? `${p.name} (Copy)` : p.name,
+	image: `https://picsum.photos/400/400?random=${i + 100}`
+}))
 ---
 
 <style>
@@ -31,100 +38,213 @@ const people = [
 	.culture-people {
 		@apply relative;
 		@apply py-20;
-		@apply bg-neutral-light;
+		@apply bg-neutral-light; /* Match background color from image if needed, or keep neutral */
 		@apply text-text-dark;
+		@apply overflow-hidden;
+	}
+
+	.container {
+		@apply relative;
+		@apply px-4 mx-auto;
+		@apply max-w-7xl; /* limit width for better grid control on large screens */
 	}
 
 	.people-header {
 		@apply text-center;
 		@apply max-w-[720px] mx-auto;
+		@apply mb-12;
 	}
 
 	.people-title {
 		@apply text-primary text-3xl font-bold leading-tight lg:text-5xl;
+		@apply mb-6;
+
+		span {
+			@apply block;
+		}
 	}
 
 	.people-text {
 		@apply mt-4;
 		@apply text-base leading-relaxed lg:text-lg;
+		@apply text-primary/80;
+		@apply max-w-2xl mx-auto;
 	}
 
-	.people-carousel {
-		@apply mt-10;
+	/* Navigation Arrows */
+	.people-nav {
+		@apply flex justify-center items-center gap-8;
+		@apply mb-12;
 	}
 
-	.people-scroll {
-		@apply flex;
-		@apply gap-6;
-		@apply px-6;
+	.nav-btn {
+		@apply text-primary/30 hover:text-primary;
+		@apply transition-colors duration-300;
+		@apply cursor-pointer;
+		
+		svg {
+			@apply w-12 h-12;
+		}
+	}
+
+	/* Grid Layout */
+	.people-grid-wrapper {
 		@apply overflow-x-auto;
 		@apply scroll-smooth;
-		@apply pb-6;
+		@apply -mx-4 px-4; /* Allow full width scroll on mobile */
+		@apply pb-8;
+		
+		/* Hide scrollbar */
+		scrollbar-width: none;
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+
+	.people-grid {
+		@apply grid;
+		@apply gap-x-6 gap-y-12; /* Space between columns and rows */
+		@apply grid-cols-[repeat(12,minmax(200px,1fr))]; /* Mobile: horizontal scroll */
+		@apply w-max md:w-full; /* Mobile: fit content width */
+		
+		/* 
+			Desktop: 2 rows, auto-flow column to fill horizontally. 
+			We want exactly 6 columns visible per "page".
+			So we use a grid template that defines columns based on container width.
+		*/
+		@apply md:grid-cols-[repeat(24,minmax(160px,1fr))]; /* 24 items in total across columns */
+		@apply md:grid-rows-2;
+		@apply md:grid-flow-col; /* Fill columns first */
+		@apply md:auto-cols-[minmax(160px,1fr)];
+	}
+	
+	/* 
+	   To simulate pages of 6 columns (12 items) on desktop:
+	   The container is limited width. The grid is wider.
+	   We scroll the wrapper.
+	*/
+
+	.people-item-wrapper {
+		@apply flex flex-col items-center;
+		@apply w-[200px] md:w-auto; /* Fixed width on mobile */
 	}
 
 	.person-card {
-		@apply flex flex-col items-center;
-		@apply flex-shrink-0;
-		@apply w-[200px] md:w-[220px];
-	}
-
-	.person-avatar {
+		@apply relative;
 		@apply w-full;
-		@apply aspect-square;
-		@apply bg-blue-light;
-		@apply rounded-2xl;
+		@apply aspect-square; /* Make cards square */
+		@apply rounded-[2rem];
 		@apply overflow-hidden;
-
-		img {
-			@apply w-full h-full;
-			@apply object-cover;
-		}
+		@apply cursor-pointer;
+		@apply bg-blue-light; /* Fallback */
 	}
 
-	.person-name {
+	.person-image {
+		@apply w-full h-full;
+		@apply object-cover;
+		@apply transition-transform duration-500;
+		@apply group-hover:scale-110;
+	}
+
+	/* Hover Overlay */
+	.person-overlay {
+		@apply absolute inset-0;
+		@apply bg-primary/90;
+		@apply opacity-0 group-hover:opacity-100;
+		@apply transition-opacity duration-300;
+		@apply flex flex-col justify-center items-center;
+		@apply p-4 text-center text-white;
+	}
+
+	.overlay-text {
+		@apply text-sm md:text-base;
+		@apply font-medium;
+	}
+
+	/* Info below card */
+	.person-info {
 		@apply mt-3;
-		@apply text-primary text-sm font-bold text-center;
-	}
-
-	.person-role {
-		@apply mt-1;
-		@apply text-primary text-xs tracking-[0.15em] uppercase text-center;
-	}
-
-	.people-controls {
-		@apply flex items-center justify-center;
-		@apply gap-4;
-		@apply mt-4;
-	}
-
-	.people-btn {
-		@apply flex items-center justify-center;
-		@apply h-10 w-10;
-		@apply bg-transparent;
-		@apply text-primary;
-		@apply border border-primary rounded-full;
-		@apply transition-transform;
-
-		&:hover {
-			@apply scale-105;
-		}
-	}
-
-	.people-footer {
-		@apply mt-16;
 		@apply text-center;
 	}
 
-	.people-footer-text {
-		@apply text-primary text-2xl leading-tight lg:text-4xl;
+	.person-name {
+		@apply text-primary font-bold text-lg;
+		@apply leading-tight;
 	}
 
-	.people-footer-btn {
-		@apply btn;
-		@apply mt-8 px-8 py-3;
-		@apply bg-transparent;
-		@apply text-primary text-sm font-semibold;
-		@apply border border-primary rounded-full;
+	.person-role {
+		@apply text-xs uppercase tracking-wider;
+		@apply text-primary/60;
+		@apply mt-1;
+		@apply font-semibold;
+	}
+
+	/* Modal */
+	.people-modal {
+		@apply fixed inset-0 z-50;
+		@apply flex items-center justify-center;
+		@apply bg-black/90;
+		@apply opacity-0 pointer-events-none;
+		@apply transition-opacity duration-300;
+		@apply p-4;
+
+		&.open {
+			@apply opacity-100 pointer-events-auto;
+		}
+	}
+
+	.modal-content {
+		@apply relative;
+		@apply max-w-4xl w-full;
+		@apply flex flex-col items-center;
+	}
+	
+	.modal-image-container {
+		@apply relative;
+		@apply rounded-xl overflow-hidden;
+		@apply shadow-2xl;
+	}
+
+	.modal-img {
+		@apply max-h-[70vh] w-auto;
+		@apply object-contain;
+	}
+
+	.modal-info {
+		@apply mt-6 text-center text-white;
+	}
+
+	.modal-name {
+		@apply text-2xl font-bold;
+	}
+	
+	.modal-desc {
+		@apply text-white/80 mt-2;
+	}
+
+	.modal-close {
+		@apply absolute top-4 right-4;
+		@apply text-white/70 hover:text-white;
+		@apply w-10 h-10;
+		@apply flex items-center justify-center;
+		@apply cursor-pointer;
+		@apply z-50;
+		@apply bg-white/10 rounded-full hover:bg-white/20;
+	}
+
+	.modal-nav-btn {
+		@apply absolute top-1/2 -translate-y-1/2;
+		@apply w-12 h-12;
+		@apply flex items-center justify-center;
+		@apply text-white/70 hover:text-white;
+		@apply bg-white/10 hover:bg-white/20;
+		@apply rounded-full;
+		@apply cursor-pointer;
+		@apply transition-colors;
+		@apply z-50;
+
+		&.prev { @apply left-4; }
+		&.next { @apply right-4; }
 	}
 </style>
 
@@ -136,68 +256,156 @@ const people = [
 			</h2>
 			<p class="people-text">{t(translations, 'culture.people.description')}</p>
 		</div>
-	</div>
 
-	<div class="people-carousel">
-		<div class="people-scroll" data-people-scroll>
-			{people.map((person) => (
-				<div class="person-card">
-					<div class="person-avatar">
-						<Image src={teamImg} alt={person.name} loading="lazy" />
+		<div class="people-nav">
+			<button class="nav-btn" id="grid-prev" aria-label="Previous page">
+				<svg viewBox="0 0 24 24" fill="none" class="rotate-180">
+					<path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</button>
+			<button class="nav-btn" id="grid-next" aria-label="Next page">
+				<svg viewBox="0 0 24 24" fill="none">
+					<path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</button>
+		</div>
+
+		<div class="people-grid-wrapper" id="people-scroll-container">
+			<div class="people-grid">
+				{people.map((person, index) => (
+					<div class="people-item-wrapper">
+						<div class="person-card group" data-index={index}>
+							<img src={person.image} alt={person.name} class="person-image" loading="lazy" />
+							<div class="person-overlay">
+								<p class="overlay-text">{person.desc}</p>
+							</div>
+						</div>
+						<div class="person-info">
+							<h3 class="person-name">{person.name}</h3>
+							<p class="person-role">{person.role}</p>
+						</div>
 					</div>
-					<p class="person-name">{person.name}</p>
-					{person.role && <p class="person-role">{person.role}</p>}
-				</div>
-			))}
-		</div>
-		<div class="people-controls">
-			<button class="people-btn" type="button" data-people-prev aria-label="Previous people">
-				<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-					<path
-						d="M15 6L9 12L15 18"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			</button>
-			<button class="people-btn" type="button" data-people-next aria-label="Next people">
-				<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-					<path
-						d="M9 6L15 12L9 18"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			</button>
-		</div>
+				))}
 	</div>
 
-	<div class="people-footer">
-		<p class="people-footer-text">
-			<Fragment set:html={t(translations, 'culture.people.footerText')} />
-		</p>
-		<a class="people-footer-btn" href={socialLinks.linkedin} target="_blank">
-			{t(translations, 'culture.people.footerCta')}
-		</a>
+	<!-- Modal -->
+	<div class="people-modal" id="people-modal">
+		<button class="modal-close" id="people-modal-close">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<line x1="18" y1="6" x2="6" y2="18"></line>
+				<line x1="6" y1="6" x2="18" y2="18"></line>
+			</svg>
+		</button>
+
+		<div class="modal-content">
+			<div class="modal-image-container">
+				<img src="" alt="" class="modal-img" id="people-modal-img" />
+			</div>
+			<div class="modal-info">
+				<h3 class="modal-name" id="people-modal-name"></h3>
+				<p class="modal-desc" id="people-modal-desc"></p>
+			</div>
+		</div>
+		
+		<button class="modal-nav-btn prev" id="people-modal-prev">
+			<svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+				<path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+		</button>
+		<button class="modal-nav-btn next" id="people-modal-next">
+			<svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+				<path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+		</button>
 	</div>
-
-	<script>
-		const scrollContainer = document.querySelector('[data-people-scroll]')
-		const prevBtn = document.querySelector('[data-people-prev]')
-		const nextBtn = document.querySelector('[data-people-next]')
-
-		const scrollByAmount = () => (scrollContainer?.clientWidth ?? 0) * 0.8
-
-		prevBtn?.addEventListener('click', () => {
-			scrollContainer?.scrollBy({ left: -scrollByAmount(), behavior: 'smooth' })
-		})
-
-		nextBtn?.addEventListener('click', () => {
-			scrollContainer?.scrollBy({ left: scrollByAmount(), behavior: 'smooth' })
-		})
-	</script>
 </section>
+
+<script define:vars={{ people }}>
+	// Grid Navigation Logic
+	const scrollContainer = document.getElementById('people-scroll-container');
+	const gridPrev = document.getElementById('grid-prev');
+	const gridNext = document.getElementById('grid-next');
+
+	gridPrev?.addEventListener('click', () => {
+		if (scrollContainer) {
+			scrollContainer.scrollBy({ left: -scrollContainer.clientWidth, behavior: 'smooth' });
+		}
+	});
+
+	gridNext?.addEventListener('click', () => {
+		if (scrollContainer) {
+			scrollContainer.scrollBy({ left: scrollContainer.clientWidth, behavior: 'smooth' });
+		}
+	});
+
+	// Modal Logic
+	const modal = document.getElementById('people-modal');
+	const modalImg = document.getElementById('people-modal-img');
+	const modalName = document.getElementById('people-modal-name');
+	const modalDesc = document.getElementById('people-modal-desc');
+	const modalClose = document.getElementById('people-modal-close');
+	const modalPrev = document.getElementById('people-modal-prev');
+	const modalNext = document.getElementById('people-modal-next');
+	
+	let currentIndex = 0;
+	const totalPeople = people.length;
+
+	function updateModal(index) {
+		if (!people[index]) return;
+		
+		const person = people[index];
+		currentIndex = index;
+		
+		if (modalImg) modalImg.src = person.image;
+		if (modalName) modalName.textContent = person.name;
+		if (modalDesc) modalDesc.textContent = `${person.role} - ${person.desc}`;
+	}
+
+	function openModal(index) {
+		updateModal(index);
+		modal?.classList.add('open');
+		document.body.style.overflow = 'hidden';
+	}
+
+	function closeModal() {
+		modal?.classList.remove('open');
+		document.body.style.overflow = '';
+	}
+
+	function nextPerson() {
+		const newIndex = (currentIndex + 1) % totalPeople;
+		updateModal(newIndex);
+	}
+
+	function prevPerson() {
+		const newIndex = (currentIndex - 1 + totalPeople) % totalPeople;
+		updateModal(newIndex);
+	}
+
+	// Attach click listeners to cards
+	document.querySelectorAll('.person-card').forEach(card => {
+		card.addEventListener('click', () => {
+			const index = parseInt(card.getAttribute('data-index') || '0');
+			openModal(index);
+		});
+	});
+
+	// Modal event listeners
+	modalClose?.addEventListener('click', closeModal);
+	modalPrev?.addEventListener('click', (e) => { e.stopPropagation(); prevPerson(); });
+	modalNext?.addEventListener('click', (e) => { e.stopPropagation(); nextPerson(); });
+	
+	// Close on backdrop click
+	modal?.addEventListener('click', (e) => {
+		if (e.target === modal) closeModal();
+	});
+
+	// Keyboard navigation
+	document.addEventListener('keydown', (e) => {
+		if (!modal?.classList.contains('open')) return;
+		
+		if (e.key === 'Escape') closeModal();
+		if (e.key === 'ArrowLeft') prevPerson();
+		if (e.key === 'ArrowRight') nextPerson();
+	});
+</script>
