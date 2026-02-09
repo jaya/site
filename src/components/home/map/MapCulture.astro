@@ -1,5 +1,5 @@
 ---
-import MapElement from './MapElement.astro'
+import MapCultureElement from './MapCultureElement.astro'
 import { withBase } from '@/utils/url'
 import { getTranslations, t } from '@/i18n/translations'
 import { getLocale, getLocalizedPath, type Locale } from '@/i18n/utils'
@@ -47,7 +47,7 @@ const translations = await getTranslations(locale)
 		.btn-get-in-touch {
 			@apply btn btn-outline btn-wide;
 			@apply hidden lg:flex;
-			@apply mx-auto my-10;
+			@apply my-10;
 			@apply text-white;
 			@apply rounded-full;
 
@@ -60,6 +60,7 @@ const translations = await getTranslations(locale)
 			@apply w-full lg:w-1/3;
 			@apply px-8;
 			@apply text-white;
+			@apply flex flex-col justify-center;
 		}
 
 		.map-container {
@@ -79,30 +80,21 @@ const translations = await getTranslations(locale)
 	<div class="container">
 		<div class="layout">
 			<div class="content">
-				<h2 class="driving-subtitle">{t(translations, 'home.map.subtitle')}</h2>
+				<h2 class="driving-subtitle">{t(translations, 'culture.map.subtitle')}</h2>
 				<h3 class="driving-title">
-					<b>{t(translations, 'home.map.title1')}</b>
-					<i>{t(translations, 'home.map.title2')}</i><br />
-					<i>{t(translations, 'home.map.title3')}</i>
-					<b>{t(translations, 'home.map.title4')}</b>
+					<b>{t(translations, 'culture.map.title1')}</b>
+					<b>{t(translations, 'culture.map.title2')}</b><br />
 				</h3>
-				<p class="driving-text">
-					{t(translations, 'home.map.text1')}
-				</p>
-
-				<p class="driving-text mt-5">
-					{t(translations, 'home.map.text2')}
-				</p>
-
+				<p class="driving-text"><Fragment set:html={t(translations, 'culture.map.text1')} /></p>
 				<a class="btn-get-in-touch" href={withBase(getLocalizedPath('contact', locale))}>
-					{t(translations, 'common.getInTouch')}
+					{t(translations, 'culture.map.cta')}
 				</a>
 			</div>
 			<div class="map-container">
-				<MapElement />
+				<MapCultureElement />
 			</div>
 			<a class="btn-get-in-touch btn-mobile" href={withBase(getLocalizedPath('contact', locale))}>
-				{t(translations, 'common.getInTouch')}
+				{t(translations, 'culture.map.cta')}
 			</a>
 		</div>
 	</div>

@@ -84,7 +84,7 @@
 		}
 	},
 	"culture": {
-		"title": "at <b>Jaya, we develop people</b> while <b>they develop software</b>",
+		"title": "at <b>Jaya, we develop people</b> while they <b>develop software</b>",
 		"pill1": "FULLY REMOTE",
 		"pill2": "PEOPLE-FIRST",
 		"pill3": "DRIVEN BY IMPACT",
@@ -121,6 +121,13 @@
 			"description": "Every person who joins Jaya gets their own caricature, a small tribute to the big part they play here. Swipe through and meet the faces (and smiles) behind our work.",
 			"footerText": "we share our culture in practice on <b>LinkedIn</b>,<br />from behind-the-scenes stories to reflections<br />on conscious engineering.",
 			"footerCta": "Visit our LinkedIn"
+		},
+		"map": {
+			"subtitle": "100% remote since day one",
+			"title1": "people everywhere.",
+			"title2": "purpose in common.",
+			"text1": "Our team is spread across Brazil, just look at the map beside you. While we work from different cities, we collaborate on high-impact projects for clients in both Brazil and the U.S. Distance doesn’t separate us. <b>Purpose connects us.</b>",
+			"cta": "Apply on LinkedIn"
 		}
 	},
 	"fintech": {

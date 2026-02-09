@@ -83,22 +83,26 @@ const translations = await getTranslations(locale)
 
 	.values-grid {
 		@apply grid;
-		@apply gap-6;
 		@apply mt-10;
 		@apply grid-cols-1 lg:grid-cols-4;
+		@apply justify-items-center;
 	}
 
 	.value-card {
 		@apply flex flex-col;
 		@apply min-h-[220px];
 		@apply p-6;
-		@apply bg-blue-light;
+		@apply bg-primary-light;
 		@apply text-white;
 		@apply rounded-2xl;
+
+		&:nth-child(even) {
+			@apply max-w-[250px];
+		}
 	}
 
 	.value-title {
-		@apply text-4xl font-bold leading-tight;
+		@apply text-4xl font-bold leading-8;
 	}
 
 	.value-text {
@@ -107,21 +111,22 @@ const translations = await getTranslations(locale)
 	}
 
 	.values-action {
-		@apply flex flex-col items-center;
+		@apply flex flex-row items-center justify-center;
 		@apply gap-6;
-		@apply mt-12;
+		@apply mt-24;
 	}
 
 	.values-action-label {
-		@apply text-primary text-center text-xs font-bold tracking-[0.2em];
+		@apply text-primary text-center text-lg tracking-[0.2em];
+		@apply font-space-grotesk uppercase;
 	}
 
 	.values-action-btn {
-		@apply btn;
+		@apply btn btn-outline;
 		@apply px-8 py-3;
 		@apply bg-transparent;
-		@apply text-primary text-sm font-semibold;
-		@apply border border-primary rounded-full;
+		@apply text-primary-light text-sm font-semibold;
+		@apply border border-primary-light rounded-full;
 	}
 </style>
 

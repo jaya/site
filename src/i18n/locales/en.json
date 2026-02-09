@@ -121,6 +121,16 @@
 			"description": "Every person who joins Jaya gets their own caricature, a small tribute to the big part they play here. Swipe through and meet the faces (and smiles) behind our work.",
 			"footerText": "we share our culture in practice on <b>LinkedIn</b>,<br />from behind-the-scenes stories to reflections<br />on conscious engineering.",
 			"footerCta": "Visit our LinkedIn"
+		},
+		"map": {
+			"subtitle": "Driving results nationwide",
+			"title1": "our",
+			"title2": "presence",
+			"title3": "across",
+			"title4": "america",
+			"text1": "Jaya's nearshore teams are already delivering impact across the U.S. from California to New York.",
+			"text2": "Our remote-native model ensures timezone-aligned delivery, seamless collaboration, and long-term value wherever your team is based.",
+			"cta": "Get in touch"
 		}
 	},
 	"fintech": {
