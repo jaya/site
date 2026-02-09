@@ -9,6 +9,7 @@ import TeamCulture from '@/components/team/TeamCulture.astro'
 import CultureValues from '@/components/team/CultureValues.astro'
 import CultureGallery from '@/components/team/CultureGallery.astro'
 import CulturePeople from '@/components/team/CulturePeople.astro'
+import CultureLinkedinCta from '@/components/team/CultureLinkedinCta.astro'
 import { getTranslations, t } from '@/i18n/translations'
 import { localeEn, type Locale } from '@/i18n/utils'
 
@@ -38,5 +39,6 @@ const pageContent = {
 		<!-- <MapCulture locale={locale} /> -->
 		<CultureGallery locale={locale} />
 		<CulturePeople locale={locale} />
+		<CultureLinkedinCta locale={locale} />
 	</main>
 </Layout>

@@ -37,8 +37,8 @@ const people = [...basePeople, ...basePeople].map((p, i) => ({
 
 	.culture-people {
 		@apply relative;
-		@apply py-20;
-		@apply bg-neutral-light; /* Match background color from image if needed, or keep neutral */
+		@apply pt-20;
+		@apply bg-body-light; /* Match background color from image if needed, or keep neutral */
 		@apply text-text-dark;
 		@apply overflow-hidden;
 	}
@@ -92,7 +92,6 @@ const people = [...basePeople, ...basePeople].map((p, i) => ({
 		@apply overflow-x-auto;
 		@apply scroll-smooth;
 		@apply -mx-4 px-4; /* Allow full width scroll on mobile */
-		@apply pb-8;
 		
 		/* Hide scrollbar */
 		scrollbar-width: none;

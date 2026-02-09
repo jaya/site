@@ -1,0 +1,57 @@
+---
+import { socialLinks } from '@/data/social-links'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, type Locale } from '@/i18n/utils'
+
+const { locale: propLocale } = Astro.props as { locale?: Locale }
+const locale = propLocale ?? getLocale(Astro)
+const translations = await getTranslations(locale)
+---
+
+<style>
+	@reference '@/styles/global.css';
+
+	.culture-linkedin {
+		@apply py-16 lg:py-20;
+		@apply bg-body-light;
+		@apply text-text-dark;
+	}
+
+	.content {
+		@apply container;
+		@apply px-6;
+		@apply text-center;
+	}
+
+	.copy {
+		@apply max-w-4xl;
+		@apply mx-auto;
+	}
+
+	.copy-text {
+		@apply text-primary text-center text-2xl font-medium leading-tight tracking-[-0.02em] lg:text-4xl;
+	}
+
+	.cta {
+		@apply btn btn-outline;
+		@apply mt-10 mx-auto;
+		@apply px-10 py-3;
+		@apply bg-transparent;
+		@apply text-primary-light text-sm font-semibold;
+		@apply border border-primary-light rounded-full;
+		@apply hover:bg-primary-light hover:text-white transition-colors;
+	}
+</style>
+
+<section class="culture-linkedin">
+	<div class="content">
+		<div class="copy">
+			<p class="copy-text">
+				<Fragment set:html={t(translations, 'culture.people.footerText')} />
+			</p>
+		</div>
+		<a class="cta" href={socialLinks.linkedin} target="_blank" rel="noreferrer">
+			{t(translations, 'culture.people.footerCta')}
+		</a>
+	</div>
+</section>
