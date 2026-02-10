@@ -195,6 +195,7 @@ const pagedPeople = Array.from({ length: Math.ceil(people.length / itemsPerPage)
 		@apply grid-cols-2; /* 12 items = 6 rows on mobile */
 		@apply md:grid-cols-6 md:grid-rows-2; /* 12 items = 2 rows on desktop */
 		@apply grid-flow-row;
+		@apply content-start;
 	}
 	
 	/* 
