@@ -24,6 +24,7 @@ const translations = await getTranslations(locale)
 	.intro-grid {
 		@apply grid;
 		@apply gap-12 lg:gap-16;
+		@apply px-10;
 	}
 
 	.intro-row {
@@ -74,11 +75,12 @@ const translations = await getTranslations(locale)
 	}
 
 	.values-block {
-		@apply mt-16;
+		@apply mt-25;
 	}
 
 	.values-eyebrow {
-		@apply text-primary text-center text-sm font-bold tracking-[0.2em];
+		@apply text-primary text-center text-xl tracking-[0.2em];
+		@apply font-space-grotesk uppercase;
 	}
 
 	.values-grid {
@@ -163,7 +165,7 @@ const translations = await getTranslations(locale)
 		</div>
 
 		<div class="values-block">
-			<p class="values-eyebrow">{t(translations, 'culture.valuesSection.valuesEyebrow')}</p>
+			<p class="values-eyebrow"><Fragment set:html={t(translations, 'culture.valuesSection.valuesEyebrow')} /></p>
 			<div class="values-grid">
 				<div class="value-card">
 					<div class="value-title">
