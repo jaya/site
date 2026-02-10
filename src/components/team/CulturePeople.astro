@@ -99,7 +99,7 @@ const people = Object.entries(teamImages).map(([path, module], index) => {
 		id: index,
 		name: override.name || formatName(slug),
 		role: override.role,
-		desc: override.desc || t(translations, 'culture.people.description'),
+		desc: override.desc,
 		image: module.default.src
 	};
 });
@@ -131,7 +131,7 @@ const pagedPeople = Array.from({ length: Math.ceil(people.length / itemsPerPage)
 
 	.people-header {
 		@apply text-center;
-		@apply max-w-[720px] mx-auto;
+		@apply max-w-5xl mx-auto;
 		@apply mb-12;
 	}
 
@@ -148,7 +148,7 @@ const pagedPeople = Array.from({ length: Math.ceil(people.length / itemsPerPage)
 		@apply mt-4;
 		@apply text-base leading-relaxed lg:text-lg;
 		@apply text-primary/80;
-		@apply max-w-2xl mx-auto;
+		@apply mx-auto;
 	}
 
 	/* Navigation Arrows */
