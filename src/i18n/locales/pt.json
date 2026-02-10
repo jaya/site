@@ -88,7 +88,19 @@
 		"pill1": "TOTALMENTE REMOTO",
 		"pill2": "PESSOAS EM PRIMEIRO",
 		"pill3": "ORIENTADOS POR IMPACTO",
-		"description": "Na Jaya, <b>cultura não é modismo</b>, é o que molda como pensamos, entregamos e crescemos juntos. <b>construa sua próxima versão conosco</b>"
+		"description": "Na Jaya, <b>cultura não é modismo</b>, é o que molda como pensamos, entregamos e crescemos juntos. <b>construa sua próxima versão conosco</b>",
+		"gallery": {
+			"eyebrow": "GRANDES PESSOAS CONSTROEM GRANDES PRODUTOS",
+			"title": "<b>pessoas</b> são nossa <b>base</b>",
+			"description": "Somos totalmente remotos, mas nunca distantes. Nossa equipe é baseada em confiança, cuidado e colaboração, e abrimos espaço para que cada um seja quem é. Aqui está um pouco de quem faz a Jaya ser o que é.",
+			"imageAlt": "Momento da equipe Jaya"
+		},
+		"people": {
+			"title": "quem constrói a Jaya,<br />em linhas e cores",
+			"description": "Cada pessoa que entra na Jaya ganha sua própria caricatura, uma pequena homenagem ao grande papel que desempenha aqui. Navegue e conheça os rostos (e sorrisos) por trás do nosso trabalho.",
+			"footerText": "compartilhamos nossa cultura na prática no <b>LinkedIn</b>,<br />de histórias de bastidores a reflexões<br />sobre engenharia consciente.",
+			"footerCta": "Visite nosso LinkedIn"
+		}
 	},
 	"fintech": {
 		"title": "Soluções Fintech - Jaya Tech",

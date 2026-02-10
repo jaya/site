@@ -1,4 +1,5 @@
 ---
+import type { ImageMetadata } from 'astro'
 import { socialLinks } from '@/data/social-links'
 import { getTranslations, t } from '@/i18n/translations'
 import { getLocale, type Locale } from '@/i18n/utils'
@@ -7,29 +8,108 @@ const { locale: propLocale } = Astro.props as { locale?: Locale }
 const locale = propLocale ?? getLocale(Astro)
 const translations = await getTranslations(locale)
 
-// Generate dummy data for the people grid
-const basePeople = [
-	{ name: 'Abraao Rosseto', role: 'Photographer', desc: 'Passionate about capturing moments.' },
-	{ name: 'Adriana Tateno', role: 'Human Resources', desc: 'Ensuring everyone feels at home.' },
-	{ name: 'Alexandre Queiroz', role: 'Tech Lead', desc: 'Coding the future.' },
-	{ name: 'Allan Motroni', role: 'Drummer / Dev', desc: 'Rhythm in code and life.' },
-	{ name: 'Andre Fernandes', role: 'Biker / Dev', desc: 'Fast code, faster wheels.' },
-	{ name: 'Andreia Berto', role: 'Designer', desc: 'Making things beautiful.' },
-	{ name: 'Artur Paes', role: 'Traveler', desc: 'Exploring the world, one commit at a time.' },
-	{ name: 'Bianca Guzenski', role: 'Cyclist', desc: 'Pedaling towards success.' },
-	{ name: 'Bruna Soares', role: 'SpreadSheets Woman', desc: 'Data driven decisions.' },
-	{ name: 'Bruno Marins', role: 'Gamer', desc: 'Leveling up skills daily.' },
-	{ name: 'Bruno Tatsumi', role: 'Developer', desc: 'Building robust solutions.' },
-	{ name: 'Caio Melo', role: 'Reader', desc: 'Knowledge is power.' },
-]
+// Import all images from the team directory
+const teamImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/culture/team/*.{jpeg,jpg,png,webp,svg}', { eager: true });
 
-// Duplicate to create 24 items for testing pagination
-const people = [...basePeople, ...basePeople].map((p, i) => ({
-	...p,
-	id: i,
-	name: i >= 12 ? `${p.name} (Copy)` : p.name,
-	image: `https://picsum.photos/400/400?random=${i + 100}`
-}))
+function formatName(slug: string) {
+	return slug
+		.split(/[-_]/)
+		.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(' ');
+}
+
+// Map of manual overrides for names, roles, and descriptions
+const peopleOverrides: Record<string, Partial<{ name: string, role: string, desc: string }>> = {
+	'abraao': { name: 'Abraão Rosseto', role: '', desc: '' },
+	'adri': { name: 'Adriana Tateno', role: 'Human Resources', desc: 'Le freak, c’est chic' },
+	'alexandre': { name: 'Alexandre Queiroz', role: '', desc: '' },
+	'allan': { name: 'Allan Motroni', role: '', desc: '' },
+	'andre': { name: 'Andre Fernandes', role: '', desc: '' },
+	'andreia': { name: 'Andreia Berto', role: '', desc: '' },
+	'artur': { name: 'Artur Paes', role: '', desc: '' },
+	'bianca': { name: 'Bianca Guzenski', role: '', desc: '' },
+	'bruna': { name: 'Bruna Soares', role: 'spreadsheets woman', desc: 'Paulista santista, esposa, mãe de três' },
+	'bruno-marins': { name: 'Bruno Marins', role: '', desc: '' },
+	'bruno-tatsumi': { name: 'Bruno Tatsumi', role: 'Developer', desc: 'Do or do not. There is no try.' },
+	'caio': { name: 'Caio Melo', role: '', desc: '' },
+	'cazuza': { name: 'Cazuza Neto', role: '', desc: '' },
+	'claudio': { name: 'Claudio de Morais', role: '', desc: '' },
+	'daniel': { name: 'Daniel Pereira', role: '', desc: '' },
+	'daniel-lima': { name: 'Daniel Lima', role: '', desc: '' },
+	'diogo': { name: 'Diogo Oliveira', role: '', desc: '' },
+	'edu-ferreira': { name: 'Eduardo Ferreira', role: '', desc: '' },
+	'edu-tercio': { name: 'Eduardo Tercio', role: '', desc: '' },
+	'emanuel': { name: 'Emanuel Batista', role: 'Backwoods Samurai', desc: "That's just it" },
+	'fernando-ferreira': { name: 'Fernando Ferreira', role: 'Frontend engineer', desc: 'Fixing more than breaking' },
+	'francisco-junior': { name: 'Francisco Junior', role: '', desc: '' },
+	'gabriel-mendes': { name: 'Gabriel Mendes', role: '', desc: '' },
+	'gabriel': { name: 'Gabriel Silva', role: 'Spaces > tabs', desc: 'Takes two hours to name variables.' },
+	'georgeo': { name: 'Georgeo Rocco', role: '', desc: '' },
+	'hugo': { name: 'Hugo Ramos', role: '', desc: '' },
+	'icaro': { name: 'Icaro Ang', role: '', desc: '' },
+	'igor-candido': { name: 'Igor Candido', role: '', desc: '' },
+	'ivan': { name: 'Ivan Queiroz', role: '', desc: '' },
+	'jefferson': { name: 'Jefferson Silvério', role: '', desc: '' },
+	'jocelio': { name: 'Jocelio da Silva', role: '', desc: '' },
+	'jonatas-brito': { name: 'Jonatas Brito', role: '', desc: '' },
+	'jose-roberto': { name: 'Jose Roberto', role: '', desc: '' },
+	'lauro': { name: 'Lauro Omatsu', role: '', desc: '' },
+	'leandro': { name: 'Leandro Costa', role: 'Zen Code', desc: '' },
+	'leonardo': { name: 'Leonardo Nascimento', role: 'June Party Lover', desc: 'Maranhão, meu tesouro, meu torrão' },
+	'lourran': { name: 'Lourran Zorzi', role: '', desc: '' },
+	'lucas': { name: 'Lucas Camargo', role: 'Listener', desc: '' },
+	'lucas-coelho': { name: 'Lucas Coelho', role: '', desc: '' },
+	'lucas-rocha': { name: 'Lucas Rocha', role: '', desc: '' },
+	'marcio_carvalho': { name: 'Marcio Carvalho', role: 'Kite hunter', desc: 'When we stretch the smile, the problems shrink' },
+	'marcus-cruz': { name: 'Marcus Cruz', role: '', desc: '' },
+	'mariel': { name: 'Mariel Couto', role: '', desc: '' },
+	'matheus_cardoso': { name: 'Matheus Cardoso', role: '', desc: '' },
+	'michel': { name: 'Michel Doumit', role: 'Problem Solver', desc: 'Top man, animal' },
+	'marcio-noda': { name: 'Marcio Noda', role: '', desc: '' },
+	'patricia': { name: 'Patricia Tonella', role: '', desc: '' },
+	'paulo-roberto': { name: 'Paulo Roberto da Silva', role: '', desc: '' },
+	'pedro': { name: 'Pedro Gabriel', role: '', desc: '' },
+	'rafael-lugli': { name: 'Rafael Lugli', role: '', desc: '' },
+	'rafael-oliveira': { name: 'Rafael Oliveira', role: '', desc: '' },
+	'rafael-tavares': { name: 'Rafael Tavares', role: 'Masterchef', desc: 'may the force be with you' },
+	'ray': { name: 'Ray Araujo', role: '', desc: '' },
+	'rennan': { name: 'Rennan Oliveira', role: 'Dog lover', desc: 'Did I tell you I have 2 dogs??' },
+	'ricardo-ferreira': { name: 'Ricardo Ferreira', role: '', desc: '' },
+	'ricardo-saggioni': { name: 'Ricardo Saggioni', role: '', desc: '' },
+	'rodrigo-cabral': { name: 'Rodrigo Cabral', role: '', desc: '' },
+	'ro_matos': { name: 'Rodrigo Matos', role: 'Programaçao na veia', desc: '' },
+	'rodrigo-de-paula': { name: 'Rodrigo de Paula', role: '', desc: '' },
+	'samuel-botelho': { name: 'Samuel Botelho', role: '', desc: '' },
+	'samuel-yamagata': { name: 'Samuel Yamagata', role: '', desc: '' },
+	'sol': { name: 'Solange Soares', role: '', desc: '' },
+	'thiago-thimoteo': { name: 'Thiago Thimoteo', role: '', desc: '' },
+	'tiago-link': { name: 'Tiago Link', role: '', desc: '' },
+	'vanderson': { name: 'Vanderson Sampaio', role: '', desc: '' },
+	'victor-ramalho': { name: 'Victor Ramalho', role: '', desc: '' },
+	'weylab': { name: 'Weylab', role: '', desc: '' },
+	'wilson': { name: 'Wilson Faustino', role: '', desc: '' },
+}
+
+// Final people array directly from raw data
+const people = Object.entries(teamImages).map(([path, module], index) => {
+	const slug = path.split('/').pop()?.split('.')[0] || '';
+	const override = peopleOverrides[slug] || {};
+	
+	return {
+		id: index,
+		name: override.name || formatName(slug),
+		role: override.role,
+		desc: override.desc || t(translations, 'culture.people.description'),
+		image: module.default.src
+	};
+});
+
+// Helper to chunk people into pages of 12 for the template
+const itemsPerPage = 12;
+const pagedPeople = Array.from({ length: Math.ceil(people.length / itemsPerPage) }, (_, i) =>
+	people.slice(i * itemsPerPage, i * itemsPerPage + itemsPerPage)
+);
+
 ---
 
 <style>
@@ -91,7 +171,10 @@ const people = [...basePeople, ...basePeople].map((p, i) => ({
 	.people-grid-wrapper {
 		@apply overflow-x-auto;
 		@apply scroll-smooth;
-		@apply -mx-4 px-4; /* Allow full width scroll on mobile */
+		@apply snap-x snap-mandatory;
+		/* @apply mx-4; */
+		/* @apply mx-4 px-4; */
+		 /* Allow full width scroll on mobile */
 		
 		/* Hide scrollbar */
 		scrollbar-width: none;
@@ -101,20 +184,17 @@ const people = [...basePeople, ...basePeople].map((p, i) => ({
 	}
 
 	.people-grid {
-		@apply grid;
-		@apply gap-x-6 gap-y-12; /* Space between columns and rows */
-		@apply grid-cols-[repeat(12,minmax(200px,1fr))]; /* Mobile: horizontal scroll */
-		@apply w-max md:w-full; /* Mobile: fit content width */
-		
-		/* 
-			Desktop: 2 rows, auto-flow column to fill horizontally. 
-			We want exactly 6 columns visible per "page".
-			So we use a grid template that defines columns based on container width.
-		*/
-		@apply md:grid-cols-[repeat(24,minmax(160px,1fr))]; /* 24 items in total across columns */
-		@apply md:grid-rows-2;
-		@apply md:grid-flow-col; /* Fill columns first */
-		@apply md:auto-cols-[minmax(160px,1fr)];
+		@apply flex gap-6;
+		/* No w-max here, let flex children define the width */
+	}
+
+	.grid-page {
+		@apply grid flex-shrink-0 w-full;
+		@apply gap-x-6 gap-y-12;
+		@apply snap-start;
+		@apply grid-cols-2; /* 12 items = 6 rows on mobile */
+		@apply md:grid-cols-6 md:grid-rows-2; /* 12 items = 2 rows on desktop */
+		@apply grid-flow-row;
 	}
 	
 	/* 
@@ -271,18 +351,22 @@ const people = [...basePeople, ...basePeople].map((p, i) => ({
 
 		<div class="people-grid-wrapper" id="people-scroll-container">
 			<div class="people-grid">
-				{people.map((person, index) => (
-					<div class="people-item-wrapper">
-						<div class="person-card group" data-index={index}>
-							<img src={person.image} alt={person.name} class="person-image" loading="lazy" />
-							<div class="person-overlay">
-								<p class="overlay-text">{person.desc}</p>
+				{pagedPeople.map((page) => (
+					<div class="grid-page">
+						{page.map((person) => (
+							<div class="people-item-wrapper">
+								<div class="person-card group" data-index={person.id}>
+									<img src={person.image} alt={person.name} class="person-image" loading="lazy" />
+									<div class="person-overlay">
+										<p class="overlay-text">{person.desc}</p>
+									</div>
+								</div>
+								<div class="person-info">
+									<h3 class="person-name">{person.name}</h3>
+									<p class="person-role">{person.role}</p>
+								</div>
 							</div>
-						</div>
-						<div class="person-info">
-							<h3 class="person-name">{person.name}</h3>
-							<p class="person-role">{person.role}</p>
-						</div>
+						))}
 					</div>
 				))}
 	</div>
