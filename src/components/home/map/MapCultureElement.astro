@@ -1,64 +1,66 @@
 ---
+// Position types: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+// Default is 'top-right' if not specified
 const pins = [
   // AL
-  { label: 'Maceió', title: 'Maceió, Alagoas', x: 385, y: 155 },
+  { label: 'Maceió', title: 'Maceió, Alagoas', x: 385, y: 155, position: 'top-left' },
   // BA
-  { label: 'Salvador', title: 'Salvador, Bahia', x: 350, y: 190 },
-  { label: 'Itabuna', title: 'Itabuna, Bahia', x: 347, y: 205 },
+  { label: 'Salvador', title: 'Salvador, Bahia', x: 350, y: 190, position: 'top-right' },
+  { label: 'Itabuna', title: 'Itabuna, Bahia', x: 347, y: 205, position: 'top-right' },
   // CE
-  { label: 'Fortaleza', title: 'Fortaleza, Ceará', x: 350, y: 90 },
-  { label: 'Cascavel', title: 'Cascavel, Ceará', x: 352, y: 97 },
-  { label: 'Quixadá', title: 'Quixadá, Ceará', x: 345, y: 110 },
+  { label: 'Fortaleza', title: 'Fortaleza, Ceará', x: 350, y: 90, position: 'top-right' },
+  { label: 'Cascavel', title: 'Cascavel, Ceará', x: 352, y: 97, position: 'top-right' },
+  { label: 'Quixadá', title: 'Quixadá, Ceará', x: 345, y: 110, position: 'top-right' },
   // DF
-  { label: 'Brasília', title: 'Brasília, Distrito Federal', x: 260, y: 210 },
+  { label: 'Brasília', title: 'Brasília, Distrito Federal', x: 260, y: 210, position: 'top-right' },
   // ES
-  { label: 'Vitória', title: 'Vitória, Espírito Santo', x: 335, y: 260 },
+  { label: 'Vitória', title: 'Vitória, Espírito Santo', x: 335, y: 260, position: 'top-right' },
   // MA
-  { label: 'São Luís', title: 'São Luís, Maranhão', x: 305, y: 80 },
+  { label: 'São Luís', title: 'São Luís, Maranhão', x: 305, y: 80, position: 'top-right' },
   // MG
-  { label: 'Montes Claros', title: 'Montes Claros, Minas Gerais', x: 290, y: 230 },
-  { label: 'Poços de Caldas', title: 'Poços de Caldas, Minas Gerais', x: 272, y: 270 },
+  { label: 'Montes Claros', title: 'Montes Claros, Minas Gerais', x: 290, y: 230, position: 'top-right' },
+  { label: 'Poços de Caldas', title: 'Poços de Caldas, Minas Gerais', x: 272, y: 270, position: 'top-right' },
   // MT
-  { label: 'Cuiabá', title: 'Cuiabá, Mato Grosso', x: 170, y: 210 },
+  { label: 'Cuiabá', title: 'Cuiabá, Mato Grosso', x: 170, y: 210, position: 'top-right' },
   // PB
-  { label: 'Cajazeiras', title: 'Cajazeiras, Paraíba', x: 355, y: 125 },
-  { label: 'Campina Grande', title: 'Campina Grande, Paraíba', x: 376, y: 135 },
-  { label: 'Santa Rita', title: 'Santa Rita, Paraíba', x: 390, y: 128 },
-  { label: 'João Pessoa', title: 'João Pessoa, Paraíba', x: 391, y: 122 },
+  { label: 'Cajazeiras', title: 'Cajazeiras, Paraíba', x: 355, y: 125, position: 'top-right' },
+  { label: 'Campina Grande', title: 'Campina Grande, Paraíba', x: 376, y: 135, position: 'top-right' },
+  { label: 'Santa Rita', title: 'Santa Rita, Paraíba', x: 390, y: 128, position: 'top-left' },
+  { label: 'João Pessoa', title: 'João Pessoa, Paraíba', x: 391, y: 122, position: 'top-left' },
   // PE
-  { label: 'Recife', title: 'Recife, Pernambuco', x: 392, y: 140 },
-  { label: 'São Cristóvão', title: 'São Cristóvão, Pernambuco', x: 365, y: 140 },
+  { label: 'Recife', title: 'Recife, Pernambuco', x: 392, y: 140, position: 'top-left' },
+  { label: 'São Cristóvão', title: 'São Cristóvão, Pernambuco', x: 365, y: 140, position: 'top-right' },
   // PR
-  { label: 'Campina Grande do Sul', title: 'Campina Grande do Sul, Paraná', x: 240, y: 310 },
-  { label: 'Maringá', title: 'Maringá, Paraná', x: 225, y: 295 },
+  { label: 'Campina Grande do Sul', title: 'Campina Grande do Sul, Paraná', x: 240, y: 310, position: 'top-right' },
+  { label: 'Maringá', title: 'Maringá, Paraná', x: 225, y: 295, position: 'bottom-left' },
   // RJ
-  { label: 'Guapimirim', title: 'Guapimirim, Rio de Janeiro', x: 311, y: 288 },
-  { label: 'Itaperuna', title: 'Itaperuna, Rio de Janeiro', x: 315, y: 270 },
-  { label: 'Macaé', title: 'Macaé, Rio de Janeiro', x: 320, y: 282 },
-  { label: 'Maricá', title: 'Maricá, Rio de Janeiro', x: 312, y: 279 },
-  { label: 'Niterói', title: 'Niterói, Rio de Janeiro', x: 310, y: 285 },
-  { label: 'Petrópolis', title: 'Petrópolis, Rio de Janeiro', x: 310, y: 280 },
-  { label: 'São Pedro da Aldeia', title: 'São Pedro da Aldeia, Rio de Janeiro', x: 312, y: 288 },
-  { label: 'Teresópolis', title: 'Teresópolis, Rio de Janeiro', x: 311, y: 282 },
-  { label: 'Rio de Janeiro', title: 'Rio de Janeiro, Rio de Janeiro', x: 310, y: 285 },
+  { label: 'Guapimirim', title: 'Guapimirim, Rio de Janeiro', x: 311, y: 288, position: 'bottom-right' },
+  { label: 'Itaperuna', title: 'Itaperuna, Rio de Janeiro', x: 315, y: 270, position: 'top-right' },
+  { label: 'Macaé', title: 'Macaé, Rio de Janeiro', x: 320, y: 282, position: 'top-right' },
+  { label: 'Maricá', title: 'Maricá, Rio de Janeiro', x: 312, y: 279, position: 'bottom-right' },
+  { label: 'Niterói', title: 'Niterói, Rio de Janeiro', x: 310, y: 285, position: 'bottom-right' },
+  { label: 'Petrópolis', title: 'Petrópolis, Rio de Janeiro', x: 310, y: 280, position: 'top-right' },
+  { label: 'São Pedro da Aldeia', title: 'São Pedro da Aldeia, Rio de Janeiro', x: 312, y: 288, position: 'bottom-left' },
+  { label: 'Teresópolis', title: 'Teresópolis, Rio de Janeiro', x: 311, y: 282, position: 'bottom-right' },
+  { label: 'Rio de Janeiro', title: 'Rio de Janeiro, Rio de Janeiro', x: 310, y: 285, position: 'bottom-right' },
   // RS
-  { label: 'Porto Alegre', title: 'Porto Alegre, Rio Grande do Sul', x: 230, y: 360 },
-  { label: 'Salvador do Sul', title: 'Salvador do Sul, Rio Grande do Sul', x: 225, y: 355 },
+  { label: 'Porto Alegre', title: 'Porto Alegre, Rio Grande do Sul', x: 230, y: 360, position: 'bottom-right' },
+  { label: 'Salvador do Sul', title: 'Salvador do Sul, Rio Grande do Sul', x: 225, y: 355, position: 'bottom-left' },
   // SC
-  { label: 'Barra Velha', title: 'Barra Velha, Santa Catarina', x: 248, y: 324 },
+  { label: 'Barra Velha', title: 'Barra Velha, Santa Catarina', x: 248, y: 324, position: 'bottom-left' },
   // SE
-  { label: 'Aracaju', title: 'Aracaju, Sergipe', x: 370, y: 170 },
+  { label: 'Aracaju', title: 'Aracaju, Sergipe', x: 370, y: 170, position: 'top-right' },
   // SP
-  { label: 'Américo Brasiliense', title: 'Américo Brasiliense, São Paulo', x: 250, y: 280 },
-  { label: 'Assis', title: 'Assis, São Paulo', x: 230, y: 280 },
-  { label: 'Bauru', title: 'Bauru, São Paulo', x: 250, y: 285 },
-  { label: 'Campinas', title: 'Campinas, São Paulo', x: 265, y: 290 },
-  { label: 'Guarujá', title: 'Guarujá, São Paulo', x: 262, y: 300 },
-  { label: 'Guarulhos', title: 'Guarulhos, São Paulo', x: 262, y: 293 },
-  { label: 'Itapira', title: 'Itapira, São Paulo', x: 258, y: 285 },
-  { label: 'Praia Grande', title: 'Praia Grande, São Paulo', x: 263, y: 302 },
-  { label: 'São Caetano do Sul', title: 'São Caetano do Sul, São Paulo', x: 261, y: 296 },
-  { label: 'São Paulo', title: 'São Paulo, São Paulo', x: 260, y: 295 },
+  { label: 'Américo Brasiliense', title: 'Américo Brasiliense, São Paulo', x: 250, y: 280, position: 'top-right' },
+  { label: 'Assis', title: 'Assis, São Paulo', x: 230, y: 280, position: 'top-right' },
+  { label: 'Bauru', title: 'Bauru, São Paulo', x: 250, y: 285, position: 'top-right' },
+  { label: 'Campinas', title: 'Campinas, São Paulo', x: 265, y: 290, position: 'top-right' },
+  { label: 'Guarujá', title: 'Guarujá, São Paulo', x: 262, y: 300, position: 'bottom-right' },
+  { label: 'Guarulhos', title: 'Guarulhos, São Paulo', x: 262, y: 293, position: 'top-right' },
+  { label: 'Itapira', title: 'Itapira, São Paulo', x: 258, y: 285, position: 'top-right' },
+  { label: 'Praia Grande', title: 'Praia Grande, São Paulo', x: 263, y: 302, position: 'bottom-right' },
+  { label: 'São Caetano do Sul', title: 'São Caetano do Sul, São Paulo', x: 261, y: 296, position: 'top-right' },
+  { label: 'São Paulo', title: 'São Paulo, São Paulo', x: 260, y: 295, position: 'top-right' },
 ]
 ---
 
@@ -85,7 +87,7 @@ const pins = [
       .map-pin text {
         fill: #fff;
         font-size: 5px;
-        text-anchor: start;
+        text-anchor: middle;
         @apply font-open-sauce-one;
       }
     </style>
@@ -121,7 +123,7 @@ const pins = [
     <path class="cls-1" d="M336.22,127.26l-.07,2.81-.16,7.18-5.46,4.41.07,3.15-.24-.05-2.5-.54-4.99,5.34-23.47-.35,5,5.57-5.46,6.27-8.14,3.72-3.83-7.2-6.4-.27.47-.54.12-12.89s2.79-18.12,22.77-22.64h7.78v-19.28l10.77-17.47h0c2.13.32,4.29.4,6.46.46l7.28,42.33Z"/>
     {
       pins.map((pin) => (
-        <g class="map-pin" transform={`translate(${pin.x}, ${pin.y})`} aria-label={pin.label}>
+        <g class="map-pin" transform={`translate(${pin.x}, ${pin.y})`} aria-label={pin.label} data-position={pin.position || 'top-right'}>
           <title>{pin.title}</title>
           <line x1="0" y1="0" x2="0" y2="-15" />
           <rect x="-6" y="-37" width="56" height="22" rx="11" />
@@ -143,37 +145,95 @@ const pins = [
         const text = g.querySelector('text');
         const rect = g.querySelector('rect');
         const line = g.querySelector('line');
-        if (!text || !rect) return;
+        if (!text || !rect || !line) return;
 
-        // Reset text position to ensure calculation consistency
+        // Get the position from data attribute
+        const position = g.getAttribute('data-position') || 'top-right';
+
+        // Reset text position to calculate bbox
         text.setAttribute('x', '0');
+        text.setAttribute('y', '0');
 
         const bbox = text.getBBox();
         const paddingX = 5;
-        const paddingY = 2; // Reduced vertical padding
+        const paddingY = 2;
         
-        // Calculate new dimensions
-        const newWidth = bbox.width + (paddingX * 2);
-        const newHeight = bbox.height + (paddingY * 2);
+        // Calculate dimensions
+        const width = bbox.width + (paddingX * 2);
+        const height = bbox.height + (paddingY * 2);
+        const radius = height / 2; // Border radius
         
-        // Update rect (Size)
-        rect.setAttribute('width', newWidth.toString());
-        rect.setAttribute('height', newHeight.toString());
-        rect.setAttribute('rx', (newHeight / 2).toString());
+        // Update rect size
+        rect.setAttribute('width', width.toString());
+        rect.setAttribute('height', height.toString());
+        rect.setAttribute('rx', radius.toString());
         
-        // Update rect (Position) - Centers rect around text
-        // Use bbox.x to align correctly with text's starting position
-        rect.setAttribute('x', (bbox.x - paddingX).toString());
-
-        const centerY = bbox.y + bbox.height / 2;
-        const rectY = centerY - newHeight / 2;
-        rect.setAttribute('y', rectY.toString());
-
-        // Update line position to touch the bottom of the rect
-        if (line) {
-          const rectBottom = rectY + newHeight;
-          line.setAttribute('y2', rectBottom.toString());
+        // Determine if position is top or bottom
+        const isTop = position.startsWith('top');
+        
+        // Line direction changes based on position:
+        // - top positions: line points UP (0,0) to (0,-15)
+        // - bottom positions: line points DOWN (0,0) to (0,15)
+        line.setAttribute('x1', '0');
+        line.setAttribute('y1', '0');
+        line.setAttribute('x2', '0');
+        line.setAttribute('y2', isTop ? '-15' : '15');
+        
+        // Position rect and text based on position prop
+        // The rect should align with the line (x=0)
+        // Text should be centered inside the rect
+        
+        const gap = -3; // Gap between line endpoint and rect
+        const cornerOffset = 2; // Offset to account for rounded corners
+        const lineEnd = isTop ? -15 : 15; // Line endpoint Y coordinate
+        let rectX, rectY, textX, textY;
+        
+        switch(position) {
+          case 'top-left':
+            // Rect extends to the LEFT from the line endpoint
+            rectX = -width + cornerOffset; // Slightly past x=0 for rounded corner
+            rectY = lineEnd - gap - height; // Above the line endpoint
+            textX = -width / 2 + cornerOffset; // Center of rect
+            textY = lineEnd - gap - height / 2; // Center of rect
+            break;
+            
+          case 'top-right':
+            // Rect extends to the RIGHT from the line endpoint
+            rectX = -cornerOffset; // Slightly before x=0 for rounded corner
+            rectY = lineEnd - gap - height; // Above the line endpoint
+            textX = width / 2 - cornerOffset; // Center of rect
+            textY = lineEnd - gap - height / 2; // Center of rect
+            break;
+            
+          case 'bottom-left':
+            // Rect extends to the LEFT from the line endpoint
+            rectX = -width + cornerOffset; // Slightly past x=0 for rounded corner
+            rectY = lineEnd + gap; // Below the line endpoint
+            textX = -width / 2 + cornerOffset; // Center of rect
+            textY = lineEnd + gap + height / 2; // Center of rect
+            break;
+            
+          case 'bottom-right':
+            // Rect extends to the RIGHT from the line endpoint
+            rectX = -cornerOffset; // Slightly before x=0 for rounded corner
+            rectY = lineEnd + gap; // Below the line endpoint
+            textX = width / 2 - cornerOffset; // Center of rect
+            textY = lineEnd + gap + height / 2; // Center of rect
+            break;
+            
+          default:
+            // Default to top-right
+            rectX = -cornerOffset;
+            rectY = lineEnd - gap - height;
+            textX = width / 2 - cornerOffset;
+            textY = lineEnd - gap - height / 2;
         }
+        
+        // Apply positions
+        rect.setAttribute('x', rectX.toString());
+        rect.setAttribute('y', rectY.toString());
+        text.setAttribute('x', textX.toString());
+        text.setAttribute('y', textY.toString());
       });
     });
   }
