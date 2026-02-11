@@ -6,11 +6,11 @@ const pins = [
   { label: 'Maceió', title: 'Maceió, Alagoas', x: 385, y: 155, position: 'top-left' },
   // BA
   { label: 'Salvador', title: 'Salvador, Bahia', x: 350, y: 190, position: 'top-right' },
-  { label: 'Itabuna', title: 'Itabuna, Bahia', x: 347, y: 205, position: 'top-right' },
+  { label: 'Itabuna', title: 'Itabuna, Bahia', x: 347, y: 205, position: 'bottom-left' },
   // CE
-  { label: 'Fortaleza', title: 'Fortaleza, Ceará', x: 350, y: 90, position: 'top-right' },
-  { label: 'Cascavel', title: 'Cascavel, Ceará', x: 352, y: 97, position: 'top-right' },
-  { label: 'Quixadá', title: 'Quixadá, Ceará', x: 345, y: 110, position: 'top-right' },
+  { label: 'Fortaleza', title: 'Fortaleza, Ceará', x: 350, y: 90, position: 'top-left' },
+  { label: 'Cascavel', title: 'Cascavel, Ceará', x: 352, y: 97, position: 'bottom-right' },
+  { label: 'Quixadá', title: 'Quixadá, Ceará', x: 345, y: 110, position: 'bottom-left' },
   // DF
   { label: 'Brasília', title: 'Brasília, Distrito Federal', x: 260, y: 210, position: 'top-right' },
   // ES
@@ -18,49 +18,49 @@ const pins = [
   // MA
   { label: 'São Luís', title: 'São Luís, Maranhão', x: 305, y: 80, position: 'top-right' },
   // MG
-  { label: 'Montes Claros', title: 'Montes Claros, Minas Gerais', x: 290, y: 230, position: 'top-right' },
-  { label: 'Poços de Caldas', title: 'Poços de Caldas, Minas Gerais', x: 272, y: 270, position: 'top-right' },
+  { label: 'Montes Claros', title: 'Montes Claros, Minas Gerais', x: 290, y: 230, position: 'top-left' },
+  { label: 'Poços de Caldas', title: 'Poços de Caldas, Minas Gerais', x: 272, y: 270, position: 'bottom-left' },
   // MT
   { label: 'Cuiabá', title: 'Cuiabá, Mato Grosso', x: 170, y: 210, position: 'top-right' },
   // PB
-  { label: 'Cajazeiras', title: 'Cajazeiras, Paraíba', x: 355, y: 125, position: 'top-right' },
-  { label: 'Campina Grande', title: 'Campina Grande, Paraíba', x: 376, y: 135, position: 'top-right' },
+  { label: 'Cajazeiras', title: 'Cajazeiras, Paraíba', x: 355, y: 125, position: 'top-left' },
+  { label: 'Campina Grande', title: 'Campina Grande, Paraíba', x: 376, y: 135, position: 'bottom-right' },
   { label: 'Santa Rita', title: 'Santa Rita, Paraíba', x: 390, y: 128, position: 'top-left' },
-  { label: 'João Pessoa', title: 'João Pessoa, Paraíba', x: 391, y: 122, position: 'top-left' },
+  { label: 'João Pessoa', title: 'João Pessoa, Paraíba', x: 391, y: 122, position: 'top-right' },
   // PE
-  { label: 'Recife', title: 'Recife, Pernambuco', x: 392, y: 140, position: 'top-left' },
+  { label: 'Recife', title: 'Recife, Pernambuco', x: 392, y: 140, position: 'bottom-left' },
   { label: 'São Cristóvão', title: 'São Cristóvão, Pernambuco', x: 365, y: 140, position: 'top-right' },
   // PR
-  { label: 'Campina Grande do Sul', title: 'Campina Grande do Sul, Paraná', x: 240, y: 310, position: 'top-right' },
+  { label: 'Campina Grande do Sul', title: 'Campina Grande do Sul, Paraná', x: 240, y: 310, position: 'top-left' },
   { label: 'Maringá', title: 'Maringá, Paraná', x: 225, y: 295, position: 'bottom-left' },
-  // RJ
-  { label: 'Guapimirim', title: 'Guapimirim, Rio de Janeiro', x: 311, y: 288, position: 'bottom-right' },
+  // RJ - Região muito densa, alternando posições
+  { label: 'Guapimirim', title: 'Guapimirim, Rio de Janeiro', x: 311, y: 288, position: 'bottom-left' },
   { label: 'Itaperuna', title: 'Itaperuna, Rio de Janeiro', x: 315, y: 270, position: 'top-right' },
   { label: 'Macaé', title: 'Macaé, Rio de Janeiro', x: 320, y: 282, position: 'top-right' },
-  { label: 'Maricá', title: 'Maricá, Rio de Janeiro', x: 312, y: 279, position: 'bottom-right' },
+  { label: 'Maricá', title: 'Maricá, Rio de Janeiro', x: 312, y: 279, position: 'top-left' },
   { label: 'Niterói', title: 'Niterói, Rio de Janeiro', x: 310, y: 285, position: 'bottom-right' },
-  { label: 'Petrópolis', title: 'Petrópolis, Rio de Janeiro', x: 310, y: 280, position: 'top-right' },
-  { label: 'São Pedro da Aldeia', title: 'São Pedro da Aldeia, Rio de Janeiro', x: 312, y: 288, position: 'bottom-left' },
+  { label: 'Petrópolis', title: 'Petrópolis, Rio de Janeiro', x: 310, y: 280, position: 'top-left' },
+  { label: 'São Pedro da Aldeia', title: 'São Pedro da Aldeia, Rio de Janeiro', x: 312, y: 288, position: 'top-right' },
   { label: 'Teresópolis', title: 'Teresópolis, Rio de Janeiro', x: 311, y: 282, position: 'bottom-right' },
-  { label: 'Rio de Janeiro', title: 'Rio de Janeiro, Rio de Janeiro', x: 310, y: 285, position: 'bottom-right' },
+  { label: 'Rio de Janeiro', title: 'Rio de Janeiro, Rio de Janeiro', x: 310, y: 285, position: 'top-right' },
   // RS
   { label: 'Porto Alegre', title: 'Porto Alegre, Rio Grande do Sul', x: 230, y: 360, position: 'bottom-right' },
   { label: 'Salvador do Sul', title: 'Salvador do Sul, Rio Grande do Sul', x: 225, y: 355, position: 'bottom-left' },
   // SC
   { label: 'Barra Velha', title: 'Barra Velha, Santa Catarina', x: 248, y: 324, position: 'bottom-left' },
   // SE
-  { label: 'Aracaju', title: 'Aracaju, Sergipe', x: 370, y: 170, position: 'top-right' },
+  { label: 'Aracaju', title: 'Aracaju, Sergipe', x: 370, y: 170, position: 'top-left' },
   // SP
-  { label: 'Américo Brasiliense', title: 'Américo Brasiliense, São Paulo', x: 250, y: 280, position: 'top-right' },
-  { label: 'Assis', title: 'Assis, São Paulo', x: 230, y: 280, position: 'top-right' },
-  { label: 'Bauru', title: 'Bauru, São Paulo', x: 250, y: 285, position: 'top-right' },
+  { label: 'Américo Brasiliense', title: 'Américo Brasiliense, São Paulo', x: 250, y: 280, position: 'top-left' },
+  { label: 'Assis', title: 'Assis, São Paulo', x: 230, y: 280, position: 'bottom-left' },
+  { label: 'Bauru', title: 'Bauru, São Paulo', x: 250, y: 285, position: 'bottom-right' },
   { label: 'Campinas', title: 'Campinas, São Paulo', x: 265, y: 290, position: 'top-right' },
   { label: 'Guarujá', title: 'Guarujá, São Paulo', x: 262, y: 300, position: 'bottom-right' },
-  { label: 'Guarulhos', title: 'Guarulhos, São Paulo', x: 262, y: 293, position: 'top-right' },
+  { label: 'Guarulhos', title: 'Guarulhos, São Paulo', x: 262, y: 293, position: 'top-left' },
   { label: 'Itapira', title: 'Itapira, São Paulo', x: 258, y: 285, position: 'top-right' },
-  { label: 'Praia Grande', title: 'Praia Grande, São Paulo', x: 263, y: 302, position: 'bottom-right' },
+  { label: 'Praia Grande', title: 'Praia Grande, São Paulo', x: 263, y: 302, position: 'bottom-left' },
   { label: 'São Caetano do Sul', title: 'São Caetano do Sul, São Paulo', x: 261, y: 296, position: 'top-right' },
-  { label: 'São Paulo', title: 'São Paulo, São Paulo', x: 260, y: 295, position: 'top-right' },
+  { label: 'São Paulo', title: 'São Paulo, São Paulo', x: 260, y: 295, position: 'bottom-left' },
 ]
 ---
 
