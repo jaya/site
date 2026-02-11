@@ -1,65 +1,84 @@
 ---
+import GalleryItem from './GalleryItem.astro'
+import GalleryModal from './GalleryModal.astro'
 import type { ImageMetadata } from 'astro'
 import { getTranslations, t } from '@/i18n/translations'
 import { getLocale, type Locale } from '@/i18n/utils'
 
-const { locale: propLocale } = Astro.props as { locale?: Locale }
+interface Props {
+	locale?: Locale
+}
+
+const { locale: propLocale } = Astro.props
 const locale = propLocale ?? getLocale(Astro)
 const translations = await getTranslations(locale)
 
-// Import all images from the culture people directory
-const cultureImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/culture/people/*.{jpeg,jpg,png,webp,svg,JPG}', { eager: true });
+// Types
+type LayoutType = 'tall' | 'stacked' | 'triple'
+type WidthClass = 'narrow' | 'normal' | 'wide'
 
-const images = Object.values(cultureImages);
-const columns = [];
-let imgIndex = 0;
+interface LayoutPattern {
+	type: LayoutType
+	width: WidthClass
+}
 
-// Definitions for Varied Column Layouts
-const layouts = [
+interface GalleryImageData {
+	src: string
+	alt: string
+	globalIndex: number
+}
+
+interface Column {
+	widthClass: WidthClass
+	type: LayoutType
+	items: GalleryImageData[]
+}
+
+// 1. Image Discovery
+const cultureImages = import.meta.glob<{ default: ImageMetadata }>(
+	'/src/assets/culture/people/*.{jpeg,jpg,png,webp,svg,JPG}',
+	{ eager: true }
+)
+const images = Object.values(cultureImages)
+
+// 2. Layout Definitions
+const LAYOUT_SEQUENCE: LayoutPattern[] = [
 	{ type: 'tall', width: 'normal' },
 	{ type: 'stacked', width: 'normal' },
-	{ type: 'triple', width: 'wide' }, // 2 atop 1
+	{ type: 'triple', width: 'wide' },
 	{ type: 'tall', width: 'wide' },
 	{ type: 'tall', width: 'narrow' },
 	{ type: 'stacked', width: 'wide' },
 	{ type: 'tall', width: 'normal' },
 	{ type: 'tall', width: 'wide' },
 	{ type: 'stacked', width: 'narrow' },
-];
+]
 
-let layoutIndex = 0;
-while (imgIndex < images.length) {
-	const layout = layouts[layoutIndex % layouts.length];
-	const colItems = [];
+// 3. Column Builder Logic
+const columns: Column[] = []
+let currentImgIndex = 0
+let currentLayoutIndex = 0
+
+while (currentImgIndex < images.length) {
+	const layout = LAYOUT_SEQUENCE[currentLayoutIndex % LAYOUT_SEQUENCE.length]
+	const itemsNeeded = layout.type === 'triple' ? 3 : (layout.type === 'stacked' ? 2 : 1)
 	
-	if (layout.type === 'tall') {
-		colItems.push(images[imgIndex++]);
-	} else if (layout.type === 'stacked') {
-		colItems.push(images[imgIndex++]);
-		if (imgIndex < images.length) colItems.push(images[imgIndex++]);
-	} else if (layout.type === 'triple') {
-		colItems.push(images[imgIndex++]);
-		if (imgIndex < images.length) colItems.push(images[imgIndex++]);
-		if (imgIndex < images.length) colItems.push(images[imgIndex++]);
-	}
-
-	// Adjust type if we ran out of images
-	const finalType = colItems.length === 3 ? 'triple' : (colItems.length === 2 ? 'stacked' : 'tall');
+	// Grab requested slices, fall back if not enough images left
+	const colImages = images.slice(currentImgIndex, currentImgIndex + itemsNeeded)
+	const finalType: LayoutType = colImages.length === 3 ? 'triple' : (colImages.length === 2 ? 'stacked' : 'tall')
 
 	columns.push({
 		widthClass: layout.width,
 		type: finalType,
-		items: colItems.map((mod, i) => {
-			const m = mod as { default: ImageMetadata };
-			const globalIdx = imgIndex - colItems.length + i;
-			return {
-				src: m.default.src,
-				alt: `Culture image ${globalIdx + 1}`,
-				globalIndex: globalIdx
-			};
-		})
-	});
-	layoutIndex++;
+		items: colImages.map((mod, i) => ({
+			src: mod.default.src,
+			alt: `Culture image ${currentImgIndex + i + 1}`,
+			globalIndex: currentImgIndex + i
+		}))
+	})
+
+	currentImgIndex += colImages.length
+	currentLayoutIndex++
 }
 ---
 
@@ -67,168 +86,59 @@ while (imgIndex < images.length) {
 	@reference '@/styles/global.css';
 
 	.culture-gallery {
-		@apply relative;
-		@apply py-20;
-		@apply bg-blue-light;
-		@apply text-white;
+		@apply relative py-20 bg-blue-light text-white;
 	}
 
 	.gallery-header {
-		@apply text-center;
-		@apply max-w-3xl mx-auto;
-		@apply py-20 px-10 lg:px-0;
+		@apply text-center max-w-3xl mx-auto py-20 px-10 lg:px-0;
 	}
 
 	.gallery-eyebrow {
-		@apply text-lg tracking-[0.25em] uppercase;
-		@apply font-space-grotesk;
+		@apply text-lg tracking-[0.25em] uppercase font-space-grotesk;
 	}
 
 	.gallery-title {
-		@apply my-10;
-		@apply text-lg font-bold tracking-[-0.02em] lg:text-5xl;
+		@apply my-10 text-lg font-bold tracking-[-0.02em] lg:text-5xl;
 	}
 
 	.gallery-text {
-		@apply mt-4;
-		@apply text-sm leading-relaxed lg:text-base;
+		@apply mt-4 text-sm leading-relaxed lg:text-base;
 	}
 
 	.gallery-container {
-		@apply mt-12;
-		@apply relative;
-		@apply w-full;
+		@apply mt-12 relative w-full;
 	}
 
 	.gallery-scroll-wrapper {
-		@apply overflow-x-auto;
-		@apply overflow-y-hidden;
-		@apply pb-6;
-		@apply scroll-smooth;
-		/* Hide scrollbar for cleaner look but keep functionality */
+		@apply overflow-x-auto overflow-y-hidden pb-6 scroll-smooth;
 		scrollbar-width: none;
-		&::-webkit-scrollbar {
-			display: none;
-		}
+		&::-webkit-scrollbar { display: none; }
 	}
 
 	.masonry-grid {
-		@apply flex;
-		@apply h-[500px] md:h-[700px];
-		@apply px-4;
-		@apply gap-2 md:gap-3;
+		@apply flex h-[500px] md:h-[700px] px-4 gap-2 md:gap-3;
 	}
 
 	.gallery-col {
-		@apply flex-shrink-0 h-full;
+		@apply flex-shrink-0 h-full flex flex-col gap-2 md:gap-3;
 		
-		/* Width Classes */
 		&.narrow { @apply w-[140px] md:w-[180px]; }
 		&.normal { @apply w-[220px] md:w-[300px]; }
-		&.wide { @apply w-[300px] md:w-[420px]; }
+		&.wide   { @apply w-[300px] md:w-[420px]; }
+
+		/* Specific layout heights */
+		&.tall > :global(.gallery-item) { @apply h-full; }
+		&.stacked > :global(.gallery-item) { @apply h-1/2; }
+		&.triple > :global(.gallery-item) { @apply h-1/2; }
 	}
 
-	.gallery-item {
-		@apply relative;
-		@apply rounded-lg;
-		@apply overflow-hidden;
-		@apply cursor-pointer;
-		@apply transition-all duration-500;
-		@apply border border-white/5;
-
-		&:hover {
-			@apply scale-[1.03] shadow-2xl z-10;
-			@apply border-white/20;
-		}
-
-		img {
-			@apply w-full h-full;
-			@apply object-cover block;
-		}
-	}
-	/* Controls */
 	.gallery-controls {
-		@apply flex items-center justify-center;
-		@apply gap-6;
-		@apply mt-8;
+		@apply flex items-center justify-center gap-6 mt-8;
 	}
 
 	.gallery-btn {
-		@apply flex items-center justify-center;
-		@apply h-10 w-10;
-		@apply bg-transparent;
-		@apply text-white;
-		@apply border border-white rounded-full;
-		@apply transition-transform cursor-pointer;
-
-		&:hover {
-			@apply scale-105 bg-white/10;
-		}
-	}
-
-	/* Modal */
-	.gallery-modal {
-		@apply fixed inset-0 z-50;
-		@apply flex items-center justify-center;
-		@apply bg-black/95;
-		@apply opacity-0 pointer-events-none;
-		@apply transition-opacity duration-300;
-		@apply p-4 md:p-10;
-
-		&.open {
-			@apply opacity-100 pointer-events-auto;
-		}
-	}
-
-	.modal-content {
-		@apply relative;
-		@apply max-w-full max-h-full;
-		@apply rounded-xl overflow-hidden shadow-2xl;
-		@apply flex items-center justify-center;
-		
-		img {
-			@apply max-h-[85vh] max-w-[90vw];
-			@apply object-contain;
-		}
-	}
-
-	.modal-close {
-		@apply absolute top-6 right-6;
-		@apply text-white/50 hover:text-white;
-		@apply w-12 h-12;
-		@apply bg-white/5 hover:bg-white/10 rounded-full;
-		@apply flex items-center justify-center;
-		@apply cursor-pointer;
-		@apply transition-all;
-		@apply z-50;
-
-		&:hover {
-			@apply scale-110;
-		}
-	}
-
-	.modal-nav-btn {
-		@apply absolute top-1/2 -translate-y-1/2;
-		@apply w-14 h-14;
-		@apply flex items-center justify-center;
-		@apply text-white/40 hover:text-white;
-		@apply bg-white/5 hover:bg-white/10;
-		@apply rounded-full;
-		@apply transition-all;
-		@apply z-50;
-		@apply cursor-pointer;
-
-		&.prev {
-			@apply left-6;
-		}
-
-		&.next {
-			@apply right-6;
-		}
-
-		&:hover {
-			@apply scale-110;
-		}
+		@apply flex items-center justify-center h-10 w-10 bg-transparent text-white border border-white rounded-full transition-transform cursor-pointer;
+		&:hover { @apply scale-105 bg-white/10; }
 	}
 </style>
 
@@ -246,36 +156,24 @@ while (imgIndex < images.length) {
 	<div class="gallery-container">
 		<div class="gallery-scroll-wrapper" id="gallery-scroll">
 			<div class="masonry-grid" id="masonry-grid">
-				{columns.map((col: any) => (
+				{columns.map((col) => (
 					<div class={`gallery-col ${col.widthClass} ${col.type}`}>
 						{col.type === 'tall' && (
-							<div class="gallery-item h-full" data-index={col.items[0].globalIndex} data-full-src={col.items[0].src}>
-								<img src={col.items[0].src} alt={col.items[0].alt} loading="lazy" />
-							</div>
+							<GalleryItem {...col.items[0]} index={col.items[0].globalIndex} />
 						)}
-						{col.type === 'stacked' && (
-							<div class="flex flex-col gap-2 md:gap-3 h-full">
-								{col.items.map((item: any) => (
-									<div class="gallery-item h-1/2" data-index={item.globalIndex} data-full-src={item.src}>
-										<img src={item.src} alt={item.alt} loading="lazy" />
-									</div>
-								))}
-							</div>
-						)}
+
+						{col.type === 'stacked' && col.items.map((item) => (
+							<GalleryItem {...item} index={item.globalIndex} />
+						))}
+
 						{col.type === 'triple' && (
-							<div class="flex flex-col gap-2 md:gap-3 h-full">
+							<>
 								<div class="flex gap-2 md:gap-3 h-1/2">
-									<div class="gallery-item w-1/2 h-full" data-index={col.items[0].globalIndex} data-full-src={col.items[0].src}>
-										<img src={col.items[0].src} alt={col.items[0].alt} loading="lazy" />
-									</div>
-									<div class="gallery-item w-1/2 h-full" data-index={col.items[1].globalIndex} data-full-src={col.items[1].src}>
-										<img src={col.items[1].src} alt={col.items[1].alt} loading="lazy" />
-									</div>
+									<GalleryItem {...col.items[0]} index={col.items[0].globalIndex} class="w-1/2" />
+									<GalleryItem {...col.items[1]} index={col.items[1].globalIndex} class="w-1/2" />
 								</div>
-								<div class="gallery-item h-1/2" data-index={col.items[2].globalIndex} data-full-src={col.items[2].src}>
-									<img src={col.items[2].src} alt={col.items[2].alt} loading="lazy" />
-								</div>
-							</div>
+								<GalleryItem {...col.items[2]} index={col.items[2].globalIndex} class="h-1/2" />
+							</>
 						)}
 					</div>
 				))}
@@ -296,123 +194,15 @@ while (imgIndex < images.length) {
 		</div>
 	</div>
 
-	<!-- Modal -->
-	<div class="gallery-modal" id="gallery-modal">
-		<button class="modal-close" id="modal-close" aria-label="Close modal">
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-				<line x1="18" y1="6" x2="6" y2="18"></line>
-				<line x1="6" y1="6" x2="18" y2="18"></line>
-			</svg>
-		</button>
-		
-		<button class="modal-nav-btn prev" id="modal-prev" aria-label="Previous image">
-			<svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-				<path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-			</svg>
-		</button>
-
-		<button class="modal-nav-btn next" id="modal-next" aria-label="Next image">
-			<svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-				<path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-			</svg>
-		</button>
-
-		<div class="modal-content">
-			<img src="" alt="Gallery Preview" id="modal-image" />
-		</div>
-	</div>
+	<GalleryModal />
 </section>
 
 <script>
-	// Scroll Logic
 	const scrollContainer = document.getElementById('gallery-scroll');
 	const prevBtn = document.getElementById('prev-btn');
 	const nextBtn = document.getElementById('next-btn');
-
 	const scrollAmount = 400;
 
-	prevBtn?.addEventListener('click', () => {
-		scrollContainer?.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-	});
-
-	nextBtn?.addEventListener('click', () => {
-		scrollContainer?.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-	});
-
-	// Modal Logic
-	const modal = document.getElementById('gallery-modal');
-	const modalImg = document.getElementById('modal-image') as HTMLImageElement;
-	const closeBtn = document.getElementById('modal-close');
-	const modalPrevBtn = document.getElementById('modal-prev');
-	const modalNextBtn = document.getElementById('modal-next');
-	const items = document.querySelectorAll('.gallery-item');
-	
-	let currentImageIndex = 0;
-	const totalImages = items.length;
-
-	const updateModalImage = (index: number) => {
-		const item = items[index];
-		const src = item?.getAttribute('data-full-src');
-		if (src && modalImg) {
-			modalImg.src = src;
-			currentImageIndex = index;
-		}
-	}
-
-	const openModal = (index: number) => {
-		if (modal) {
-			updateModalImage(index);
-			modal.classList.add('open');
-			document.body.style.overflow = 'hidden';
-		}
-	};
-
-	const closeModal = () => {
-		if (modal) {
-			modal.classList.remove('open');
-			document.body.style.overflow = '';
-			// Clear src after transition to prevent flicker on reopen
-			setTimeout(() => {
-				if (modalImg) modalImg.src = '';
-			}, 300);
-		}
-	};
-
-	const navPrev = (e?: Event) => {
-		e?.stopPropagation();
-		const newIndex = (currentImageIndex - 1 + totalImages) % totalImages;
-		updateModalImage(newIndex);
-	};
-
-	const navNext = (e?: Event) => {
-		e?.stopPropagation();
-		const newIndex = (currentImageIndex + 1) % totalImages;
-		updateModalImage(newIndex);
-	};
-
-	items.forEach((item, index) => {
-		item.addEventListener('click', () => {
-			openModal(index);
-		});
-	});
-
-	closeBtn?.addEventListener('click', closeModal);
-	modalPrevBtn?.addEventListener('click', navPrev);
-	modalNextBtn?.addEventListener('click', navNext);
-
-	modal?.addEventListener('click', (e) => {
-		if (e.target === modal) closeModal();
-	});
-
-	document.addEventListener('keydown', (e) => {
-		if (!modal?.classList.contains('open')) return;
-
-		if (e.key === 'Escape') {
-			closeModal();
-		} else if (e.key === 'ArrowLeft') {
-			navPrev();
-		} else if (e.key === 'ArrowRight') {
-			navNext();
-		}
-	});
+	prevBtn?.addEventListener('click', () => scrollContainer?.scrollBy({ left: -scrollAmount, behavior: 'smooth' }));
+	nextBtn?.addEventListener('click', () => scrollContainer?.scrollBy({ left: scrollAmount, behavior: 'smooth' }));
 </script>

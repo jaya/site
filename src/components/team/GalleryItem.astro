@@ -1,0 +1,35 @@
+---
+interface Props {
+	src: string
+	alt: string
+	index: number
+	class?: string
+}
+
+const { src, alt, index, class: className } = Astro.props
+---
+
+<div 
+	class:list={['gallery-item', className]} 
+	data-index={index} 
+	data-full-src={src}
+>
+	<img src={src} alt={alt} loading="lazy" />
+</div>
+
+<style>
+	@reference '@/styles/global.css';
+
+	.gallery-item {
+		@apply relative rounded-lg overflow-hidden cursor-pointer transition-all duration-500 border border-white/5;
+		@apply w-full h-full; /* Fill container */
+
+		&:hover {
+			@apply scale-[1.03] shadow-2xl z-10 border-white/20;
+		}
+
+		img {
+			@apply w-full h-full object-cover block;
+		}
+	}
+</style>
