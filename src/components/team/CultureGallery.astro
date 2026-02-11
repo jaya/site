@@ -1,4 +1,5 @@
 ---
+import type { ImageMetadata } from 'astro'
 import { getTranslations, t } from '@/i18n/translations'
 import { getLocale, type Locale } from '@/i18n/utils'
 
@@ -6,29 +7,60 @@ const { locale: propLocale } = Astro.props as { locale?: Locale }
 const locale = propLocale ?? getLocale(Astro)
 const translations = await getTranslations(locale)
 
-// Generate consistent random-like images for SSR
-const galleryImages = [
-	{ width: 600, height: 400 },
-	{ width: 400, height: 600 },
-	{ width: 500, height: 500 },
-	{ width: 600, height: 350 },
-	{ width: 400, height: 500 },
-	{ width: 550, height: 400 },
-	{ width: 400, height: 600 }, // Intentionally repeated styles for layout testing
-	{ width: 600, height: 400 },
-	{ width: 500, height: 700 },
-	{ width: 450, height: 300 },
-	{ width: 600, height: 450 },
-	{ width: 400, height: 400 },
-	{ width: 500, height: 600 },
-	{ width: 600, height: 300 },
-	{ width: 400, height: 500 },
-].map((dims, i) => ({
-	src: `https://picsum.photos/${dims.width}/${dims.height}?random=${i}`,
-	width: dims.width,
-	height: dims.height,
-	alt: `Culture image ${i + 1}`
-}))
+// Import all images from the culture people directory
+const cultureImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/culture/people/*.{jpeg,jpg,png,webp,svg,JPG}', { eager: true });
+
+const images = Object.values(cultureImages);
+const columns = [];
+let imgIndex = 0;
+
+// Definitions for Varied Column Layouts
+const layouts = [
+	{ type: 'tall', width: 'normal' },
+	{ type: 'stacked', width: 'normal' },
+	{ type: 'triple', width: 'wide' }, // 2 atop 1
+	{ type: 'tall', width: 'wide' },
+	{ type: 'tall', width: 'narrow' },
+	{ type: 'stacked', width: 'wide' },
+	{ type: 'tall', width: 'normal' },
+	{ type: 'tall', width: 'wide' },
+	{ type: 'stacked', width: 'narrow' },
+];
+
+let layoutIndex = 0;
+while (imgIndex < images.length) {
+	const layout = layouts[layoutIndex % layouts.length];
+	const colItems = [];
+	
+	if (layout.type === 'tall') {
+		colItems.push(images[imgIndex++]);
+	} else if (layout.type === 'stacked') {
+		colItems.push(images[imgIndex++]);
+		if (imgIndex < images.length) colItems.push(images[imgIndex++]);
+	} else if (layout.type === 'triple') {
+		colItems.push(images[imgIndex++]);
+		if (imgIndex < images.length) colItems.push(images[imgIndex++]);
+		if (imgIndex < images.length) colItems.push(images[imgIndex++]);
+	}
+
+	// Adjust type if we ran out of images
+	const finalType = colItems.length === 3 ? 'triple' : (colItems.length === 2 ? 'stacked' : 'tall');
+
+	columns.push({
+		widthClass: layout.width,
+		type: finalType,
+		items: colItems.map((mod, i) => {
+			const m = mod as { default: ImageMetadata };
+			const globalIdx = imgIndex - colItems.length + i;
+			return {
+				src: m.default.src,
+				alt: `Culture image ${globalIdx + 1}`,
+				globalIndex: globalIdx
+			};
+		})
+	});
+	layoutIndex++;
+}
 ---
 
 <style>
@@ -44,7 +76,7 @@ const galleryImages = [
 	.gallery-header {
 		@apply text-center;
 		@apply max-w-3xl mx-auto;
-		@apply py-20;
+		@apply py-20 px-10 lg:px-0;
 	}
 
 	.gallery-eyebrow {
@@ -81,37 +113,39 @@ const galleryImages = [
 	}
 
 	.masonry-grid {
-		@apply flex flex-col flex-wrap;
-		@apply content-start;
-		@apply h-[600px] md:h-[800px]; /* Explicit height required for column wrapping */
-		@apply px-6;
-		@apply gap-4;
+		@apply flex;
+		@apply h-[500px] md:h-[700px];
+		@apply px-4;
+		@apply gap-2 md:gap-3;
+	}
+
+	.gallery-col {
+		@apply flex-shrink-0 h-full;
+		
+		/* Width Classes */
+		&.narrow { @apply w-[140px] md:w-[180px]; }
+		&.normal { @apply w-[220px] md:w-[300px]; }
+		&.wide { @apply w-[300px] md:w-[420px]; }
 	}
 
 	.gallery-item {
 		@apply relative;
-		@apply w-[280px] md:w-[320px]; /* Fixed width for columns */
-		@apply mb-4; /* Bottom margin for spacing in column flow */
-		@apply rounded-xl;
+		@apply rounded-lg;
 		@apply overflow-hidden;
 		@apply cursor-pointer;
-		@apply transition-transform duration-300;
-		@apply border border-white/10;
+		@apply transition-all duration-500;
+		@apply border border-white/5;
 
-		/* Prevent break inside columns */
-		break-inside: avoid;
-		
 		&:hover {
-			@apply scale-[1.02];
-			@apply z-10;
+			@apply scale-[1.03] shadow-2xl z-10;
+			@apply border-white/20;
 		}
 
 		img {
-			@apply w-full h-auto;
-			@apply block;
+			@apply w-full h-full;
+			@apply object-cover block;
 		}
 	}
-
 	/* Controls */
 	.gallery-controls {
 		@apply flex items-center justify-center;
@@ -136,10 +170,10 @@ const galleryImages = [
 	.gallery-modal {
 		@apply fixed inset-0 z-50;
 		@apply flex items-center justify-center;
-		@apply bg-black/90;
+		@apply bg-black/95;
 		@apply opacity-0 pointer-events-none;
 		@apply transition-opacity duration-300;
-		@apply p-4;
+		@apply p-4 md:p-10;
 
 		&.open {
 			@apply opacity-100 pointer-events-auto;
@@ -149,46 +183,51 @@ const galleryImages = [
 	.modal-content {
 		@apply relative;
 		@apply max-w-full max-h-full;
-		@apply rounded-lg overflow-hidden;
+		@apply rounded-xl overflow-hidden shadow-2xl;
+		@apply flex items-center justify-center;
 		
 		img {
-			@apply max-h-[90vh] max-w-[90vw];
+			@apply max-h-[85vh] max-w-[90vw];
 			@apply object-contain;
 		}
 	}
 
 	.modal-close {
-		@apply absolute top-4 right-4;
-		@apply text-white;
-		@apply w-10 h-10;
-		@apply bg-black/50 rounded-full;
+		@apply absolute top-6 right-6;
+		@apply text-white/50 hover:text-white;
+		@apply w-12 h-12;
+		@apply bg-white/5 hover:bg-white/10 rounded-full;
 		@apply flex items-center justify-center;
 		@apply cursor-pointer;
-		@apply transition-colors;
+		@apply transition-all;
 		@apply z-50;
 
 		&:hover {
-			@apply bg-white text-black;
+			@apply scale-110;
 		}
 	}
 
 	.modal-nav-btn {
 		@apply absolute top-1/2 -translate-y-1/2;
-		@apply w-12 h-12;
+		@apply w-14 h-14;
 		@apply flex items-center justify-center;
-		@apply text-white/70 hover:text-white;
-		@apply bg-black/20 hover:bg-black/50;
+		@apply text-white/40 hover:text-white;
+		@apply bg-white/5 hover:bg-white/10;
 		@apply rounded-full;
 		@apply transition-all;
 		@apply z-50;
 		@apply cursor-pointer;
 
 		&.prev {
-			@apply left-4;
+			@apply left-6;
 		}
 
 		&.next {
-			@apply right-4;
+			@apply right-6;
+		}
+
+		&:hover {
+			@apply scale-110;
 		}
 	}
 </style>
@@ -206,16 +245,38 @@ const galleryImages = [
 
 	<div class="gallery-container">
 		<div class="gallery-scroll-wrapper" id="gallery-scroll">
-			<div class="masonry-grid">
-				{galleryImages.map((img, index) => (
-					<div class="gallery-item" data-index={index} data-full-src={img.src}>
-						<img
-							src={img.src}
-							alt={img.alt}
-							width={img.width}
-							height={img.height}
-							loading="lazy"
-						/>
+			<div class="masonry-grid" id="masonry-grid">
+				{columns.map((col: any) => (
+					<div class={`gallery-col ${col.widthClass} ${col.type}`}>
+						{col.type === 'tall' && (
+							<div class="gallery-item h-full" data-index={col.items[0].globalIndex} data-full-src={col.items[0].src}>
+								<img src={col.items[0].src} alt={col.items[0].alt} loading="lazy" />
+							</div>
+						)}
+						{col.type === 'stacked' && (
+							<div class="flex flex-col gap-2 md:gap-3 h-full">
+								{col.items.map((item: any) => (
+									<div class="gallery-item h-1/2" data-index={item.globalIndex} data-full-src={item.src}>
+										<img src={item.src} alt={item.alt} loading="lazy" />
+									</div>
+								))}
+							</div>
+						)}
+						{col.type === 'triple' && (
+							<div class="flex flex-col gap-2 md:gap-3 h-full">
+								<div class="flex gap-2 md:gap-3 h-1/2">
+									<div class="gallery-item w-1/2 h-full" data-index={col.items[0].globalIndex} data-full-src={col.items[0].src}>
+										<img src={col.items[0].src} alt={col.items[0].alt} loading="lazy" />
+									</div>
+									<div class="gallery-item w-1/2 h-full" data-index={col.items[1].globalIndex} data-full-src={col.items[1].src}>
+										<img src={col.items[1].src} alt={col.items[1].alt} loading="lazy" />
+									</div>
+								</div>
+								<div class="gallery-item h-1/2" data-index={col.items[2].globalIndex} data-full-src={col.items[2].src}>
+									<img src={col.items[2].src} alt={col.items[2].alt} loading="lazy" />
+								</div>
+							</div>
+						)}
 					</div>
 				))}
 			</div>
