@@ -15,12 +15,12 @@ const pins = [
   // DF
   { label: 'Brasília', title: 'Brasília, Distrito Federal', x: 260, y: 210, position: 'top-right', lineLength: 15 },
   // ES
-  { label: 'Vitória', title: 'Vitória, Espírito Santo', x: 335, y: 260, position: 'right', lineLength: 15 },
+  { label: 'Vitória', title: 'Vitória, Espírito Santo', x: 335, y: 260, position: 'top-right', lineLength: 15 },
   // MA
   { label: 'São Luís', title: 'São Luís, Maranhão', x: 305, y: 80, position: 'top-right', lineLength: 15 },
   // MG
   { label: 'Montes Claros', title: 'Montes Claros, Minas Gerais', x: 290, y: 230, position: 'top', lineLength: 20 },
-  { label: 'Poços de Caldas', title: 'Poços de Caldas, Minas Gerais', x: 272, y: 270, position: 'top', lineLength: 15 },
+  { label: 'Poços de Caldas', title: 'Poços de Caldas, Minas Gerais', x: 272, y: 270, position: 'top', lineLength: 25 },
   // MT
   { label: 'Cuiabá', title: 'Cuiabá, Mato Grosso', x: 170, y: 210, position: 'top-right', lineLength: 15 },
   // PB
@@ -35,18 +35,18 @@ const pins = [
   { label: 'Campina Grande do Sul', title: 'Campina Grande do Sul, Paraná', x: 240, y: 310, position: 'left', lineLength: 20 },
   { label: 'Maringá', title: 'Maringá, Paraná', x: 225, y: 295, position: 'left', lineLength: 25 },
   // RJ
-  { label: 'Guapimirim', title: 'Guapimirim, Rio de Janeiro', x: 311, y: 288, position: 'bottom-right', lineLength: 1 },
   { label: 'Itaperuna', title: 'Itaperuna, Rio de Janeiro', x: 315, y: 270, position: 'right', lineLength: 25 },
-  { label: 'Macaé', title: 'Macaé, Rio de Janeiro', x: 320, y: 282, position: 'right', lineLength: 30 },
-  { label: 'Maricá', title: 'Maricá, Rio de Janeiro', x: 312, y: 276, position: 'right', lineLength: 15 },
-  { label: 'Niterói', title: 'Niterói, Rio de Janeiro', x: 310, y: 285, position: 'right', lineLength: 10 },
-  { label: 'Petrópolis', title: 'Petrópolis, Rio de Janeiro', x: 310, y: 278, position: 'top-left', lineLength: 8 },
-  { label: 'São Pedro da Aldeia', title: 'São Pedro da Aldeia, Rio de Janeiro', x: 312, y: 288, position: 'right', lineLength: 55 },
-  { label: 'Teresópolis', title: 'Teresópolis, Rio de Janeiro', x: 313, y: 282, position: 'top-right', lineLength: 40 },
-  { label: 'Rio de Janeiro', title: 'Rio de Janeiro, Rio de Janeiro', x: 310, y: 285, position: 'bottom-right', lineLength: 45 },
+  { label: 'Maricá', title: 'Maricá, Rio de Janeiro', x: 312, y: 276, position: 'top-right', lineLength: 10 },
+  { label: 'Petrópolis', title: 'Petrópolis, Rio de Janeiro', x: 310, y: 278, position: 'right', lineLength: 20 },
+  { label: 'Macaé', title: 'Macaé, Rio de Janeiro', x: 320, y: 282, position: 'right', lineLength: 50 },
+  { label: 'Teresópolis', title: 'Teresópolis, Rio de Janeiro', x: 313, y: 286, position: 'right', lineLength: 10 },
+  { label: 'Rio de Janeiro', title: 'Rio de Janeiro, Rio de Janeiro', x: 310, y: 285, position: 'bottom-right', lineLength: 20 },
+  { label: 'Niterói', title: 'Niterói, Rio de Janeiro', x: 310, y: 285, position: 'bottom-right', lineLength: 32 },
+  { label: 'Guapimirim', title: 'Guapimirim, Rio de Janeiro', x: 311, y: 288, position: 'bottom-right', lineLength: 45 },
+  { label: 'São Pedro da Aldeia', title: 'São Pedro da Aldeia, Rio de Janeiro', x: 312, y: 288, position: 'bottom-right', lineLength: 55 },
   // RS
-  { label: 'Porto Alegre', title: 'Porto Alegre, Rio Grande do Sul', x: 230, y: 360, position: 'bottom-right', lineLength: 15 },
-  { label: 'Salvador do Sul', title: 'Salvador do Sul, Rio Grande do Sul', x: 225, y: 355, position: 'left', lineLength: 18 },
+  { label: 'Porto Alegre', title: 'Porto Alegre, Rio Grande do Sul', x: 230, y: 355, position: 'bottom-left', lineLength: 15 },
+  { label: 'Salvador do Sul', title: 'Salvador do Sul, Rio Grande do Sul', x: 225, y: 350, position: 'left', lineLength: 18 },
   // SC
   { label: 'Barra Velha', title: 'Barra Velha, Santa Catarina', x: 248, y: 324, position: 'left', lineLength: 15 },
   // SE
@@ -54,14 +54,14 @@ const pins = [
   // SP 
   { label: 'Américo Brasiliense', title: 'Américo Brasiliense, São Paulo', x: 250, y: 280, position: 'left', lineLength: 35 },
   { label: 'Assis', title: 'Assis, São Paulo', x: 230, y: 275, position: 'top', lineLength: 15 },
-  { label: 'Bauru', title: 'Bauru, São Paulo', x: 250, y: 285, position: 'bottom-left', lineLength: 10 },
+  { label: 'Bauru', title: 'Bauru, São Paulo', x: 250, y: 285, position: 'top', lineLength: 10 },
+  { label: 'Itapira', title: 'Itapira, São Paulo', x: 258, y: 285, position: 'top', lineLength: 25 },
   { label: 'Campinas', title: 'Campinas, São Paulo', x: 265, y: 290, position: 'right', lineLength: 10 },
-  { label: 'Guarujá', title: 'Guarujá, São Paulo', x: 262, y: 298, position: 'right', lineLength: 1 },
-  { label: 'Guarulhos', title: 'Guarulhos, São Paulo', x: 262, y: 293, position: 'top-right', lineLength: 15 },
-  { label: 'Itapira', title: 'Itapira, São Paulo', x: 258, y: 285, position: 'top-left', lineLength: 10 },
-  { label: 'Praia Grande', title: 'Praia Grande, São Paulo', x: 263, y: 302, position: 'right', lineLength: 35 },
-  { label: 'São Caetano do Sul', title: 'São Caetano do Sul, São Paulo', x: 261, y: 296, position: 'bottom-right', lineLength: 15 },
-  { label: 'São Paulo', title: 'São Paulo, São Paulo', x: 260, y: 295, position: 'bottom-right', lineLength: 30 },
+  { label: 'Guarulhos', title: 'Guarulhos, São Paulo', x: 262, y: 293, position: 'top', lineLength: 10 },
+  { label: 'São Paulo', title: 'São Paulo, São Paulo', x: 260, y: 295, position: 'left', lineLength: 15 },
+  { label: 'Guarujá', title: 'Guarujá, São Paulo', x: 262, y: 298, position: 'bottom-right', lineLength: 15 },
+  { label: 'São Caetano do Sul', title: 'São Caetano do Sul, São Paulo', x: 261, y: 296, position: 'bottom-right', lineLength: 30 },
+  { label: 'Praia Grande', title: 'Praia Grande, São Paulo', x: 263, y: 302, position: 'bottom-right', lineLength: 35 },
 ]
 ---
 
@@ -81,7 +81,7 @@ const pins = [
       .map-pin rect {
         fill: var(--color-primary-light);
       }
-      .map-pin line {
+      .map-pin-line {
         stroke: var(--color-primary-light);
         stroke-width: 1px;
       }
@@ -122,13 +122,24 @@ const pins = [
     <path class="cls-1" d="M239.1,348.78s-.07.05-.1.07c-2.74,2.19-2.03,6.9-4.59,9.3-.74.68-1.68,1.11-2.46,1.75-3.06,2.49-2.87,7.44-5.58,10.3-1.58,1.66-3.88,2.35-5.98,3.26-2.41,1.04-4.78,2.54-5.96,4.89-1.1,2.17-1.78,4.55-2.14,6.95-.11.69-.21,1.43-.64,1.98-.6.75-1.65.92-2.54,1.26-1.34.5-2.49,1.48-3.21,2.73-.26.46-.49.97-.91,1.29-.32.25-.72.35-1.12.43-1.43.26-2.94.12-4.3-.4.21-1.49,1.39-2.63,2.45-3.71,1.05-1.08,2.1-2.4,1.97-3.91-.08-1.02-.71-1.91-.96-2.9-.17-.66-.18-1.38-.51-1.98-.4-.72-1.19-1.14-1.84-1.64-1.13-.87-1.95-2.14-2.28-3.52-.35-1.44-.2-3.04-.94-4.31-.96-1.66-3.08-2.23-5-2.29-1.91-.07-3.89.21-5.71-.38-3.44-1.12-5.19-4.9-8.02-7.16-3.26-2.6-7.7-3.01-11.86-3.32,1.18-2.53,3.6-4.27,5.66-6.16s4.08-4.08,4.55-6.83c.17-1,.13-2.03.43-2.98.35-1.1,1.1-2.02,1.89-2.87,1.43-1.56,3-3,4.66-4.31,1.31-1.02,2.77-2.1,3.17-3.71.24-.99.03-2.05.28-3.04,2.43-.07,4.83-.69,7.02-1.75h.1l21.51.28,21.84,12.66,1.15,10Z"/>
     <path class="cls-1" d="M278.56,180.11l-.3,22.89-.88-.02-5.62-.1.35,5.46h-4.53l.02.83-12.35-2.87v9.96h12.5l.07,3.34-5.46,9.17-.93,9.41-19.86.12-11.15,10.92-.05.58-.72-.06-18.97-15.55-.89-17.14,22.5-29.31-.45-8.57,1.8.62,5.43-5.15-.44,8.98,6.49,3.82,3.56-4.97,3.56.26,3.56,3.47,11.39.09,11.4-6.18Z"/>
     <path class="cls-1" d="M336.22,127.26l-.07,2.81-.16,7.18-5.46,4.41.07,3.15-.24-.05-2.5-.54-4.99,5.34-23.47-.35,5,5.57-5.46,6.27-8.14,3.72-3.83-7.2-6.4-.27.47-.54.12-12.89s2.79-18.12,22.77-22.64h7.78v-19.28l10.77-17.47h0c2.13.32,4.29.4,6.46.46l7.28,42.33Z"/>
+    {/* Layer 1: All lines (rendered behind) */}
+    {
+      pins.map((pin) => (
+        <line 
+          class="map-pin-line" 
+          transform={`translate(${pin.x}, ${pin.y})`}
+          x1="0" y1="0" x2="0" y2="0" 
+        />
+      ))
+    }
+    
+    {/* Layer 2: All tooltips (rendered in front) */}
     {
       pins.map((pin) => (
         <g class="map-pin" transform={`translate(${pin.x}, ${pin.y})`} aria-label={pin.label} data-position={pin.position || 'top-right'} data-line-length={pin.lineLength || 15}>
           <title>{pin.title}</title>
-          <line x1="0" y1="0" x2="0" y2="-15" />
-          <rect x="-6" y="-37" width="56" height="22" rx="11" />
-          <text x="0" y="-16" dy="0.35em">
+          <rect x="0" y="0" width="0" height="0" rx="0" />
+          <text x="0" y="0" dy="0.35em">
             {pin.label}
           </text>
         </g>
@@ -141,11 +152,13 @@ const pins = [
   function updatePinSizes() {
     // Wait for fonts to load to ensure correct BBox calculations
     document.fonts.ready.then(() => {
-      const pins = document.querySelectorAll('.map-pin');
-      pins.forEach(g => {
+      const pinsElements = document.querySelectorAll('.map-pin');
+      const linesElements = document.querySelectorAll('.map-pin-line');
+      
+      pinsElements.forEach((g, i) => {
         const text = g.querySelector('text');
         const rect = g.querySelector('rect');
-        const line = g.querySelector('line');
+        const line = linesElements[i];
         if (!text || !rect || !line) return;
 
         // Get the position and line length from data attributes
@@ -222,10 +235,10 @@ const pins = [
         } else {
           // Vertical positions (top/bottom)
           const lineEnd = isTop ? -lineLength : lineLength; // Line endpoint Y coordinate
+          const isCentered = position === 'top' || position === 'bottom';
           
           switch(position) {
             case 'top-left':
-              // Rect extends to the LEFT from the line endpoint
               rectX = -width + cornerOffset;
               rectY = lineEnd - gap - height;
               textX = -width / 2 + cornerOffset;
@@ -233,15 +246,20 @@ const pins = [
               break;
               
             case 'top-right':
-              // Rect extends to the RIGHT from the line endpoint
               rectX = -cornerOffset;
               rectY = lineEnd - gap - height;
               textX = width / 2 - cornerOffset;
               textY = lineEnd - gap - height / 2;
               break;
+
+            case 'top': // Added centered top position
+              rectX = -width / 2;
+              rectY = lineEnd - gap - height;
+              textX = 0;
+              textY = lineEnd - gap - height / 2;
+              break;
               
             case 'bottom-left':
-              // Rect extends to the LEFT from the line endpoint
               rectX = -width + cornerOffset;
               rectY = lineEnd + gap;
               textX = -width / 2 + cornerOffset;
@@ -249,15 +267,21 @@ const pins = [
               break;
               
             case 'bottom-right':
-              // Rect extends to the RIGHT from the line endpoint
               rectX = -cornerOffset;
               rectY = lineEnd + gap;
               textX = width / 2 - cornerOffset;
               textY = lineEnd + gap + height / 2;
               break;
+
+            case 'bottom': // Added centered bottom position
+              rectX = -width / 2;
+              rectY = lineEnd + gap;
+              textX = 0;
+              textY = lineEnd + gap + height / 2;
+              break;
               
             default:
-              // Default to top-right
+              // Default to top-right behavior
               rectX = -cornerOffset;
               rectY = lineEnd - gap - height;
               textX = width / 2 - cornerOffset;
