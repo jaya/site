@@ -14,7 +14,7 @@ const { src, alt, index, class: className } = Astro.props
 	data-index={index} 
 	data-full-src={src}
 >
-	<img src={src} alt={alt} loading="lazy" />
+	<img data-src={src} alt={alt} class="lazy-image" draggable="false" />
 </div>
 
 <style>
@@ -23,13 +23,59 @@ const { src, alt, index, class: className } = Astro.props
 	.gallery-item {
 		@apply relative rounded-lg overflow-hidden cursor-pointer transition-all duration-500 border border-white/5;
 		@apply w-full h-full; /* Fill container */
+		@apply bg-gradient-to-br from-blue-light/20 to-blue-light/5; /* Placeholder background */
 
 		&:hover {
-			@apply scale-[1.03] shadow-2xl z-10 border-white/20;
+			@apply scale-[1.03] shadow-sm z-10 border-white/20;
 		}
 
 		img {
 			@apply w-full h-full object-cover block;
+			@apply transition-opacity duration-500;
+			
+			&.lazy-image:not(.loaded) {
+				@apply opacity-0;
+			}
+			
+			&.lazy-image.loaded {
+				@apply opacity-100;
+			}
 		}
 	}
 </style>
+
+<script>
+	// Lazy loading with Intersection Observer
+	if ('IntersectionObserver' in window) {
+		const imageObserver = new IntersectionObserver((entries, observer) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					const img = entry.target as HTMLImageElement;
+					const src = img.getAttribute('data-src');
+					
+					if (src && !img.classList.contains('loaded')) {
+						img.src = src;
+						img.classList.add('loaded');
+						observer.unobserve(img);
+					}
+				}
+			});
+		}, {
+			rootMargin: '50px' // Start loading 50px before entering viewport
+		});
+
+		// Observe all lazy images
+		document.querySelectorAll('.lazy-image').forEach(img => {
+			imageObserver.observe(img);
+		});
+	} else {
+		// Fallback for browsers without Intersection Observer
+		document.querySelectorAll('.lazy-image').forEach((img: HTMLImageElement) => {
+			const src = img.getAttribute('data-src');
+			if (src) {
+				img.src = src;
+				img.classList.add('loaded');
+			}
+		});
+	}
+</script>

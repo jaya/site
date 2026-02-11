@@ -111,7 +111,10 @@ while (currentImgIndex < images.length) {
 
 	.gallery-scroll-wrapper {
 		@apply overflow-x-auto overflow-y-hidden pb-6 scroll-smooth;
+		@apply cursor-grab active:cursor-grabbing;
+		@apply select-none; /* Prevent text selection while dragging */
 		scrollbar-width: none;
+		-webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 		&::-webkit-scrollbar { display: none; }
 	}
 
@@ -198,11 +201,109 @@ while (currentImgIndex < images.length) {
 </section>
 
 <script>
-	const scrollContainer = document.getElementById('gallery-scroll');
+	// Constants
+	const SCROLL_AMOUNT = 400;
+	const DRAG_THRESHOLD = 5;
+	const SCROLL_SPEED_MULTIPLIER = 2;
+
+	// DOM Elements
+	const scrollContainer = document.getElementById('gallery-scroll') as HTMLElement | null;
 	const prevBtn = document.getElementById('prev-btn');
 	const nextBtn = document.getElementById('next-btn');
-	const scrollAmount = 400;
 
-	prevBtn?.addEventListener('click', () => scrollContainer?.scrollBy({ left: -scrollAmount, behavior: 'smooth' }));
-	nextBtn?.addEventListener('click', () => scrollContainer?.scrollBy({ left: scrollAmount, behavior: 'smooth' }));
+	// ============================================
+	// Button Controls
+	// ============================================
+	const setupButtonControls = () => {
+		if (!scrollContainer) return;
+
+		const scroll = (direction: 'prev' | 'next') => {
+			const amount = direction === 'prev' ? -SCROLL_AMOUNT : SCROLL_AMOUNT;
+			scrollContainer.scrollBy({ left: amount, behavior: 'smooth' });
+		};
+
+		prevBtn?.addEventListener('click', () => scroll('prev'));
+		nextBtn?.addEventListener('click', () => scroll('next'));
+	};
+
+	// ============================================
+	// Prevent Native Image Dragging
+	// ============================================
+	const disableImageDragging = () => {
+		if (!scrollContainer) return;
+
+		scrollContainer.querySelectorAll('img').forEach(img => {
+			img.addEventListener('dragstart', (e) => e.preventDefault());
+		});
+	};
+
+	// ============================================
+	// Mouse Drag Scrolling
+	// ============================================
+	const setupDragScrolling = () => {
+		if (!scrollContainer) return;
+
+		const state = {
+			isDown: false,
+			startX: 0,
+			scrollLeft: 0,
+			hasMoved: false
+		};
+
+		const handleMouseDown = (e: MouseEvent) => {
+			if (e.button !== 0) return; // Only left mouse button
+
+			state.isDown = true;
+			state.hasMoved = false;
+			scrollContainer.classList.add('active');
+			state.startX = e.pageX - scrollContainer.offsetLeft;
+			state.scrollLeft = scrollContainer.scrollLeft;
+		};
+
+		const handleMouseUp = () => {
+			state.isDown = false;
+			scrollContainer.classList.remove('active');
+		};
+
+		const handleMouseMove = (e: MouseEvent) => {
+			if (!state.isDown) return;
+			e.preventDefault();
+
+			const x = e.pageX - scrollContainer.offsetLeft;
+			const distance = (x - state.startX) * SCROLL_SPEED_MULTIPLIER;
+
+			// Mark as drag if moved beyond threshold
+			if (Math.abs(distance) > DRAG_THRESHOLD) {
+				state.hasMoved = true;
+			}
+
+			scrollContainer.scrollLeft = state.scrollLeft - distance;
+		};
+
+		const preventClickAfterDrag = (e: MouseEvent) => {
+			if (state.hasMoved) {
+				e.preventDefault();
+				e.stopPropagation();
+			}
+		};
+
+		// Attach listeners
+		scrollContainer.addEventListener('mousedown', handleMouseDown);
+		scrollContainer.addEventListener('mouseleave', handleMouseUp);
+		scrollContainer.addEventListener('mouseup', handleMouseUp);
+		scrollContainer.addEventListener('mousemove', handleMouseMove);
+		scrollContainer.addEventListener('click', preventClickAfterDrag, true);
+	};
+
+	// ============================================
+	// Initialize
+	// ============================================
+	setupButtonControls();
+	disableImageDragging();
+	setupDragScrolling();
 </script>
+
+
+
+
+
