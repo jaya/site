@@ -3,6 +3,7 @@ import MapCultureElement from './MapCultureElement.astro'
 import { withBase } from '@/utils/url'
 import { getTranslations, t } from '@/i18n/translations'
 import { getLocale, getLocalizedPath, type Locale } from '@/i18n/utils'
+import { socialLinks } from '@/data/social-links'
 
 const { locale: propLocale } = Astro.props as { locale?: Locale }
 const locale = propLocale ?? getLocale(Astro)
@@ -86,14 +87,14 @@ const translations = await getTranslations(locale)
 					<b>{t(translations, 'culture.map.title2')}</b><br />
 				</h3>
 				<p class="driving-text"><Fragment set:html={t(translations, 'culture.map.text1')} /></p>
-				<a class="btn-get-in-touch" href={withBase(getLocalizedPath('contact', locale))}>
+				<a class="btn-get-in-touch" href={socialLinks.linkedin}>
 					{t(translations, 'culture.map.cta')}
 				</a>
 			</div>
 			<div class="map-container">
 				<MapCultureElement />
 			</div>
-			<a class="btn-get-in-touch btn-mobile" href={withBase(getLocalizedPath('contact', locale))}>
+			<a class="btn-get-in-touch btn-mobile" href={socialLinks.linkedin}>
 				{t(translations, 'culture.map.cta')}
 			</a>
 		</div>
