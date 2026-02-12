@@ -12,10 +12,14 @@ const { type } = Astro.props
 
 // Active link detection
 const currentPath = Astro.url.pathname
-const isActive = (href: string) => {
+const normalizePath = (path: string) => (path.length > 1 ? path.replace(/\/+$/, '') : path)
+const isActive = (href: string, exact = false) => {
 	const siteUrl = Astro.site?.toString() || ''
-	const path = href.replace(siteUrl, '')
-	const active = path === '' ? currentPath === '/' : currentPath.startsWith(path)
+	const path = normalizePath(href.replace(siteUrl, ''))
+	const normalizedCurrentPath = normalizePath(currentPath)
+	const active = exact
+		? normalizedCurrentPath === path
+		: normalizedCurrentPath === path || normalizedCurrentPath.startsWith(`${path}/`)
 	return active ? 'font-bold' : ''
 }
 
@@ -24,6 +28,11 @@ const locale = getLocale(Astro)
 const translations = await getTranslations(locale)
 
 const navigationItems = [
+	{
+		label: t(translations, 'nav.home'),
+		href: withBase(getLocalizedPath('/', locale)),
+		exact: true
+	},
 	{
 		label: t(translations, 'nav.services'),
 		type: 'dropdown',
@@ -62,7 +71,7 @@ const navigationItems = [
 {
 	type === 'mobile' ? (
 		// <!-- Mobile Navigation -->
-		<ul class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+		<ul class="menu menu-sm dropdown-content bg-white text-primary rounded-box z-1 mt-3 w-52 p-2 shadow">
 			{navigationItems.map((item) => (
 				<li>
 					{item.type === 'dropdown' ? (
@@ -81,7 +90,7 @@ const navigationItems = [
 					) : (
 						<a
 							href={item.href}
-							class={[isActive(item.href || ''), item.className].filter(Boolean).join(' ')}
+							class={[isActive(item.href || '', item.exact), item.className].filter(Boolean).join(' ')}
 							target={item.target}
 						>
 							{item.label}
@@ -111,7 +120,7 @@ const navigationItems = [
 					) : (
 						<a
 							href={item.href}
-							class={[isActive(item.href || ''), item.className].filter(Boolean).join(' ')}
+							class={[isActive(item.href || '', item.exact), item.className].filter(Boolean).join(' ')}
 							target={item.target}
 						>
 							{item.label}

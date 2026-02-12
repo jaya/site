@@ -59,8 +59,10 @@ const translations = await getTranslations(locale)
 
 						.email-link {
 							@apply block;
+							@apply text-primary;
 							@apply font-semibold;
 							@apply mb-6;
+							@apply hover:text-primary focus:text-primary active:text-primary;
 						}
 
 						.contact-details {

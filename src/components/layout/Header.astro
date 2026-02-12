@@ -54,6 +54,10 @@ const locale = getLocale(Astro)
 		.mobile-menu-button {
 			@apply btn btn-ghost;
 			@apply lg:hidden;
+			@apply bg-transparent text-primary;
+			@apply hover:bg-transparent hover:text-primary;
+			@apply focus:bg-transparent focus:text-primary;
+			@apply active:bg-transparent active:text-primary;
 		}
 
 		.dropdown-wrapper {
