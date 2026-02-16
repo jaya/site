@@ -9,6 +9,7 @@ const match = cookie.match(langCookieRegex)
 
 // 1. High Priority: Previous user choice (Cookie)
 if (match?.[1]) {
+	console.log('debug: Cookie found:', match[1])
 	return Astro.redirect(`/${match[1]}/`, 307)
 }
 
@@ -25,6 +26,7 @@ if (userIP) {
 		})
 		if (response.ok) {
 			const data = await response.json()
+			console.log('debug: ipinfo', {data})
 			prefersBrByIP = data.country === 'BR'
 		}
 	} catch (e) {
@@ -34,10 +36,12 @@ if (userIP) {
 
 // 3. Fallback Priority: Browser language
 const acceptLanguage = (Astro.request.headers.get('accept-language') ?? '').toLowerCase()
+console.log('debug: acceptLanguage', {acceptLanguage})
 const prefersBrByNav = acceptLanguage.includes('pt')
 
 // Final decision: Brazil location or Portuguese browser = 'br', otherwise 'en'
 const lang = (prefersBrByIP || prefersBrByNav) ? localeBr : localeEn
+console.log('debug: final lang', {lang})
 
 // Persist the decision in a cookie and use a non-permanent redirect.
 return new Response(null, {
