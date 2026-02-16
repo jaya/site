@@ -32,8 +32,8 @@
 			"title2": "for long-term partnerships",
 			"description": "Jaya is a fully remote software consulting company specializing in <b>staff augmentation, outsourcing and AI development.</b><br />Since 2012, we've helped companies scale with handpicked engineering talent and stable, high-performing teams. From fintech and healthtech to retail, SaaS... and beyond.<br /><b>Our squads deliver with speed, cultural alignment, and a long-term mindset.</b>",
 			"stat1": "years of<br /> <b>remote<br /> experience</b>",
-			"stat2": "<b>U.S clients</b><br />served",
-			"stat3": "<b>engineers allocated</b><br /> to U.S. product<br />squads",
+			"stat2": "<b>clients</b><br />served",
+			"stat3": "<b>engineers allocated</b><br /> to product<br />squads",
 			"cta": "Let's transform your business? Contact Us"
 		},
 		"services": {
@@ -41,8 +41,8 @@
 			"subtitle": "mission-driven nearshoring for high-impact projects.",
 			"description": "At Jaya, software is more than lines of code, it's a strategic asset built with intention, precision, and purpose. Our <b>conscious software engineering model</b> blends technical excellence with human understanding, enabling teams to collaborate better, ship faster, and deliver real business outcomes. With a nearshore structure, we work in sync with your operations, bridging cultural and timezone gaps to create long-term value from day one.",
 			"service1": {
-				"title": "<i>nearshore</i> <b>staff augmentation</b>",
-				"text": "Beyond filling roles, we connect companies with nearshore talent across developers, tech leads, and staff engineers, professionals who combine strong technical skills with high cultural alignment.<br /><br />Through a rigorous recruitment process, we ensure top-tier talent with English fluency, long-term retention, and the stability needed to build high-performing teams."
+				"title": "<i>remote</i> <b>staff augmentation</b>",
+				"text": "Beyond finding roles, we connect companies with remote talent across developers, tech leads, and staff engineers, professionals who combine strong technical skills with high cultural alignment.<br /><br />Through a rigorous recruitment process, we ensure top-tier talent with English fluency, long-term retention, and the stability needed to build high-performing teams."
 			},
 			"service2": {
 				"title": "<b>outsourcing</b>",
