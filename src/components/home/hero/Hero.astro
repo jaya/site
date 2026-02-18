@@ -47,14 +47,14 @@ const translations = await getTranslations(locale)
 		.hero-left-image {
 			@apply absolute hidden lg:block;
 			@apply top-[35%] left-[-100px];
-			@apply h-[260px] w-[275px];
+			@apply w-[275px] h-auto;
 			animation: slideInFromRight 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 		}
 
 		.hero-right-image {
 			@apply absolute hidden lg:block;
 			@apply top-[20%] right-[-100px];
-			@apply h-[260px] w-[275px];
+			@apply w-[275px] h-auto;
 			animation: slideInFromLeft 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 		}
 
