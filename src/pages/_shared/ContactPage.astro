@@ -1,0 +1,240 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { getTranslations, t } from '@/i18n/translations'
+import type { Locale } from '@/i18n/utils'
+
+interface Props {
+	locale: Locale
+	action: any
+	result?: any
+}
+
+const { locale, action, result } = Astro.props
+const translations = await getTranslations(locale)
+---
+
+<style>
+	@reference '@/styles/global.css';
+
+	.contact-main {
+		@apply bg-neutral-light;
+		@apply pb-16;
+		@apply min-h-screen;
+
+		.title {
+			@apply max-w-[12ch];
+			@apply mx-auto;
+			@apply text-4xl lg:text-5xl;
+			@apply text-primary;
+			@apply text-center;
+			@apply mt-22 mb-16;
+		}
+
+		.content-section {
+			@apply flex flex-col lg:flex-row;
+			@apply gap-16;
+			@apply px-10;
+
+			.text-column {
+				@apply w-full lg:w-1/2;
+
+				.contact-text {
+					@apply max-w-[450px];
+					@apply space-y-6;
+
+					h2 {
+						@apply text-gray-900;
+						@apply font-bold;
+						@apply leading-tight;
+						@apply mb-6;
+					}
+
+					p {
+						@apply text-gray-700;
+						@apply leading-relaxed;
+					}
+
+					.contact-info {
+						@apply mt-8;
+
+						.email-link {
+							@apply block;
+							@apply text-primary;
+							@apply font-semibold;
+							@apply mb-6;
+							@apply hover:text-primary focus:text-primary active:text-primary;
+						}
+
+						.contact-details {
+							@apply space-y-4;
+
+							.location {
+								p {
+									@apply text-gray-800;
+									@apply mb-1;
+
+									strong {
+										@apply text-gray-900;
+										@apply font-bold;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.form-column {
+				@apply w-full lg:w-1/2;
+
+				.contact-form {
+					@apply space-y-6;
+
+					.form-group {
+						@apply space-y-2;
+
+						label {
+							@apply block;
+							@apply text-gray-700;
+							@apply font-medium;
+							@apply text-sm;
+							@apply lowercase;
+						}
+
+						input,
+						textarea {
+							@apply w-full;
+							@apply bg-transparent;
+							@apply text-gray-900;
+							@apply text-base;
+							@apply border-0;
+							@apply border-b-2;
+							@apply border-gray-300;
+							@apply rounded-none;
+							@apply ring-0;
+							@apply px-0;
+							@apply py-3;
+						}
+
+						textarea {
+							@apply min-h-[120px];
+							@apply resize-y;
+							resize: vertical;
+						}
+					}
+
+					.btn-submit {
+						@apply flex;
+						@apply text-center;
+						@apply text-primary-light;
+						@apply border-primary-light;
+						@apply max-w-[420px];
+						@apply rounded-full;
+						@apply btn btn-outline btn-primary rounded-full;
+					}
+
+					.form-message {
+						@apply mt-4;
+						@apply p-4;
+						@apply rounded-lg;
+						@apply text-sm;
+					}
+
+					.form-message.success {
+						@apply bg-green-100;
+						@apply text-green-800;
+						@apply border border-green-300;
+					}
+
+					.form-message.error {
+						@apply bg-red-100;
+						@apply text-red-800;
+						@apply border border-red-300;
+					}
+				}
+			}
+		}
+	}
+</style>
+
+<Layout
+	title={t(translations, 'contact.title')}
+	description={t(translations, 'contact.description')}
+>
+	<main class="nav-padding contact-main">
+		<div class="contact-hero-section">
+			<div class="container">
+				<h1 class="title">
+					<b>{t(translations, 'contact.hero.title1')}</b><i
+						>{t(translations, 'contact.hero.title2')}</i
+					>
+				</h1>
+
+				<div class="content-section">
+					<div class="text-column">
+						<div class="contact-text">
+							<h2>{t(translations, 'contact.hero.subtitle')}</h2>
+							<p>
+								{t(translations, 'contact.hero.text1')}
+							</p>
+							<p>
+								{t(translations, 'contact.hero.text2')}
+							</p>
+
+							<div class="contact-info">
+								<a href="mailto:contact@jaya.tech" class="email-link">contact@jaya.tech</a>
+
+								<div class="contact-details">
+									<div class="location">
+										<p><strong>{t(translations, 'footer.address.us')}</strong></p>
+										<p>+1 (512) 555-1212</p>
+									</div>
+									<div class="location">
+										<p><strong>{t(translations, 'footer.address.br')}</strong></p>
+										<p>+55(11) 333-1212</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-column">
+						<form class="contact-form" action={action} method="POST">
+							{
+								result && result.error && (
+									<div class="form-message error">
+										{result.error.message || t(translations, 'contact.form.error')}
+									</div>
+								)
+							}
+							{
+								result && result.data && (
+									<div class="form-message success">{t(translations, 'contact.form.success')}</div>
+								)
+							}
+
+							<div class="form-group">
+								<label for="name">{t(translations, 'contact.form.name')}</label>
+								<input type="text" id="name" name="name" required />
+							</div>
+
+							<div class="form-group">
+								<label for="email">{t(translations, 'contact.form.email')}</label>
+								<input type="email" id="email" name="email" required />
+							</div>
+
+							<div class="form-group">
+								<label for="message">{t(translations, 'contact.form.message')}</label>
+								<textarea id="message" name="message" rows="6" required></textarea>
+							</div>
+
+							<button type="submit" class="btn-submit"
+								>{t(translations, 'contact.form.submit')}</button
+							>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</Layout>

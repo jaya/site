@@ -1,5 +1,10 @@
 ---
 import { withBase } from '@/utils/url'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, getLocalizedPath } from '@/i18n/utils'
+
+const locale = getLocale(Astro)
+const translations = await getTranslations(locale)
 ---
 
 <style>
@@ -88,42 +93,37 @@ import { withBase } from '@/utils/url'
 		<div class="image-content"></div>
 
 		<div class="text-content">
-			<h2>why choose Jaya?</h2>
+			<h2>{t(translations, 'about.why.title')}</h2>
 			<p class="intro-text">
-				In the digital age, finding the right partner to boost your company with strategic
-				technology is essential. Jaya Tech goes beyond software development - we build custom teams,
-				combining technology and business vision to generate real impact. With an innovative and
-				humanized approach, we guarantee agility, precision and personalization in each project. See
-				what sets us apart:
+				{t(translations, 'about.why.intro')}
 			</p>
 
 			<div class="advantages-grid">
 				<div class="advantage-box">
-					<div class="advantage-number">1. Agility</div>
+					<div class="advantage-number">{t(translations, 'about.why.adv1Title')}</div>
 					<div class="advantage-text">
-						Our team works with dynamism and efficiency to deliver solutions that meet your business
-						demands in the shortest possible time, without losing quality.
+						{t(translations, 'about.why.adv1Text')}
 					</div>
 				</div>
 
 				<div class="advantage-box">
-					<div class="advantage-number">2. Capability</div>
+					<div class="advantage-number">{t(translations, 'about.why.adv2Title')}</div>
 					<div class="advantage-text">
-						We have a highly qualified team, specialists in technology and innovation, ready to
-						solve complex challenges and create scalable solutions.
+						{t(translations, 'about.why.adv2Text')}
 					</div>
 				</div>
 
 				<div class="advantage-box">
-					<div class="advantage-number">3. Flexibility</div>
+					<div class="advantage-number">{t(translations, 'about.why.adv3Title')}</div>
 					<div class="advantage-text">
-						Every company is unique. That's why we adapt our solutions to your needs, ensuring
-						personalized, strategic and high-performance service.
+						{t(translations, 'about.why.adv3Text')}
 					</div>
 				</div>
 			</div>
 
-			<a href={withBase('contact')} class="cta-button">Let's transform your business? Contact Us</a>
+			<a href={withBase(getLocalizedPath('contact', locale))} class="cta-button">
+				{t(translations, 'about.why.cta')}
+			</a>
 		</div>
 	</div>
 </section>

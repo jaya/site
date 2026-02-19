@@ -1,5 +1,10 @@
 ---
 import { withBase } from '@/utils/url'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, getLocalizedPath } from '@/i18n/utils'
+
+const locale = getLocale(Astro)
+const translations = await getTranslations(locale)
 ---
 
 <style>
@@ -82,6 +87,8 @@ import { withBase } from '@/utils/url'
 	</div>
 	<slot name="experience-why" />
 	<div class="px-10">
-		<a href={withBase('contact')} class="btn-contact">Let's transform your business? Contact Us</a>
+		<a href={withBase(getLocalizedPath('contact', locale))} class="btn-contact">
+			{t(translations, 'home.hero.cta')}
+		</a>
 	</div>
 </section>

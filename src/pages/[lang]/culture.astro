@@ -1,0 +1,15 @@
+---
+import { getLocaleParam, locales } from '@/i18n/utils'
+import CulturePage from '../_shared/CulturePage.astro'
+
+export function getStaticPaths() {
+	return locales.map((lang) => ({ params: { lang } }))
+}
+
+const lang = getLocaleParam(Astro.params.lang, locales)
+if (!lang) {
+	return new Response(null, { status: 404 })
+}
+---
+
+<CulturePage locale={lang} />

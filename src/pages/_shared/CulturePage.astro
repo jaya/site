@@ -1,0 +1,38 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import Hero from '@/components/home/hero/Hero.astro'
+import MapCulture from '@/components/home/map/MapCulture.astro'
+import Services from '@/components/home/services/Services.astro'
+import Impact from '@/components/impact/Impact.astro'
+import Clients from '@/components/clients/Clients.astro'
+import TeamCulture from '@/components/team/TeamCulture.astro'
+import CultureValues from '@/components/team/CultureValues.astro'
+import CultureGallery from '@/components/team/CultureGallery.astro'
+import CulturePeople from '@/components/team/CulturePeople.astro'
+import CultureLinkedinCta from '@/components/team/CultureLinkedinCta.astro'
+import { getTranslations, t } from '@/i18n/translations'
+import { localeEn, type Locale } from '@/i18n/utils'
+
+interface Props {
+	locale: Locale
+}
+
+const { locale } = Astro.props
+const translations = await getTranslations(locale)
+
+const pageContent = {
+	title: t(translations, 'home.hero.title1').replace(/<[^>]*>?/gm, ''),
+	description: t(translations, 'home.hero.description').replace(/<[^>]*>?/gm, '')
+}
+---
+
+<Layout title={pageContent.title} description={pageContent.description}>
+	<main class="nav-padding">
+		<TeamCulture locale={locale} />
+		<CultureValues locale={locale} />
+		<MapCulture locale={locale} />
+		<CultureGallery locale={locale} />
+		<CulturePeople locale={locale} />
+		<CultureLinkedinCta locale={locale} />
+	</main>
+</Layout>

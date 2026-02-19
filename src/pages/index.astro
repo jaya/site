@@ -1,27 +1,7 @@
 ---
-import Layout from '@/layouts/Layout.astro'
-import Hero from '@/components/home/hero/Hero.astro'
-import Map from '@/components/home/map/Map.astro'
-import Services from '@/components/home/services/Services.astro'
-import Impact from '@/components/impact/Impact.astro'
-import Clients from '@/components/clients/Clients.astro'
-import Team from '@/components/team/Team.astro'
+import { defaultLocale } from '@/i18n/utils'
 
-// Home page content
-const pageContent = {
-	title: 'Reliable software squad',
-	description:
-		'Jaya is a fully remote software consulting company, founded in 2012 and partnering with U.S. companies since 2016. We specialize in strategic staff augmentation and long-term, high-impact projects, combining technical and cultural fit through a deep recruitment process. Behind every delivery, we mentor our teams, nurture strong culture, and develop people who are inspired to build software that truly matters.'
-}
+export const prerender = false
+
+return Astro.redirect(`/${defaultLocale}/`)
 ---
-
-<Layout title={pageContent.title} description={pageContent.description}>
-	<main class="nav-padding">
-		<Hero />
-		<Map />
-		<Services />
-		<Impact />
-		<Clients />
-		<Team />
-	</main>
-</Layout>

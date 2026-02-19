@@ -1,0 +1,495 @@
+---
+import type { ImageMetadata } from 'astro'
+import { socialLinks } from '@/data/social-links'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, type Locale } from '@/i18n/utils'
+
+const { locale: propLocale } = Astro.props as { locale?: Locale }
+const locale = propLocale ?? getLocale(Astro)
+const translations = await getTranslations(locale)
+
+// Import all images from the team directory
+const teamImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/culture/team/*.{jpeg,jpg,png,webp,svg}', { eager: true });
+
+function formatName(slug: string) {
+	return slug
+		.split(/[-_]/)
+		.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(' ');
+}
+
+// Map of manual overrides for names, roles, and descriptions
+const peopleOverrides: Record<string, Partial<{ name: string, role: string, desc: string }>> = {
+	'abraao': { name: 'Abraão Rosseto', role: '', desc: '' },
+	'adri': { name: 'Adriana Tateno', role: 'Human Resources', desc: 'Le freak, c’est chic' },
+	'alexandre': { name: 'Alexandre Queiroz', role: '', desc: '' },
+	'allan': { name: 'Allan Motroni', role: '', desc: '' },
+	'andre': { name: 'Andre Fernandes', role: '', desc: '' },
+	'andreia': { name: 'Andreia Berto', role: '', desc: '' },
+	'artur': { name: 'Artur Paes', role: '', desc: '' },
+	'bianca': { name: 'Bianca Guzenski', role: '', desc: '' },
+	'bruna': { name: 'Bruna Soares', role: 'spreadsheets woman', desc: 'Paulista santista, esposa, mãe de três' },
+	'bruno-marins': { name: 'Bruno Marins', role: '', desc: '' },
+	'bruno-tatsumi': { name: 'Bruno Tatsumi', role: 'Developer', desc: 'Do or do not. There is no try.' },
+	'caio': { name: 'Caio Melo', role: '', desc: '' },
+	'cazuza': { name: 'Cazuza Neto', role: '', desc: '' },
+	'claudio': { name: 'Claudio de Morais', role: '', desc: '' },
+	'daniel': { name: 'Daniel Pereira', role: '', desc: '' },
+	'daniel-lima': { name: 'Daniel Lima', role: '', desc: '' },
+	'diogo': { name: 'Diogo Oliveira', role: '', desc: '' },
+	'edu-ferreira': { name: 'Eduardo Ferreira', role: '', desc: '' },
+	'edu-tercio': { name: 'Eduardo Tercio', role: '', desc: '' },
+	'emanuel': { name: 'Emanuel Batista', role: 'Backwoods Samurai', desc: "That's just it" },
+	'fernando-ferreira': { name: 'Fernando Ferreira', role: 'Frontend engineer', desc: 'Fixing more than breaking' },
+	'francisco-junior': { name: 'Francisco Junior', role: '', desc: '' },
+	'gabriel-mendes': { name: 'Gabriel Mendes', role: '', desc: '' },
+	'gabriel': { name: 'Gabriel Silva', role: 'Spaces > tabs', desc: 'Takes two hours to name variables.' },
+	'georgeo': { name: 'Georgeo Rocco', role: '', desc: '' },
+	'hugo': { name: 'Hugo Ramos', role: '', desc: '' },
+	'icaro': { name: 'Icaro Ang', role: '', desc: '' },
+	'igor-candido': { name: 'Igor Candido', role: '', desc: '' },
+	'ivan': { name: 'Ivan Queiroz', role: '', desc: '' },
+	'jefferson': { name: 'Jefferson Silvério', role: '', desc: '' },
+	'jocelio': { name: 'Jocelio da Silva', role: '', desc: '' },
+	'jonatas-brito': { name: 'Jonatas Brito', role: '', desc: '' },
+	'jose-roberto': { name: 'Jose Roberto', role: '', desc: '' },
+	'lauro': { name: 'Lauro Omatsu', role: '', desc: '' },
+	'leandro': { name: 'Leandro Costa', role: 'Zen Code', desc: '' },
+	'leonardo': { name: 'Leonardo Nascimento', role: 'June Party Lover', desc: 'Maranhão, meu tesouro, meu torrão' },
+	'lourran': { name: 'Lourran Zorzi', role: '', desc: '' },
+	'lucas': { name: 'Lucas Camargo', role: 'Listener', desc: '' },
+	'lucas-coelho': { name: 'Lucas Coelho', role: '', desc: '' },
+	'lucas-rocha': { name: 'Lucas Rocha', role: '', desc: '' },
+	'marcio_carvalho': { name: 'Marcio Carvalho', role: 'Kite hunter', desc: 'When we stretch the smile, the problems shrink' },
+	'marcus-cruz': { name: 'Marcus Cruz', role: '', desc: '' },
+	'mariel': { name: 'Mariel Couto', role: '', desc: '' },
+	'matheus_cardoso': { name: 'Matheus Cardoso', role: '', desc: '' },
+	'michel': { name: 'Michel Doumit', role: 'Problem Solver', desc: 'Top man, animal' },
+	'marcio-noda': { name: 'Marcio Noda', role: '', desc: '' },
+	'patricia': { name: 'Patricia Tonella', role: '', desc: '' },
+	'paulo-roberto': { name: 'Paulo Roberto da Silva', role: '', desc: '' },
+	'pedro': { name: 'Pedro Gabriel', role: '', desc: '' },
+	'rafael-lugli': { name: 'Rafael Lugli', role: '', desc: '' },
+	'rafael-oliveira': { name: 'Rafael Oliveira', role: '', desc: '' },
+	'rafael-tavares': { name: 'Rafael Tavares', role: 'Masterchef', desc: 'may the force be with you' },
+	'ray': { name: 'Ray Araujo', role: '', desc: '' },
+	'rennan': { name: 'Rennan Oliveira', role: 'Dog lover', desc: 'Did I tell you I have 2 dogs??' },
+	'ricardo-ferreira': { name: 'Ricardo Ferreira', role: '', desc: '' },
+	'ricardo-saggioni': { name: 'Ricardo Saggioni', role: '', desc: '' },
+	'rodrigo-cabral': { name: 'Rodrigo Cabral', role: '', desc: '' },
+	'ro_matos': { name: 'Rodrigo Matos', role: 'Programaçao na veia', desc: '' },
+	'rodrigo-de-paula': { name: 'Rodrigo de Paula', role: '', desc: '' },
+	'samuel-botelho': { name: 'Samuel Botelho', role: '', desc: '' },
+	'samuel-yamagata': { name: 'Samuel Yamagata', role: '', desc: '' },
+	'sol': { name: 'Solange Soares', role: '', desc: '' },
+	'thiago-thimoteo': { name: 'Thiago Thimoteo', role: '', desc: '' },
+	'tiago-link': { name: 'Tiago Link', role: '', desc: '' },
+	'vanderson': { name: 'Vanderson Sampaio', role: '', desc: '' },
+	'victor-ramalho': { name: 'Victor Ramalho', role: '', desc: '' },
+	'weylab': { name: 'Weylab', role: '', desc: '' },
+	'wilson': { name: 'Wilson Faustino', role: '', desc: '' },
+}
+
+// Final people array directly from raw data
+const people = Object.entries(teamImages).map(([path, module], index) => {
+	const slug = path.split('/').pop()?.split('.')[0] || '';
+	const override = peopleOverrides[slug] || {};
+	
+	return {
+		id: index,
+		name: override.name || formatName(slug),
+		role: override.role,
+		desc: override.desc,
+		image: module.default.src
+	};
+});
+
+// Helper to chunk people into pages of 12 for the template
+const itemsPerPage = 12;
+const pagedPeople = Array.from({ length: Math.ceil(people.length / itemsPerPage) }, (_, i) =>
+	people.slice(i * itemsPerPage, i * itemsPerPage + itemsPerPage)
+);
+
+---
+
+<style>
+	@reference '@/styles/global.css';
+
+	.culture-people {
+		@apply relative;
+		@apply pt-20;
+		@apply bg-body-light; /* Match background color from image if needed, or keep neutral */
+		@apply text-text-dark;
+		@apply overflow-hidden;
+	}
+
+	.container {
+		@apply relative;
+		@apply px-4 mx-auto;
+		@apply max-w-7xl; /* limit width for better grid control on large screens */
+	}
+
+	.people-header {
+		@apply text-center;
+		@apply max-w-5xl mx-auto;
+		@apply mb-12;
+	}
+
+	.people-title {
+		@apply text-primary text-3xl font-bold leading-tight lg:text-5xl;
+		@apply mb-6;
+
+		span {
+			@apply block;
+		}
+	}
+
+	.people-text {
+		@apply mt-4;
+		@apply text-base leading-relaxed lg:text-lg;
+		@apply text-primary/80;
+		@apply mx-auto;
+	}
+
+	/* Navigation Arrows */
+	.people-nav {
+		@apply flex justify-center items-center gap-8;
+		@apply mb-12;
+	}
+
+	.nav-btn {
+		@apply text-primary/30 hover:text-primary;
+		@apply transition-colors duration-300;
+		@apply cursor-pointer;
+		
+		svg {
+			@apply w-12 h-12;
+		}
+	}
+
+	/* Grid Layout */
+	.people-grid-wrapper {
+		@apply overflow-x-auto;
+		@apply scroll-smooth;
+		@apply snap-x snap-mandatory;
+		/* @apply mx-4; */
+		/* @apply mx-4 px-4; */
+		 /* Allow full width scroll on mobile */
+		
+		/* Hide scrollbar */
+		scrollbar-width: none;
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+
+	.people-grid {
+		@apply flex gap-6;
+		/* No w-max here, let flex children define the width */
+	}
+
+	.grid-page {
+		@apply grid flex-shrink-0 w-full;
+		@apply gap-x-6 gap-y-12;
+		@apply snap-start;
+		@apply grid-cols-2; /* 12 items = 6 rows on mobile */
+		@apply md:grid-cols-6 md:grid-rows-2; /* 12 items = 2 rows on desktop */
+		@apply grid-flow-row;
+		@apply content-start;
+	}
+	
+	/* 
+	   To simulate pages of 6 columns (12 items) on desktop:
+	   The container is limited width. The grid is wider.
+	   We scroll the wrapper.
+	*/
+
+	.people-item-wrapper {
+		@apply flex flex-col items-center;
+		@apply lg:w-[200px] md:w-auto; /* Fixed width on mobile */
+	}
+
+	.person-card {
+		@apply relative;
+		@apply w-full;
+		@apply aspect-square; /* Make cards square */
+		@apply rounded-[2rem];
+		@apply overflow-hidden;
+		@apply cursor-pointer;
+		@apply bg-blue-light; /* Fallback */
+	}
+
+	.person-image {
+		@apply w-full h-full;
+		@apply object-cover;
+		@apply transition-transform duration-500;
+		@apply group-hover:scale-110;
+	}
+
+	/* Hover Overlay */
+	.person-overlay {
+		@apply absolute inset-0;
+		@apply bg-primary/90;
+		@apply opacity-0 group-hover:opacity-100;
+		@apply transition-opacity duration-300;
+		@apply flex flex-col justify-center items-center;
+		@apply p-4 text-center text-white;
+	}
+
+	.overlay-text {
+		@apply text-sm md:text-base;
+		@apply font-medium;
+	}
+
+	/* Info below card */
+	.person-info {
+		@apply mt-3;
+		@apply text-center;
+	}
+
+	.person-name {
+		@apply text-primary font-bold text-lg;
+		@apply leading-tight;
+	}
+
+	.person-role {
+		@apply text-xs uppercase tracking-wider;
+		@apply text-primary/60;
+		@apply mt-1;
+		@apply font-semibold;
+	}
+
+	/* Modal */
+	.people-modal {
+		@apply fixed inset-0 z-50;
+		@apply flex items-center justify-center;
+		@apply bg-black/90;
+		@apply opacity-0 pointer-events-none;
+		@apply transition-opacity duration-300;
+		@apply p-4;
+
+		&.open {
+			@apply opacity-100 pointer-events-auto;
+		}
+	}
+
+	.modal-content {
+		@apply relative;
+		@apply max-w-4xl w-full;
+		@apply flex flex-col items-center;
+	}
+	
+	.modal-image-container {
+		@apply relative;
+		@apply rounded-xl overflow-hidden;
+		@apply shadow-2xl;
+	}
+
+	.modal-img {
+		@apply max-h-[70vh] w-auto;
+		@apply object-contain;
+	}
+
+	.modal-info {
+		@apply mt-6 text-center text-white;
+	}
+
+	.modal-name {
+		@apply text-2xl font-bold;
+	}
+	
+	.modal-desc {
+		@apply text-white/80 mt-2;
+	}
+
+	.modal-close {
+		@apply absolute top-4 right-4;
+		@apply text-white/70 hover:text-white;
+		@apply w-10 h-10;
+		@apply flex items-center justify-center;
+		@apply cursor-pointer;
+		@apply z-50;
+		@apply bg-white/10 rounded-full hover:bg-white/20;
+	}
+
+	.modal-nav-btn {
+		@apply absolute top-1/2 -translate-y-1/2;
+		@apply w-12 h-12;
+		@apply flex items-center justify-center;
+		@apply text-white/70 hover:text-white;
+		@apply bg-white/10 hover:bg-white/20;
+		@apply rounded-full;
+		@apply cursor-pointer;
+		@apply transition-colors;
+		@apply z-50;
+
+		&.prev { @apply left-4; }
+		&.next { @apply right-4; }
+	}
+</style>
+
+<section class="culture-people" id="culture-people">
+	<div class="container">
+		<div class="people-header">
+			<h2 class="people-title">
+				<Fragment set:html={t(translations, 'culture.people.title')} />
+			</h2>
+			<p class="people-text">{t(translations, 'culture.people.description')}</p>
+		</div>
+
+		<div class="people-nav">
+			<button class="nav-btn" id="grid-prev" aria-label="Previous page">
+				<svg viewBox="0 0 24 24" fill="none" class="rotate-180">
+					<path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</button>
+			<button class="nav-btn" id="grid-next" aria-label="Next page">
+				<svg viewBox="0 0 24 24" fill="none">
+					<path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</button>
+		</div>
+
+		<div class="people-grid-wrapper" id="people-scroll-container">
+			<div class="people-grid">
+				{pagedPeople.map((page) => (
+					<div class="grid-page">
+						{page.map((person) => (
+							<div class="people-item-wrapper">
+								<div class="person-card group" data-index={person.id}>
+									<img src={person.image} alt={person.name} class="person-image" loading="lazy" />
+									<div class="person-overlay">
+										<p class="overlay-text">{person.desc}</p>
+									</div>
+								</div>
+								<div class="person-info">
+									<h3 class="person-name">{person.name}</h3>
+									<p class="person-role">{person.role}</p>
+								</div>
+							</div>
+						))}
+					</div>
+				))}
+	</div>
+
+	<!-- Modal -->
+	<div class="people-modal" id="people-modal">
+		<button class="modal-close" id="people-modal-close">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<line x1="18" y1="6" x2="6" y2="18"></line>
+				<line x1="6" y1="6" x2="18" y2="18"></line>
+			</svg>
+		</button>
+
+		<div class="modal-content">
+			<div class="modal-image-container">
+				<img src="" alt="" class="modal-img" id="people-modal-img" />
+			</div>
+			<div class="modal-info">
+				<h3 class="modal-name" id="people-modal-name"></h3>
+				<p class="modal-desc" id="people-modal-desc"></p>
+			</div>
+		</div>
+		
+		<button class="modal-nav-btn prev" id="people-modal-prev">
+			<svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+				<path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+		</button>
+		<button class="modal-nav-btn next" id="people-modal-next">
+			<svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+				<path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+		</button>
+	</div>
+</section>
+
+<script define:vars={{ people }}>
+	// Grid Navigation Logic
+	const scrollContainer = document.getElementById('people-scroll-container');
+	const gridPrev = document.getElementById('grid-prev');
+	const gridNext = document.getElementById('grid-next');
+
+	gridPrev?.addEventListener('click', () => {
+		if (scrollContainer) {
+			scrollContainer.scrollBy({ left: -scrollContainer.clientWidth, behavior: 'smooth' });
+		}
+	});
+
+	gridNext?.addEventListener('click', () => {
+		if (scrollContainer) {
+			scrollContainer.scrollBy({ left: scrollContainer.clientWidth, behavior: 'smooth' });
+		}
+	});
+
+	// Modal Logic
+	const modal = document.getElementById('people-modal');
+	const modalImg = document.getElementById('people-modal-img');
+	const modalName = document.getElementById('people-modal-name');
+	const modalDesc = document.getElementById('people-modal-desc');
+	const modalClose = document.getElementById('people-modal-close');
+	const modalPrev = document.getElementById('people-modal-prev');
+	const modalNext = document.getElementById('people-modal-next');
+	
+	let currentIndex = 0;
+	const totalPeople = people.length;
+
+	function updateModal(index) {
+		if (!people[index]) return;
+		
+		const person = people[index];
+		currentIndex = index;
+		
+		if (modalImg) modalImg.src = person.image;
+		if (modalName) modalName.textContent = person.name;
+		if (modalDesc) modalDesc.textContent = `${person.role} - ${person.desc}`;
+	}
+
+	function openModal(index) {
+		updateModal(index);
+		modal?.classList.add('open');
+		document.body.style.overflow = 'hidden';
+	}
+
+	function closeModal() {
+		modal?.classList.remove('open');
+		document.body.style.overflow = '';
+	}
+
+	function nextPerson() {
+		const newIndex = (currentIndex + 1) % totalPeople;
+		updateModal(newIndex);
+	}
+
+	function prevPerson() {
+		const newIndex = (currentIndex - 1 + totalPeople) % totalPeople;
+		updateModal(newIndex);
+	}
+
+	// Attach click listeners to cards
+	document.querySelectorAll('.person-card').forEach(card => {
+		card.addEventListener('click', () => {
+			const index = parseInt(card.getAttribute('data-index') || '0');
+			openModal(index);
+		});
+	});
+
+	// Modal event listeners
+	modalClose?.addEventListener('click', closeModal);
+	modalPrev?.addEventListener('click', (e) => { e.stopPropagation(); prevPerson(); });
+	modalNext?.addEventListener('click', (e) => { e.stopPropagation(); nextPerson(); });
+	
+	// Close on backdrop click
+	modal?.addEventListener('click', (e) => {
+		if (e.target === modal) closeModal();
+	});
+
+	// Keyboard navigation
+	document.addEventListener('keydown', (e) => {
+		if (!modal?.classList.contains('open')) return;
+		
+		if (e.key === 'Escape') closeModal();
+		if (e.key === 'ArrowLeft') prevPerson();
+		if (e.key === 'ArrowRight') nextPerson();
+	});
+</script>

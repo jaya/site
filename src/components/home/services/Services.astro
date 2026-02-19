@@ -2,6 +2,11 @@
 import { Image } from 'astro:assets'
 import servicesImg from '@/assets/home/services.png'
 import { withBase } from '@/utils/url'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, getLocalizedPath } from '@/i18n/utils'
+
+const locale = getLocale(Astro)
+const translations = await getTranslations(locale)
 ---
 
 <style>
@@ -73,59 +78,40 @@ import { withBase } from '@/utils/url'
 				<Image src={servicesImg} alt="Services" class="services-image" id="services-image" />
 			</div>
 			<div class="text-white lg:w-3/4 lg:max-w-[726px]">
-				<h2 class="service-title">Services</h2>
+				<h2 class="service-title">{t(translations, 'home.services.title')}</h2>
 				<h3 class="my-8 text-3xl font-bold">
-					mission-driven nearshoring for high-impact projects.
+					{t(translations, 'home.services.subtitle')}
 				</h3>
 				<p>
-					At Jaya, software is more than lines of code, it's a strategic asset built with intention,
-					precision, and purpose. Our <b>conscious software engineering model</b> blends technical excellence
-					with human understanding, enabling teams to collaborate better, ship faster, and deliver real
-					business outcomes. With a nearshore structure, we work in sync with your operations, bridging
-					cultural and timezone gaps to create long-term value from day one.
+					<Fragment set:html={t(translations, 'home.services.description')} />
 				</p>
 			</div>
 		</div>
 		<div class="services-list">
 			<div class="service-item">
-				<h3 class="service-item-title"><i>nearshore</i> <b>staff augmentation</b></h3>
+				<h3 class="service-item-title"><Fragment set:html={t(translations, 'home.services.service1.title')} /></h3>
 				<p class="service-item-text">
-					Beyond filling roles, we connect companies with nearshore talent across developers, tech
-					leads, and staff engineers, professionals who combine strong technical skills with high
-					cultural alignment.
-					<br />
-					<br />
-					Through a rigorous recruitment process, we ensure top-tier talent with English fluency, long-term
-					retention, and the stability needed to build high-performing teams.
+					<Fragment set:html={t(translations, 'home.services.service1.text')} />
 				</p>
 			</div>
 
 			<div class="service-item">
-				<h3 class="service-item-title"><b>outsourcing</b></h3>
+				<h3 class="service-item-title"><Fragment set:html={t(translations, 'home.services.service2.title')} /></h3>
 				<p class="service-item-text">
-					We deliver engineering squads managed by Jaya, composed of developers, tech leads, and
-					staff engineers.
-					<br />
-					<br />
-					Our squads integrate seamlessly with the client’s product managers, designers, and QA teams,
-					ensuring technical rigor, cultural alignment, and speed to scale strategic projects with confidence.
+					<Fragment set:html={t(translations, 'home.services.service2.text')} />
 				</p>
 			</div>
 
 			<div class="service-item">
-				<h3 class="service-item-title"><b>artificial intelligence</b></h3>
+				<h3 class="service-item-title"><Fragment set:html={t(translations, 'home.services.service3.title')} /></h3>
 				<p class="service-item-text">
-					We provide developers and engineers to support client projects in AI. Our expertise covers
-					intelligent agents, machine learning, computer vision, and integration with LLMs and
-					Generative AI.
-					<br />
-					<br />
-					With strong technical skills and cultural alignment, our teams help companies accelerate innovation
-					and deliver real impact.
+					<Fragment set:html={t(translations, 'home.services.service3.text')} />
 				</p>
 			</div>
 		</div>
-		<a href={withBase('contact')} class="btn-read-more">Let's talk</a>
+		<a href={withBase(getLocalizedPath('contact', locale))} class="btn-read-more">
+			{t(translations, 'common.letsTalk')}
+		</a>
 	</div>
 </section>
 

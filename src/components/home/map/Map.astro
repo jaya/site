@@ -1,6 +1,11 @@
 ---
 import MapElement from './MapElement.astro'
 import { withBase } from '@/utils/url'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, getLocalizedPath } from '@/i18n/utils'
+
+const locale = getLocale(Astro)
+const translations = await getTranslations(locale)
 ---
 
 <style>
@@ -73,29 +78,31 @@ import { withBase } from '@/utils/url'
 	<div class="container">
 		<div class="layout">
 			<div class="content">
-				<h2 class="driving-subtitle">Driving results nationwide</h2>
+				<h2 class="driving-subtitle">{t(translations, 'home.map.subtitle')}</h2>
 				<h3 class="driving-title">
-					<b>our</b>
-					<i>presence</i><br />
-					<i>across</i>
-					<b>america</b>
+					<b>{t(translations, 'home.map.title1')}</b>
+					<i>{t(translations, 'home.map.title2')}</i><br />
+					<i>{t(translations, 'home.map.title3')}</i>
+					<b>{t(translations, 'home.map.title4')}</b>
 				</h3>
 				<p class="driving-text">
-					Jaya's nearshore teams are already delivering impact across the U.S. from California to
-					New York.
+					{t(translations, 'home.map.text1')}
 				</p>
 
 				<p class="driving-text mt-5">
-					Our remote-native model ensures timezone-aligned delivery, seamless collaboration, and
-					long-term value wherever your team is based.
+					{t(translations, 'home.map.text2')}
 				</p>
 
-				<a class="btn-get-in-touch" href={withBase('contact')}>Get in touch</a>
+				<a class="btn-get-in-touch" href={withBase(getLocalizedPath('contact', locale))}>
+					{t(translations, 'common.getInTouch')}
+				</a>
 			</div>
 			<div class="map-container">
 				<MapElement />
 			</div>
-			<a class="btn-get-in-touch btn-mobile" href={withBase('contact')}>Get in touch</a>
+			<a class="btn-get-in-touch btn-mobile" href={withBase(getLocalizedPath('contact', locale))}>
+				{t(translations, 'common.getInTouch')}
+			</a>
 		</div>
 	</div>
 

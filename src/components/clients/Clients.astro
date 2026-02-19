@@ -76,6 +76,11 @@ const brasilClients = [
 	{ image: tmov, alt: 'TMov' },
 	{ image: vagas, alt: 'Vagas' }
 ]
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale } from '@/i18n/utils'
+
+const locale = getLocale(Astro)
+const translations = await getTranslations(locale)
 ---
 
 <style>
@@ -149,17 +154,16 @@ const brasilClients = [
 
 <section class="clients-section px-10 py-20">
 	<div class="container">
-		<div class="clients-subtitle">Trusted by innovators</div>
-		<h2 class="clients-title">our clients</h2>
+		<div class="clients-subtitle">{t(translations, 'home.clients.subtitle')}</div>
+		<h2 class="clients-title">{t(translations, 'home.clients.title')}</h2>
 		<p class="text-center">
-			We partner with forward-thinking companies in finance, logistics, healthcare, retail, and
-			more,<br /> delivering long-term software solutions with real business impact.
+			<Fragment set:html={t(translations, 'home.clients.description')} />
 		</p>
 
 		<div class="tabs tabs-lift">
 			<label class="tab">
 				<input type="radio" name="my_tabs_4" checked="checked" />
-				<Image src={usaFlag} alt="Client 1" class="flag" />
+				<Image src={usaFlag} alt={t(translations, 'home.clients.usaFlag')} class="flag" />
 			</label>
 			<div class="tab-content bg-base-100 border-base-300 p-6">
 				<div class="clients-grid">
@@ -173,7 +177,7 @@ const brasilClients = [
 
 			<label class="tab">
 				<input type="radio" name="my_tabs_4" />
-				<Image src={brasilFlag} alt="Client 1" class="flag" />
+				<Image src={brasilFlag} alt={t(translations, 'home.clients.brazilFlag')} class="flag" />
 			</label>
 			<div class="tab-content bg-base-100 border-base-300 p-6">
 				<div class="clients-grid">

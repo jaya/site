@@ -1,5 +1,10 @@
 ---
+import { withBase } from '@/utils/url'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, getLocalizedPath } from '@/i18n/utils'
 
+const locale = getLocale(Astro)
+const translations = await getTranslations(locale)
 ---
 
 <style>
@@ -64,25 +69,15 @@
 			<div class="text-box w-1/2 pt-[210px]">
 				<div class="text-box-container">
 					<h1>
-						<b
-							>at Jaya Tech, <br />
-							we believe</b
-						>
-						<i>that<br /> technology only makes<br /> sense when<br /></i>
-						<b>it transforms lives.</b>
+						<Fragment set:html={t(translations, 'about.hero.titleHtml')} />
 					</h1>
 
 					<h2>
-						<i>more than developing software,</i><br /><b
-							>we create innovative solutions<br />
-							that drive startups and disruptive<br /> projects,</b
-						>
-						<i
-							>always with a human<br />
-							and strategic approach.</i
-						>
+						<Fragment set:html={t(translations, 'about.hero.subtitleHtml')} />
 					</h2>
-					<a class="btn-get-in-touch">Get in touch</a>
+					<a href={withBase(getLocalizedPath('contact', locale))} class="btn-get-in-touch">
+						{t(translations, 'about.hero.cta')}
+					</a>
 				</div>
 			</div>
 			<div class="image-box relative w-1/2">

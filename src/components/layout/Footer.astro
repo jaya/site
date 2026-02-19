@@ -5,9 +5,14 @@ import githubIcon from '@/assets/icons/github.svg'
 import mediumIcon from '@/assets/icons/medium.svg'
 import { withBase } from '@/utils/url'
 import { socialLinks } from '@/data/social-links'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, getLocalizedPath } from '@/i18n/utils'
+
+const locale = getLocale(Astro)
+const translations = await getTranslations(locale)
 
 const currentPath = Astro.url.pathname
-const isContactPage = currentPath.includes('/contact')
+const isContactPage = currentPath.includes(getLocalizedPath('contact', locale))
 ---
 
 <style>
@@ -27,7 +32,8 @@ const isContactPage = currentPath.includes('/contact')
 		}
 
 		.lets-talk {
-			@apply text-primary text-8xl font-bold;
+			@apply max-w-[12ch] md:max-w-none;
+			@apply text-primary text-5xl leading-tight font-bold lg:text-8xl;
 		}
 
 		.btn-contact {
@@ -83,15 +89,15 @@ const isContactPage = currentPath.includes('/contact')
 </style>
 
 <footer
-	class={`footer-section ${isContactPage ? 'bg-primary text-white' : 'bg-neutral-light pb-10'}`}
+	class={`footer-section ${isContactPage ? 'bg-primary text-white' : 'bg-neutral-light py-10'}`}
 >
 	<div class="container">
 		{
 			!isContactPage && (
 				<div class="footer-main">
 					<div class="footer-main-content">
-						<div class="lets-talk">let's talk</div>
-						<a href={withBase('contact')} class="btn-contact">
+						<div class="lets-talk">{t(translations, 'footer.letsTalk')}</div>
+						<a href={withBase(getLocalizedPath('contact', locale))} class="btn-contact">
 							<svg
 								class="icon"
 								width="20"
@@ -112,13 +118,13 @@ const isContactPage = currentPath.includes('/contact')
 					</div>
 					<div class="address-container">
 						<div class="address-item mb-5">
-							<div>Austin, TX - USA</div>
+							<div>{t(translations, 'footer.address.us')}</div>
 							<div>
 								<strong>+1 (512) 555-1212</strong>
 							</div>
 						</div>
 						<div class="address-item">
-							<div>São Paulo, SP - Brazil</div>
+							<div>{t(translations, 'footer.address.br')}</div>
 							<div>
 								<strong>+55(11) 333-1212</strong>
 							</div>
@@ -131,16 +137,20 @@ const isContactPage = currentPath.includes('/contact')
 			<nav>
 				<ul class="footer-menu">
 					<li>
-						<a href={`${withBase('')}#services`} data-astro-reload>services</a>
+						<a href={`${withBase(getLocalizedPath('/', locale))}#services`} data-astro-reload>
+							{t(translations, 'footer.services')}
+						</a>
 					</li>
 					<li>
-						<a href={socialLinks.medium} target="_blank">blog</a>
+						<a href={socialLinks.medium} target="_blank">{t(translations, 'footer.blog')}</a>
 					</li>
 					<li>
-						<a href={socialLinks.linkedin} target="_blank">culture</a>
+						<a href={withBase(getLocalizedPath('culture', locale))}>{t(translations, 'footer.culture')}</a>
 					</li>
 					<li>
-						<a href={withBase('contact')}>contact</a>
+						<a href={withBase(getLocalizedPath('contact', locale))}>
+							{t(translations, 'footer.contact')}
+						</a>
 					</li>
 				</ul>
 			</nav>

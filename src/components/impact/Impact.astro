@@ -6,6 +6,11 @@ import healthtechImg from '@/assets/home/healthtech.png'
 import retailImg from '@/assets/home/retail.png'
 import saasImg from '@/assets/home/saas.png'
 import { withBase } from '@/utils/url'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale } from '@/i18n/utils'
+
+const locale = getLocale(Astro)
+const translations = await getTranslations(locale)
 ---
 
 <style>
@@ -103,23 +108,16 @@ import { withBase } from '@/utils/url'
 	<div class="container">
 		<div class="flex flex-row gap-10">
 			<div class="text-white lg:w-2/3 lg:max-w-[690px]">
-				<h1 class="impact-subtitle">Real Impact</h1>
-				<h2 class="impact-title">where <b>we make</b> an impact</h2>
+				<h1 class="impact-subtitle">{t(translations, 'home.impact.subtitle')}</h1>
+				<h2 class="impact-title"><Fragment set:html={t(translations, 'home.impact.title')} /></h2>
 				<p class="text-primary">
-					The digital revolution is driven by technology, innovation, and agility. That's why Jaya
-					Tech connects companies with highly qualified development squads, ready to create, scale,
-					and maintain secure, modern digital products tailored to the unique demands of each
-					business.
+					{t(translations, 'home.impact.description1')}
 				</p>
 				<p class="impact-description-bold">
-					We partner with organizations to deliver custom solutions for management, automation, user
-					experience, and data-driven results.
+					{t(translations, 'home.impact.description2')}
 				</p>
 				<p class="text-primary">
-					Our expertise allows us to accelerate time-to-market, ensure compliance, and deliver
-					innovative experiences, always focusing on security, performance, and scalability. Whether
-					you want to launch a new product, enhance your processes, or turn data into value, Jaya
-					Tech is the ideal partner for companies looking to go beyond the ordinary.
+					{t(translations, 'home.impact.description3')}
 				</p>
 			</div>
 			<div class="hidden text-white lg:block lg:w-1/3">
@@ -136,28 +134,28 @@ import { withBase } from '@/utils/url'
 				<div class="solution-container">
 					<Image src={fintechImg} alt="Fintech Image" class="w-[430px]" />
 				</div>
-				<div class="solution-item-text">fintech</div>
+				<div class="solution-item-text">{t(translations, 'nav.fintech')}</div>
 			</a>
 			<a href={withBase('healthtech')} class="solution-item">
 				<div class="solution-container">
 					<Image src={healthtechImg} alt="Healthtech Image" class="w-[430px]" />
 				</div>
-				<div class="solution-item-text">healthtech</div>
+				<div class="solution-item-text">{t(translations, 'nav.healthtech')}</div>
 			</a>
 			<a href={withBase('retail')} class="solution-item">
 				<div class="solution-container">
 					<Image src={retailImg} alt="Retail Image" class="w-[430px]" />
 				</div>
-				<div class="solution-item-text">retail</div>
+				<div class="solution-item-text">{t(translations, 'nav.retail')}</div>
 			</a>
 			<a href={withBase('saas')} class="solution-item">
 				<div class="solution-container">
 					<Image src={saasImg} alt="SaaS Image" class="w-[430px]" />
 				</div>
-				<div class="solution-item-text">SaaS</div>
+				<div class="solution-item-text">{t(translations, 'nav.saas')}</div>
 			</a>
 		</div>
-		<a href={withBase('fintech')} class="btn-see-more">See how we delivery accross industries</a>
+		<a href={withBase('fintech')} class="btn-see-more">{t(translations, 'home.impact.cta')}</a>
 	</div>
 </section>
 

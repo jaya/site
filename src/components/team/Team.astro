@@ -2,6 +2,11 @@
 import { Image } from 'astro:assets'
 import teamImg from '@/assets/home/team.png'
 import { socialLinks } from '@/data/social-links'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale } from '@/i18n/utils'
+
+const locale = getLocale(Astro)
+const translations = await getTranslations(locale)
 ---
 
 <style>
@@ -57,13 +62,12 @@ import { socialLinks } from '@/data/social-links'
 
 <section class="team-section">
 	<div class="content">
-		<div class="team-subtitle">Great People Build Great Products</div>
-		<h2 class="team-title"><b>we develop people</b> <i>while they</i> <b>develop software</b></h2>
+		<div class="team-subtitle">{t(translations, 'home.team.subtitle')}</div>
+		<h2 class="team-title"><Fragment set:html={t(translations, 'home.team.title')} /></h2>
 		<p class="team-description">
-			Get to know how our people-first culture fuels performance, creating committed, resilient
-			teams with low turnover and high delivery consistency.
+			{t(translations, 'home.team.description')}
 		</p>
-		<a href={socialLinks.linkedin} target="_blank" class="btn-see-more">Meet our culture</a>
+		<a href={socialLinks.linkedin} target="_blank" class="btn-see-more">{t(translations, 'home.team.cta')}</a>
 	</div>
 	<div class="team-grid lg:container">
 		<Image src={teamImg} alt="Team Image" class="team-image" />

@@ -1,5 +1,10 @@
 ---
 import { withBase } from '@/utils/url'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, getLocalizedPath } from '@/i18n/utils'
+
+const locale = getLocale(Astro)
+const translations = await getTranslations(locale)
 ---
 
 <style>
@@ -75,41 +80,40 @@ import { withBase } from '@/utils/url'
 <section class="what-drives-us-section">
 	<div class="content-container">
 		<div class="text-content">
-			<h2>what drives us?</h2>
+			<h2>{t(translations, 'about.drives.title')}</h2>
 			<p class="intro-text">
-				Our commitment is to connect people, boost careers and transform businesses with innovation
-				and purpose. We offer strategic solutions for startups and disruptive projects, combining
-				humanized software engineering and a highly qualified team to develop products that make a
-				difference.
+				{t(translations, 'about.drives.intro')}
 			</p>
 
 			<div class="principles-grid">
 				<div class="principle-box">
 					<div class="principle-text">
-						<b>Technology with Purpose</b>: We create solutions that generate value and real impact.
+						<Fragment set:html={t(translations, 'about.drives.principle1')} />
 					</div>
 				</div>
 
 				<div class="principle-box">
 					<div class="principle-text">
-						<b>Continuous Innovation</b>: We are always learning, testing and evolving.
+						<Fragment set:html={t(translations, 'about.drives.principle2')} />
 					</div>
 				</div>
 
 				<div class="principle-box">
 					<div class="principle-text">
-						<b>Collaboration and Diversity</b>: We unite global talents in remote and agile teams.
+						<Fragment set:html={t(translations, 'about.drives.principle3')} />
 					</div>
 				</div>
 
 				<div class="principle-box">
 					<div class="principle-text">
-						<b>Transparency and Ethics</b>: We build relationships based on trust and respect.
+						<Fragment set:html={t(translations, 'about.drives.principle4')} />
 					</div>
 				</div>
 			</div>
 
-			<a href={withBase('contact')} class="btn-get-in-touch">Get in touch</a>
+			<a href={withBase(getLocalizedPath('contact', locale))} class="btn-get-in-touch">
+				{t(translations, 'about.drives.cta')}
+			</a>
 		</div>
 
 		<div class="image-content">

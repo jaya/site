@@ -1,0 +1,309 @@
+---
+import GalleryItem from './GalleryItem.astro'
+import GalleryModal from './GalleryModal.astro'
+import type { ImageMetadata } from 'astro'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, type Locale } from '@/i18n/utils'
+
+interface Props {
+	locale?: Locale
+}
+
+const { locale: propLocale } = Astro.props
+const locale = propLocale ?? getLocale(Astro)
+const translations = await getTranslations(locale)
+
+// Types
+type LayoutType = 'tall' | 'stacked' | 'triple'
+type WidthClass = 'narrow' | 'normal' | 'wide'
+
+interface LayoutPattern {
+	type: LayoutType
+	width: WidthClass
+}
+
+interface GalleryImageData {
+	src: string
+	alt: string
+	globalIndex: number
+}
+
+interface Column {
+	widthClass: WidthClass
+	type: LayoutType
+	items: GalleryImageData[]
+}
+
+// 1. Image Discovery
+const cultureImages = import.meta.glob<{ default: ImageMetadata }>(
+	'/src/assets/culture/people/*.{jpeg,jpg,png,webp,svg,JPG}',
+	{ eager: true }
+)
+const images = Object.values(cultureImages)
+
+// 2. Layout Definitions
+const LAYOUT_SEQUENCE: LayoutPattern[] = [
+	{ type: 'tall', width: 'normal' },
+	{ type: 'stacked', width: 'normal' },
+	{ type: 'triple', width: 'wide' },
+	{ type: 'tall', width: 'wide' },
+	{ type: 'tall', width: 'narrow' },
+	{ type: 'stacked', width: 'wide' },
+	{ type: 'tall', width: 'normal' },
+	{ type: 'tall', width: 'wide' },
+	{ type: 'stacked', width: 'narrow' },
+]
+
+// 3. Column Builder Logic
+const columns: Column[] = []
+let currentImgIndex = 0
+let currentLayoutIndex = 0
+
+while (currentImgIndex < images.length) {
+	const layout = LAYOUT_SEQUENCE[currentLayoutIndex % LAYOUT_SEQUENCE.length]
+	const itemsNeeded = layout.type === 'triple' ? 3 : (layout.type === 'stacked' ? 2 : 1)
+	
+	// Grab requested slices, fall back if not enough images left
+	const colImages = images.slice(currentImgIndex, currentImgIndex + itemsNeeded)
+	const finalType: LayoutType = colImages.length === 3 ? 'triple' : (colImages.length === 2 ? 'stacked' : 'tall')
+
+	columns.push({
+		widthClass: layout.width,
+		type: finalType,
+		items: colImages.map((mod, i) => ({
+			src: mod.default.src,
+			alt: `Culture image ${currentImgIndex + i + 1}`,
+			globalIndex: currentImgIndex + i
+		}))
+	})
+
+	currentImgIndex += colImages.length
+	currentLayoutIndex++
+}
+---
+
+<style>
+	@reference '@/styles/global.css';
+
+	.culture-gallery {
+		@apply relative py-20 bg-blue-light text-white;
+	}
+
+	.gallery-header {
+		@apply text-center max-w-3xl mx-auto py-20 px-10 lg:px-0;
+	}
+
+	.gallery-eyebrow {
+		@apply text-lg tracking-[0.25em] uppercase font-space-grotesk;
+	}
+
+	.gallery-title {
+		@apply my-10 text-lg font-bold tracking-[-0.02em] lg:text-5xl;
+	}
+
+	.gallery-text {
+		@apply mt-4 text-sm leading-relaxed lg:text-base;
+	}
+
+	.gallery-container {
+		@apply mt-12 relative w-full;
+	}
+
+	.gallery-scroll-wrapper {
+		@apply overflow-x-auto overflow-y-hidden pb-6 scroll-smooth;
+		@apply cursor-grab active:cursor-grabbing;
+		@apply select-none; /* Prevent text selection while dragging */
+		scrollbar-width: none;
+		-webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+		&::-webkit-scrollbar { display: none; }
+	}
+
+	.masonry-grid {
+		@apply flex h-[500px] md:h-[700px] px-4 gap-2 md:gap-3;
+	}
+
+	.gallery-col {
+		@apply flex-shrink-0 h-full flex flex-col gap-2 md:gap-3;
+		
+		&.narrow { @apply w-[140px] md:w-[180px]; }
+		&.normal { @apply w-[220px] md:w-[300px]; }
+		&.wide   { @apply w-[300px] md:w-[420px]; }
+
+		/* Specific layout heights */
+		&.tall > :global(.gallery-item) { @apply h-full; }
+		&.stacked > :global(.gallery-item) { @apply h-1/2; }
+		&.triple > :global(.gallery-item) { @apply h-1/2; }
+	}
+
+	.gallery-controls {
+		@apply flex items-center justify-center gap-6 mt-8;
+	}
+
+	.gallery-btn {
+		@apply flex items-center justify-center h-10 w-10 bg-transparent text-white border border-white rounded-full transition-transform cursor-pointer;
+		&:hover { @apply scale-105 bg-white/10; }
+	}
+</style>
+
+<section class="culture-gallery" id="culture-gallery">
+	<div class="container">
+		<div class="gallery-header">
+			<p class="gallery-eyebrow">{t(translations, 'culture.gallery.eyebrow')}</p>
+			<h2 class="gallery-title">
+				<Fragment set:html={t(translations, 'culture.gallery.title')} />
+			</h2>
+			<p class="gallery-text">{t(translations, 'culture.gallery.description')}</p>
+		</div>
+	</div>
+
+	<div class="gallery-container">
+		<div class="gallery-scroll-wrapper" id="gallery-scroll">
+			<div class="masonry-grid" id="masonry-grid">
+				{columns.map((col) => (
+					<div class={`gallery-col ${col.widthClass} ${col.type}`}>
+						{col.type === 'tall' && (
+							<GalleryItem {...col.items[0]} index={col.items[0].globalIndex} />
+						)}
+
+						{col.type === 'stacked' && col.items.map((item) => (
+							<GalleryItem {...item} index={item.globalIndex} />
+						))}
+
+						{col.type === 'triple' && (
+							<>
+								<div class="flex gap-2 md:gap-3 h-1/2">
+									<GalleryItem {...col.items[0]} index={col.items[0].globalIndex} class="w-1/2" />
+									<GalleryItem {...col.items[1]} index={col.items[1].globalIndex} class="w-1/2" />
+								</div>
+								<GalleryItem {...col.items[2]} index={col.items[2].globalIndex} class="h-1/2" />
+							</>
+						)}
+					</div>
+				))}
+			</div>
+		</div>
+
+		<div class="gallery-controls">
+			<button class="gallery-btn" type="button" id="prev-btn" aria-label="Previous photos">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+					<path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</button>
+			<button class="gallery-btn" type="button" id="next-btn" aria-label="Next photos">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+					<path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</button>
+		</div>
+	</div>
+
+	<GalleryModal />
+</section>
+
+<script>
+	// Constants
+	const SCROLL_AMOUNT = 400;
+	const DRAG_THRESHOLD = 5;
+	const SCROLL_SPEED_MULTIPLIER = 2;
+
+	// DOM Elements
+	const scrollContainer = document.getElementById('gallery-scroll') as HTMLElement | null;
+	const prevBtn = document.getElementById('prev-btn');
+	const nextBtn = document.getElementById('next-btn');
+
+	// ============================================
+	// Button Controls
+	// ============================================
+	const setupButtonControls = () => {
+		if (!scrollContainer) return;
+
+		const scroll = (direction: 'prev' | 'next') => {
+			const amount = direction === 'prev' ? -SCROLL_AMOUNT : SCROLL_AMOUNT;
+			scrollContainer.scrollBy({ left: amount, behavior: 'smooth' });
+		};
+
+		prevBtn?.addEventListener('click', () => scroll('prev'));
+		nextBtn?.addEventListener('click', () => scroll('next'));
+	};
+
+	// ============================================
+	// Prevent Native Image Dragging
+	// ============================================
+	const disableImageDragging = () => {
+		if (!scrollContainer) return;
+
+		scrollContainer.querySelectorAll('img').forEach(img => {
+			img.addEventListener('dragstart', (e) => e.preventDefault());
+		});
+	};
+
+	// ============================================
+	// Mouse Drag Scrolling
+	// ============================================
+	const setupDragScrolling = () => {
+		if (!scrollContainer) return;
+
+		const state = {
+			isDown: false,
+			startX: 0,
+			scrollLeft: 0,
+			hasMoved: false
+		};
+
+		const handleMouseDown = (e: MouseEvent) => {
+			if (e.button !== 0) return; // Only left mouse button
+
+			state.isDown = true;
+			state.hasMoved = false;
+			scrollContainer.classList.add('active');
+			state.startX = e.pageX - scrollContainer.offsetLeft;
+			state.scrollLeft = scrollContainer.scrollLeft;
+		};
+
+		const handleMouseUp = () => {
+			state.isDown = false;
+			scrollContainer.classList.remove('active');
+		};
+
+		const handleMouseMove = (e: MouseEvent) => {
+			if (!state.isDown) return;
+			e.preventDefault();
+
+			const x = e.pageX - scrollContainer.offsetLeft;
+			const distance = (x - state.startX) * SCROLL_SPEED_MULTIPLIER;
+
+			// Mark as drag if moved beyond threshold
+			if (Math.abs(distance) > DRAG_THRESHOLD) {
+				state.hasMoved = true;
+			}
+
+			scrollContainer.scrollLeft = state.scrollLeft - distance;
+		};
+
+		const preventClickAfterDrag = (e: MouseEvent) => {
+			if (state.hasMoved) {
+				e.preventDefault();
+				e.stopPropagation();
+			}
+		};
+
+		// Attach listeners
+		scrollContainer.addEventListener('mousedown', handleMouseDown);
+		scrollContainer.addEventListener('mouseleave', handleMouseUp);
+		scrollContainer.addEventListener('mouseup', handleMouseUp);
+		scrollContainer.addEventListener('mousemove', handleMouseMove);
+		scrollContainer.addEventListener('click', preventClickAfterDrag, true);
+	};
+
+	// ============================================
+	// Initialize
+	// ============================================
+	setupButtonControls();
+	disableImageDragging();
+	setupDragScrolling();
+</script>
+
+
+
+
+

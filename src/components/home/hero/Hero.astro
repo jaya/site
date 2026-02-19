@@ -3,6 +3,11 @@ import heroLeftImg from '@/assets/home/hero-left.png'
 import heroRightImg from '@/assets/home/hero-right.png'
 import { Image } from 'astro:assets'
 import { withBase } from '@/utils/url'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, getLocalizedPath } from '@/i18n/utils'
+
+const locale = getLocale(Astro)
+const translations = await getTranslations(locale)
 ---
 
 <style>
@@ -19,10 +24,16 @@ import { withBase } from '@/utils/url'
 			@apply text-primary text-center text-5xl leading-[0.9] tracking-[-2px];
 
 			.slide-from-left {
+				@apply max-w-[12ch];
+				@apply mx-auto;
+				@apply text-4xl lg:text-5xl;
 				animation: slideFromLeft 2s forwards;
 			}
 
 			.slide-from-right {
+				@apply max-w-[12ch];
+				@apply mx-auto;
+				@apply text-4xl lg:text-5xl;
 				animation: slideFromRight 2s forwards;
 			}
 		}
@@ -36,14 +47,14 @@ import { withBase } from '@/utils/url'
 		.hero-left-image {
 			@apply absolute hidden lg:block;
 			@apply top-[35%] left-[-100px];
-			@apply h-[260px] w-[275px];
+			@apply w-[275px] h-auto;
 			animation: slideInFromRight 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 		}
 
 		.hero-right-image {
 			@apply absolute hidden lg:block;
 			@apply top-[20%] right-[-100px];
-			@apply h-[260px] w-[275px];
+			@apply w-[275px] h-auto;
 			animation: slideInFromLeft 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 		}
 
@@ -103,16 +114,12 @@ import { withBase } from '@/utils/url'
 <section class="hero-section">
 	<div class="relative container">
 		<div class="hero-text">
-			<div class="slide-from-left"><b>reliable nearshore developers</b></div>
-			<div class="slide-from-right"><i>for long-term partnerships </i></div>
+			<div class="slide-from-left"><b>{t(translations, 'home.hero.title1')}</b></div>
+			<div class="slide-from-right"><i>{t(translations, 'home.hero.title2')}</i></div>
 		</div>
 
 		<div class="hero-description">
-			Jaya is a fully remote software consulting company specializing in
-			<b>nearshore staff augmentation, outsourcing and AI development.</b><br />
-			Since 2012, we've helped companies scale with handpicked engineering talent and stable, high-performing
-			teams. From fintech and healthtech to retail, SaaS... and beyond.
-			<b>Our squads deliver with speed, cultural alignment, and a long-term mindset.</b>
+			<Fragment set:html={t(translations, 'home.hero.description')} />
 		</div>
 
 		<Image
@@ -129,28 +136,32 @@ import { withBase } from '@/utils/url'
 		<div class="statistics-section">
 			<div class="statistic-item">
 				<div class="statistic-number-container">
-					<div class="statistic-number">9</div>
-				</div>
-				<div class="statistic-text">years of<br /> <b>nearshore<br /> experience</b></div>
-			</div>
-			<div class="statistic-item">
-				<div class="statistic-number-container">
 					<div class="statistic-number">14</div>
 				</div>
-				<div class="statistic-text"><b>U.S clients</b><br />served</div>
+				<div class="statistic-text">
+					<Fragment set:html={t(translations, 'home.hero.stat1')} />
+				</div>
 			</div>
 			<div class="statistic-item">
 				<div class="statistic-number-container">
-					<div class="statistic-number">100</div>
+					<div class="statistic-number">30</div>
 				</div>
 				<div class="statistic-text">
-					<b>engineers allocated</b><br /> to U.S. product<br />squads
+					<Fragment set:html={t(translations, 'home.hero.stat2')} />
+				</div>
+			</div>
+			<div class="statistic-item">
+				<div class="statistic-number-container">
+					<div class="statistic-number">300</div>
+				</div>
+				<div class="statistic-text">
+					<Fragment set:html={t(translations, 'home.hero.stat3')} />
 				</div>
 			</div>
 		</div>
 
-		<a href={withBase('contact')} class="contact-button">
-			Let's transform your business? Contact Us
+		<a href={withBase(getLocalizedPath('contact', locale))} class="contact-button">
+			{t(translations, 'home.hero.cta')}
 		</a>
 	</div>
 </section>

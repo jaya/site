@@ -1,0 +1,105 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import ServiceHero from '@/components/services/ServiceHero.astro'
+import { Image } from 'astro:assets'
+import fintechImg from '@/assets/fintech/fintech.png'
+import fintechClientsImg from '@/assets/fintech/fintech-clients.png'
+import ServiceClients from '@/components/services/ServiceClients.astro'
+import ServiceExperience from '@/components/services/ServiceExperience.astro'
+import fintechExperienceImg from '@/assets/fintech/fintech-experience.png'
+import Impact from '@/components/impact/Impact.astro'
+import Team from '@/components/team/Team.astro'
+import { getTranslations, t } from '@/i18n/translations'
+import type { Locale } from '@/i18n/utils'
+
+interface Props {
+	locale: Locale
+}
+
+const { locale } = Astro.props
+const translations = await getTranslations(locale)
+---
+
+<Layout
+	title={t(translations, 'fintech.title')}
+	description={t(translations, 'fintech.description')}
+>
+	<main class="nav-padding">
+		<ServiceHero>
+			<Image src={fintechImg} alt="Fintech" slot="hero-image" />
+			<div
+				slot="hero-title"
+				set:html={`
+				<b>${t(translations, 'fintech.hero.title1')}</b>
+				<i>
+					${t(translations, 'fintech.hero.title2')}
+					<br /> ${t(translations, 'fintech.hero.title3')}
+				</i>
+				<b>${t(translations, 'fintech.hero.title4')}</b>
+			`}
+			></div>
+			<div class="statistics-section" slot="hero-statistics">
+				<div class="statistic-item">
+					<div class="statistic-number-container">
+						<div class="statistic-number">100M</div>
+					</div>
+					<div
+						class="statistic-text"
+						set:html={`<b>${t(translations, 'fintech.hero.stat1')}</b><br /><i>${t(translations, 'fintech.hero.stat1Label')}</i>`}
+					></div>
+				</div>
+				<div class="statistic-item">
+					<div class="statistic-number-container">
+						<div class="statistic-number">30</div>
+					</div>
+					<div
+						class="statistic-text"
+						set:html={`<i>${t(translations, 'fintech.hero.stat2')}</i> <b>${t(translations, 'fintech.hero.stat2Label')}</b>`}
+					></div>
+				</div>
+				<div class="statistic-item">
+					<div class="statistic-number-container">
+						<div class="statistic-number">10</div>
+					</div>
+					<div
+						class="statistic-text"
+						set:html={`<b>${t(translations, 'fintech.hero.stat3')}</b><br /><i>${t(translations, 'fintech.hero.stat3Label')}</i>`}
+					></div>
+				</div>
+			</div>
+		</ServiceHero>
+		<ServiceClients>
+			<Image src={fintechClientsImg} alt="Fintech Clients" slot="clients-image" />
+		</ServiceClients>
+		<ServiceExperience>
+			<Image
+				src={fintechExperienceImg}
+				alt="Fintech Experience"
+				slot="experience-image"
+				class="experience-image"
+			/>
+
+			<h2
+				class="experience-title"
+				slot="experience-title"
+				set:html={`
+				<b>${t(translations, 'fintech.experience.title1')}</b>
+				<i>${t(translations, 'fintech.experience.title2')}</i>
+				<b>${t(translations, 'fintech.experience.title3')}</b>
+			`}
+			></h2>
+			<p class="experience-text" slot="experience-text" set:html={t(translations, 'fintech.experience.text')}></p>
+			<div class="experience-why" slot="experience-why">
+				<h2 class="experience-why-title" set:html={t(translations, 'fintech.experience.whyTitle')}></h2>
+				<div class="experience-why-list">
+					<div class="experience-why-item" set:html={t(translations, 'fintech.experience.why1')}></div>
+					<div class="experience-why-item" set:html={t(translations, 'fintech.experience.why2')}></div>
+					<div class="experience-why-item" set:html={t(translations, 'fintech.experience.why3')}></div>
+					<div class="experience-why-item" set:html={t(translations, 'fintech.experience.why4')}></div>
+				</div>
+			</div>
+		</ServiceExperience>
+		<Impact />
+		<Team />
+	</main>
+</Layout>

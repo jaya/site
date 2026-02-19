@@ -1,6 +1,8 @@
 ---
 import { withBase } from '@/utils/url'
 import { socialLinks } from '@/data/social-links'
+import { getTranslations, t } from '@/i18n/translations'
+import { getLocale, getLocalizedPath, localeBr } from '@/i18n/utils'
 
 export interface Props {
 	type: 'mobile' | 'desktop'
@@ -10,50 +12,71 @@ const { type } = Astro.props
 
 // Active link detection
 const currentPath = Astro.url.pathname
-const isActive = (href: string) => {
+const normalizePath = (path: string) => (path.length > 1 ? path.replace(/\/+$/, '') : path)
+const isActive = (href: string, exact = false) => {
 	const siteUrl = Astro.site?.toString() || ''
-	const path = href.replace(siteUrl, '')
-	const active = path === '' ? currentPath === '/' : currentPath.startsWith(path)
+	const path = normalizePath(href.replace(siteUrl, ''))
+	const normalizedCurrentPath = normalizePath(currentPath)
+	const active = exact
+		? normalizedCurrentPath === path
+		: normalizedCurrentPath === path || normalizedCurrentPath.startsWith(`${path}/`)
 	return active ? 'font-bold' : ''
 }
 
 // Navigation items
+const locale = getLocale(Astro)
+const translations = await getTranslations(locale)
+
 const navigationItems = [
 	{
-		label: 'services',
+		label: t(translations, 'nav.home'),
+		href: withBase(getLocalizedPath('/', locale)),
+		exact: true
+	},
+	{
+		label: t(translations, 'nav.services'),
 		type: 'dropdown',
 		children: [
-			{ label: 'fintech', href: withBase('fintech') },
-			{ label: 'healthtech', href: withBase('healthtech') },
-			{ label: 'retail', href: withBase('retail') },
-			{ label: 'saas', href: withBase('saas') }
+			{
+				label: t(translations, 'nav.fintech'),
+				href: withBase(getLocalizedPath('fintech', locale))
+			},
+			{
+				label: t(translations, 'nav.healthtech'),
+				href: withBase(getLocalizedPath('healthtech', locale))
+			},
+			{ label: t(translations, 'nav.retail'), href: withBase(getLocalizedPath('retail', locale)) },
+			{ label: t(translations, 'nav.saas'), href: withBase(getLocalizedPath('saas', locale)) }
 		]
 	},
 	{
-		label: 'blog',
+		label: t(translations, 'nav.blog'),
+		target: '_blank',
 		href: withBase('blog')
 	},
 	{
-		label: 'culture',
-		href: socialLinks.linkedin,
-		target: '_blank'
+		label: t(translations, 'nav.culture'),
+		href: withBase(getLocalizedPath('culture', locale))
 	},
 	{
-		label: 'contact',
-		href: withBase('contact')
-	}
+		label: t(translations, 'nav.contact'),
+		href: withBase(getLocalizedPath('contact', locale))
+	},
+	...(locale === localeBr
+		? [{ label: 'work with us', target: '_blank', href: socialLinks.linkedin, className: 'font-bold' }]
+		: [])
 ]
 ---
 
 {
 	type === 'mobile' ? (
 		// <!-- Mobile Navigation -->
-		<ul class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+		<ul class="menu menu-sm dropdown-content bg-white text-primary rounded-box z-1 mt-3 w-52 p-2 shadow">
 			{navigationItems.map((item) => (
 				<li>
 					{item.type === 'dropdown' ? (
 						<>
-							<a>{item.label}</a>
+							<button type="button">{item.label}</button>
 							<ul class="p-2">
 								{item.children?.map((child) => (
 									<li>
@@ -65,7 +88,11 @@ const navigationItems = [
 							</ul>
 						</>
 					) : (
-						<a href={item.href} class={isActive(item.href || '')} target={item.target}>
+						<a
+							href={item.href}
+							class={[isActive(item.href || '', item.exact), item.className].filter(Boolean).join(' ')}
+							target={item.target}
+						>
 							{item.label}
 						</a>
 					)}
@@ -91,7 +118,11 @@ const navigationItems = [
 							</ul>
 						</details>
 					) : (
-						<a href={item.href} class={isActive(item.href || '')} target={item.target}>
+						<a
+							href={item.href}
+							class={[isActive(item.href || '', item.exact), item.className].filter(Boolean).join(' ')}
+							target={item.target}
+						>
 							{item.label}
 						</a>
 					)}

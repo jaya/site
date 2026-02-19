@@ -1,0 +1,242 @@
+{
+	"nav": {
+		"home": "início",
+		"services": "serviços",
+		"fintech": "fintech",
+		"healthtech": "healthtech",
+		"retail": "varejo",
+		"saas": "saas",
+		"blog": "blog",
+		"culture": "cultura",
+		"contact": "contato"
+	},
+	"footer": {
+		"letsTalk": "vamos conversar",
+		"services": "serviços",
+		"blog": "blog",
+		"culture": "cultura",
+		"contact": "contato",
+		"address": {
+			"us": "Austin, TX - EUA",
+			"br": "São Paulo, SP - Brasil"
+		}
+	},
+	"common": {
+		"getInTouch": "Entre em contato",
+		"letsTalk": "Vamos conversar",
+		"contactUs": "Entre em contato"
+	},
+	"home": {
+		"hero": {
+			"title1": "desenvolvedores remotos confiáveis",
+			"title2": "para parcerias de longo prazo",
+			"description": "A Jaya é uma empresa de consultoria de software totalmente remota especializada em <b>staff augmentation, outsourcing e desenvolvimento de IA.</b><br />Desde 2012, ajudamos empresas a escalar com talentos de engenharia selecionados e equipes estáveis e de alto desempenho. De fintech e healthtech a varejo, SaaS... e além.<br /><b>Nossas equipes entregam com velocidade, alinhamento cultural e mentalidade de longo prazo.</b>",
+			"stat1": "anos de<br /> <b>experiência<br /> nearshore</b>",
+			"stat2": "<b>clientes dos EUA</b><br />atendidos",
+			"stat3": "<b>engenheiros alocados</b><br /> para equipes de produto<br />dos EUA",
+			"cta": "Vamos transformar seu negócio? Entre em contato"
+		},
+		"services": {
+			"title": "Serviços",
+			"subtitle": "nearshoring orientado por missão para projetos de alto impacto.",
+			"description": "Na Jaya, software é mais do que linhas de código, é um ativo estratégico construído com intenção, precisão e propósito. Nosso <b>modelo de engenharia de software consciente</b> combina excelência técnica com compreensão humana, permitindo que as equipes colaborem melhor, entreguem mais rápido e gerem resultados reais de negócios. Com uma estrutura nearshore, trabalhamos em sincronia com suas operações, preenchendo lacunas culturais e de fuso horário para criar valor de longo prazo desde o primeiro dia.",
+			"service1": {
+				"title": "<i>nearshore</i> <b>staff augmentation</b>",
+				"text": "Além de preencher funções, conectamos empresas com talentos nearshore em desenvolvedores, líderes técnicos e engenheiros de equipe, profissionais que combinam fortes habilidades técnicas com alto alinhamento cultural.<br /><br />Por meio de um processo rigoroso de recrutamento, garantimos talentos de primeira linha com fluência em inglês, retenção de longo prazo e a estabilidade necessária para construir equipes de alto desempenho."
+			},
+			"service2": {
+				"title": "<b>outsourcing</b>",
+				"text": "Entregamos equipes de engenharia gerenciadas pela Jaya, compostas por desenvolvedores, líderes técnicos e engenheiros de equipe.<br /><br />Nossas equipes se integram perfeitamente com os gerentes de produto, designers e equipes de QA do cliente, garantindo rigor técnico, alinhamento cultural e velocidade para escalar projetos estratégicos com confiança."
+			},
+			"service3": {
+				"title": "<b>inteligência artificial</b>",
+				"text": "Fornecemos desenvolvedores e engenheiros para apoiar projetos de clientes em IA. Nossa expertise abrange agentes inteligentes, aprendizado de máquina, visão computacional e integração com LLMs e IA Generativa.<br /><br />Com fortes habilidades técnicas e alinhamento cultural, nossas equipes ajudam as empresas a acelerar a inovação e gerar impacto real."
+			}
+		},
+		"map": {
+			"subtitle": "Impulsionando resultados em todo o país",
+			"title1": "nossa",
+			"title2": "presença",
+			"title3": "em toda",
+			"title4": "a américa",
+			"text1": "As equipes remotas da Jaya já estão gerando impacto em todo os EUA, da Califórnia a Nova York.",
+			"text2": "Nosso modelo nativo remoto garante entrega alinhada ao fuso horário, colaboração perfeita e valor de longo prazo, independentemente de onde sua equipe esteja baseada."
+		},
+		"impact": {
+			"subtitle": "Impacto Real",
+			"title": "onde <b>nós geramos</b> impacto",
+			"description1": "A revolução digital é impulsionada pela tecnologia, inovação e agilidade. É por isso que a Jaya Tech conecta empresas com equipes de desenvolvimento altamente qualificadas, prontas para criar, escalar e manter produtos digitais seguros e modernos, adaptados às demandas únicas de cada negócio.",
+			"description2": "Fazemos parceria com organizações para entregar soluções personalizadas para gestão, automação, experiência do usuário e resultados orientados por dados.",
+			"description3": "Nossa expertise nos permite acelerar o tempo de lançamento no mercado, garantir conformidade e entregar experiências inovadoras, sempre focando em segurança, desempenho e escalabilidade. Seja para lançar um novo produto, aprimorar seus processos ou transformar dados em valor, a Jaya Tech é o parceiro ideal para empresas que buscam ir além do comum.",
+			"cta": "Veja como entregamos em diversos setores"
+		},
+		"clients": {
+			"subtitle": "Reconhecido por inovadores",
+			"title": "nossos clientes",
+			"description": "Fazemos parceria com empresas visionárias em finanças, logística, saúde, varejo e mais,<br /> entregando soluções de software de longo prazo com impacto real nos negócios.",
+			"usaFlag": "Bandeira dos EUA",
+			"brazilFlag": "Bandeira do Brasil"
+		},
+		"team": {
+			"subtitle": "Grandes Pessoas Constroem Grandes Produtos",
+			"title": "<b>desenvolvemos pessoas</b> <i>enquanto elas</i> <b>desenvolvem software</b>",
+			"description": "Conheça como nossa cultura focada em pessoas impulsiona o desempenho, criando equipes comprometidas e resilientes com baixa rotatividade e alta consistência de entrega.",
+			"cta": "Conheça nossa cultura"
+		}
+	},
+	"culture": {
+		"title": "na Jaya, desenvolvemos pessoas enquanto elas desenvolvem software",
+		"pill1": "TOTALMENTE REMOTO",
+		"pill2": "PESSOAS EM PRIMEIRO",
+		"pill3": "ORIENTADOS POR IMPACTO",
+		"description": "Na Jaya, <b>cultura não é modismo</b>, é o que molda como pensamos, entregamos e crescemos juntos. <b>construa sua próxima versão conosco</b>",
+		"gallery": {
+			"eyebrow": "GRANDES PESSOAS CONSTROEM GRANDES PRODUTOS",
+			"title": "<b>pessoas</b> são nossa <b>base</b>",
+			"description": "Somos totalmente remotos, mas nunca distantes. Nossa equipe é baseada em confiança, cuidado e colaboração, e abrimos espaço para que cada um seja quem é. Aqui está um pouco de quem faz a Jaya ser o que é.",
+			"imageAlt": "Momento da equipe Jaya"
+		},
+		"people": {
+			"title": "quem constrói a Jaya,<br />em linhas e cores",
+			"description": "Cada pessoa que entra na Jaya ganha sua própria caricatura, uma pequena homenagem ao grande papel que desempenha aqui. Navegue e conheça os rostos (e sorrisos) por trás do nosso trabalho.",
+			"footerText": "compartilhamos nossa cultura na prática no <b>LinkedIn</b>,<br />de histórias de bastidores a reflexões<br />sobre engenharia consciente.",
+			"footerCta": "Visite nosso LinkedIn"
+		}
+	},
+	"fintech": {
+		"title": "Soluções Fintech - Jaya Tech",
+		"description": "Construindo o futuro das finanças com soluções fintech seguras e escaláveis",
+		"hero": {
+			"title1": "construindo",
+			"title2": "o futuro",
+			"title3": "das finanças,",
+			"title4": "com segurança.",
+			"stat1": "usuários",
+			"stat1Label": "impactados",
+			"stat2": "equipes",
+			"stat2Label": "fintech",
+			"stat3": "anos",
+			"stat3Label": "experiência"
+		},
+		"experience": {
+			"title1": "experiência comprovada",
+			"title2": "em todo o",
+			"title3": "ecossistema fintech",
+			"text": "Na última década, fizemos parceria com bancos digitais líderes, processadores de pagamento e provedores de infraestrutura financeira no Brasil e na América Latina. Nossas equipes trabalharam em bancos centrais, crédito, pagamentos, integrações de e-commerce, plataformas de investimento e sistemas de transação em larga escala, impactando mais de 100 milhões de usuários finais.<br /><br />Desde a construção de recursos de conta digital e capacidades PIX até o design de sistemas de aquisição e liquidação de alto volume, nossas equipes trazem profundidade técnica e consciência regulatória. Sabemos o que é necessário para entregar soluções fintech seguras, compatíveis e escaláveis, e fazemos isso junto com suas equipes com velocidade e confiabilidade.",
+			"whyTitle": "por que fintechs escolhem a Jaya",
+			"why1": "<b>Equipes alinhadas e confiáveis</b><br/> equipes nearshore no seu fuso horário, totalmente integradas aos seus fluxos de trabalho.",
+			"why2": "<b>Experiência profunda em fintech</b><br/> Experiência prática em pagamentos, crédito, open finance, aquisição e conformidade.",
+			"why3": "<b>Qualidade através da precisão</b><br/> Equipes cuidadosamente montadas, padrões rigorosos de engenharia e soluções construídas para durar.",
+			"why4": "<b>Consistência que perdura</b><br/> Baixa rotatividade e equipes estáveis, garantindo retenção de conhecimento e entrega de longo prazo."
+		}
+	},
+	"healthtech": {
+		"title": "Soluções Healthtech - Jaya Tech",
+		"description": "Construindo o futuro da healthtech com soluções seguras e escaláveis",
+		"hero": {
+			"titleHtml": "<i>engenharia </i><b>health<br /> tech </b><i>com </i><b>confiança </b><i>e </i><br /><b>escala.</b>",
+			"stat1Label": "<i>pacientes</i><br /><b>impactados</b>",
+			"stat2Label": "<i>equipes</i><br /><b>de saúde</b>",
+			"stat3Label": "<b>anos</b> <i>de<br />experiência</i>"
+		},
+		"experience": {
+			"titleHtml": "<b>experiência comprovada </b><i>em </i><b>healthcare & health tech</b>",
+			"text": "Nos últimos nove anos, fizemos parceria com inovadores em saúde nos EUA e na América Latina, de plataformas de saúde digital e telemedicina a redes de integração laboratorial e sistemas de treinamento de cuidadores. Nossas equipes construíram softwares críticos que impulsionam cuidado ao paciente, integrações com planos de saúde, e-prescriptions, suporte à saúde mental e programas de bem‑estar familiar.<br /><br />Trabalhamos em praticamente todos os pilares da tecnologia em saúde: agendamento, triagem, fluxos laboratoriais, consultas de telemedicina, e‑prescriptions, integrações de e‑fax, entrega de resultados e reportes em larga escala de COVID. Os sistemas que ajudamos a construir suportaram milhões de pacientes, cuidadores e profissionais de saúde, com foco implacável em conformidade, segurança e confiabilidade.",
+			"whyTitle": "por que health techs escolhem a Jaya",
+			"why1": "<b>Expertise end-to-end em saúde</b><br/> De integrações laboratoriais a telemedicina, e‑prescriptions e plataformas de bem‑estar.",
+			"why2": "<b>Consciência regulatória comprovada</b> Experiência com HIPAA, fluxos de seguros e troca segura de dados.",
+			"why3": "<b>Engenharia em escala</b><br/> Sistemas construídos para lidar com milhões de pacientes e dados críticos de saúde.",
+			"why4": "<b>Times estáveis e confiáveis</b><br/> Baixa rotatividade e parcerias de longo prazo, garantindo continuidade em projetos sensíveis."
+		}
+	},
+	"retail": {
+		"title": "Soluções de Varejo - Jaya Tech",
+		"description": "Construindo o futuro do varejo com soluções seguras e escaláveis",
+		"hero": {
+			"titleHtml": "<i>impulsionando o </i><b>varejo </b><i>digital em </i><b>escala.</b>",
+			"stat1Label": "<i>consumidores</i><br /><b>alcançados</b>",
+			"stat2Label": "<i>equipes</i><br /><b>de varejo</b>",
+			"stat3Label": "<b>anos</b> <i>de <br />experiência</i>"
+		},
+		"experience": {
+			"titleHtml": "<i>experiência </i><b>comprovada </b><i>em </i><b>varejo & consumer tech</b>",
+			"text": "Fizemos parceria com grandes varejistas, marcas de moda e inovadores em e‑commerce para construir plataformas escaláveis que atendem milhões de clientes todos os dias. De marketplaces de alto volume a experiências direct‑to‑consumer, nossas equipes entregaram sistemas que combinam usabilidade, performance e resiliência.<br /><br />Nossa atuação abrange varejo online, plataformas de cashback e cupons, e‑commerce de moda e soluções omnichannel. Sabemos o que é necessário para engenheirar plataformas que lidam com picos massivos de tráfego, transações seguras e jornadas de usuário fluidas, mantendo velocidade e confiabilidade em escala.",
+			"whyTitle": "por que empresas de varejo & consumo escolhem a Jaya",
+			"why1": "<b>Expertise em e‑commerce</b><br />Experiência com marketplaces de grande escala, plataformas de varejo e fashion tech.",
+			"why2": "<b>Preparação para alto tráfego</b><br />Sistemas desenhados para picos massivos, de vendas sazonais a campanhas ao vivo.",
+			"why3": "<b>Engenharia centrada no usuário</b><br />Experiências digitais intuitivas e fluidas que convertem e retêm clientes.",
+			"why4": "<b>Entrega confiável</b><br />Times estáveis e de longo prazo garantindo qualidade e escalabilidade consistentes."
+		}
+	},
+	"saas": {
+		"title": "Soluções SaaS - Jaya Tech",
+		"description": "Construindo o futuro do SaaS com soluções seguras e escaláveis",
+		"hero": {
+			"titleHtml": "<i>impulsionando </i><b>inovação SaaS </b><i>em vários setores.</i>",
+			"stat1Label": "<b>usuários finais</b> <br /> <i>impactados</i>",
+			"stat2Label": "<i>SaaS </i> <br /> <b>equipes</b>",
+			"stat3Label": "<b>anos</b> <i>de <br />experiência</i>"
+		},
+		"experience": {
+			"titleHtml": "<i>experiência </i><b>comprovada </b><i>em </i><b>SaaS & produtividade</b>",
+			"text": "Nosso portfólio de SaaS cobre um espectro amplo de setores, de agricultura e viagens a HR tech, educação, produtividade corporativa e inteligência de mercado. Construímos plataformas que impulsionam viagens corporativas, recrutamento, automação em escala, insights críticos de dados e até aprendizado socioemocional para escolas.<br /><br />Cada produto SaaS tem demandas únicas: alguns precisam lidar com fluxos corporativos de alto volume, outros exigem integração perfeita com APIs de terceiros, e muitos precisam de arquiteturas flexíveis que evoluam com mercados em mudança rápida. Nossas equipes prosperam nessa diversidade, trazendo engenharia precisa, adaptabilidade e profundo entendimento de produto.",
+			"whyTitle": "por que empresas SaaS escolhem a Jaya",
+			"why1": "<b>Expertise cross‑industry</b><br />Experiência em SaaS para agricultura, RH, educação, viagens, produtividade e dados.",
+			"why2": "<b>Arquiteturas escaláveis</b><br />Sistemas desenhados para crescer com usuários e adaptar‑se às necessidades do negócio.",
+			"why3": "<b>Integrações sem fricção</b><br />Sucesso comprovado conectando produtos SaaS a ecossistemas de APIs e serviços terceiros.",
+			"why4": "<b>Times de engenharia confiáveis</b><br />Squads de longo prazo que combinam mentalidade de produto com entrega robusta."
+		}
+	},
+	"cases": {
+		"title": "Cases - Jaya Tech",
+		"description": "Descubra como a Jaya Tech ajudou empresas de fintech, healthtech, varejo e SaaS com desenvolvimento nearshore."
+	},
+	"contact": {
+		"title": "Contato",
+		"description": "Entre em contato com a Jaya Tech para discutir seu projeto e transformar suas ideias em realidade.",
+		"hero": {
+			"title1": "vamos",
+			"title2": "conversar",
+			"subtitle": "Conte-nos sobre seu projeto, seu desafio ou sua próxima grande ideia.",
+			"text1": "Estamos aqui para ouvir, pensar com você e ajudar a transformar isso em algo real. Assim que você enviar sua mensagem, saiba que ela realmente importa para nós.",
+			"text2": "Nossa equipe entrará em contato com você em até um dia útil. E não se preocupe, nunca compartilharemos suas informações pessoais com terceiros."
+		},
+		"form": {
+			"name": "nome",
+			"email": "e-mail",
+			"message": "conte-nos sobre seu projeto",
+			"submit": "Enviar Mensagem",
+			"success": "Obrigado! Sua mensagem foi enviada com sucesso. Entraremos em contato em breve.",
+			"error": "Falha ao enviar mensagem. Por favor, tente novamente."
+		}
+	},
+	"about": {
+		"title": "Sobre Nós - Jaya Tech",
+		"description": "Saiba mais sobre a missão, valores e a equipe por trás dos nossos serviços de desenvolvimento de software nearshore.",
+		"hero": {
+			"titleHtml": "<b>na Jaya Tech, <br />acreditamos </b><i>que<br /> tecnologia só faz<br /> sentido quando<br /></i><b>transforma vidas.</b>",
+			"subtitleHtml": "<i>mais do que desenvolver software,</i><br /><b>criamos soluções inovadoras<br />que impulsionam startups e projetos<br /> disruptivos, </b><i>sempre com uma abordagem<br /> humana e estratégica.</i>",
+			"cta": "Entre em contato"
+		},
+		"drives": {
+			"title": "o que nos move?",
+			"intro": "Nosso compromisso é conectar pessoas, impulsionar carreiras e transformar negócios com inovação e propósito. Oferecemos soluções estratégicas para startups e projetos disruptivos, combinando engenharia de software humanizada e um time altamente qualificado para desenvolver produtos que fazem a diferença.",
+			"principle1": "<b>Tecnologia com propósito</b>: Criamos soluções que geram valor e impacto real.",
+			"principle2": "<b>Inovação contínua</b>: Estamos sempre aprendendo, testando e evoluindo.",
+			"principle3": "<b>Colaboração e diversidade</b>: Unimos talentos globais em equipes remotas e ágeis.",
+			"principle4": "<b>Transparência e ética</b>: Construímos relações baseadas em confiança e respeito.",
+			"cta": "Entre em contato"
+		},
+		"why": {
+			"title": "por que escolher a Jaya?",
+			"intro": "Na era digital, encontrar o parceiro certo para impulsionar sua empresa com tecnologia estratégica é essencial. A Jaya Tech vai além do desenvolvimento de software — construímos times sob medida, combinando tecnologia e visão de negócio para gerar impacto real. Com uma abordagem inovadora e humanizada, garantimos agilidade, precisão e personalização em cada projeto. Veja o que nos diferencia:",
+			"adv1Title": "1. Agilidade",
+			"adv1Text": "Nosso time trabalha com dinamismo e eficiência para entregar soluções que atendem às demandas do seu negócio no menor tempo possível, sem perder qualidade.",
+			"adv2Title": "2. Capacidade",
+			"adv2Text": "Temos um time altamente qualificado, especialistas em tecnologia e inovação, pronto para resolver desafios complexos e criar soluções escaláveis.",
+			"adv3Title": "3. Flexibilidade",
+			"adv3Text": "Cada empresa é única. Por isso adaptamos nossas soluções às suas necessidades, garantindo um atendimento personalizado, estratégico e de alta performance.",
+			"cta": "Vamos transformar seu negócio? Entre em contato"
+		}
+	}
+}
