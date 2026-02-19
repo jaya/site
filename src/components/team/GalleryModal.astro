@@ -30,7 +30,8 @@
 	@reference '@/styles/global.css';
 
 	.gallery-modal {
-		@apply fixed inset-0 z-50 flex items-center justify-center bg-black/95 opacity-0 pointer-events-none transition-opacity duration-300 p-4 md:p-10;
+		@apply fixed inset-0 flex items-center justify-center bg-black/95 opacity-0 pointer-events-none transition-opacity duration-300 p-4 md:p-10;
+		z-index: 9999;
 		&.open { @apply opacity-100 pointer-events-auto; }
 	}
 
@@ -113,9 +114,18 @@
 		}
 	});
 
-	closeBtn?.addEventListener('click', closeModal);
-	modalPrevBtn?.addEventListener('click', navPrev);
-	modalNextBtn?.addEventListener('click', navNext);
+	closeBtn?.addEventListener('click', (e) => {
+		e.stopPropagation();
+		closeModal();
+	});
+	modalPrevBtn?.addEventListener('click', (e) => {
+		e.stopPropagation();
+		navPrev(e);
+	});
+	modalNextBtn?.addEventListener('click', (e) => {
+		e.stopPropagation();
+		navNext(e);
+	});
 
 	modal?.addEventListener('click', (e) => {
 		if (e.target === modal) closeModal();
