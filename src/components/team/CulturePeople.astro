@@ -261,7 +261,8 @@ const pagedPeople = Array.from({ length: Math.ceil(people.length / itemsPerPage)
 
 	/* Modal */
 	.people-modal {
-		@apply fixed inset-0 z-50;
+		@apply fixed inset-0;
+		z-index: 9999;
 		@apply flex items-center justify-center;
 		@apply bg-black/90;
 		@apply opacity-0 pointer-events-none;
@@ -475,7 +476,7 @@ const pagedPeople = Array.from({ length: Math.ceil(people.length / itemsPerPage)
 	});
 
 	// Modal event listeners
-	modalClose?.addEventListener('click', closeModal);
+	modalClose?.addEventListener('click', (e) => { e.stopPropagation(); closeModal(); });
 	modalPrev?.addEventListener('click', (e) => { e.stopPropagation(); prevPerson(); });
 	modalNext?.addEventListener('click', (e) => { e.stopPropagation(); nextPerson(); });
 	
