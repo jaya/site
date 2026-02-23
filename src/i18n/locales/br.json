@@ -232,7 +232,7 @@
 		"form": {
 			"name": "name",
 			"email": "e-mail",
-			"message": "tell us about our project",
+			"message": "tell us about your project",
 			"submit": "Send Message",
 			"success": "Thank you! Your message has been sent successfully. We'll get back to you soon.",
 			"error": "Failed to send message. Please try again."
