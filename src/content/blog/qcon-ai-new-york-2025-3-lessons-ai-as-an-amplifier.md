@@ -4,7 +4,7 @@ description: 'Three standout talks from QCon AI New York 2025 and the practical 
 pubDate: '2026-01-23'
 author: 'Elias Sousa'
 image: '/blog/qcon-ai-new-york-2025-3-lessons-ai-as-an-amplifier/cover.jpg'
-tags: ['tech', 'ai', 'qcon', 'conferences', 'productivity']
+tags: ['tech', 'AI', 'qcon', 'conferences', 'productivity']
 draft: false
 ---
 
