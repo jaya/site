@@ -15,7 +15,14 @@ const { post } = Astro.props
 const { Content } = await render(post)
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
+<Layout
+	title={post.data.title}
+	description={post.data.description}
+	image={post.data.image}
+	type="article"
+	author={post.data.author}
+	publishedTime={post.data.pubDate.toISOString()}
+>
 	<main class="nav-padding min-h-screen bg-base-100 pb-20">
 		<article class="container mx-auto max-w-4xl px-4 py-8 md:py-12">
 			<!-- Back Link -->

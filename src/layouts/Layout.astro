@@ -2,9 +2,13 @@
 interface Props {
 	title: string
 	description: string
+	image?: string
+	type?: 'website' | 'article'
+	author?: string
+	publishedTime?: string
 }
 
-const { title, description } = Astro.props
+const { title, description, image, type = 'website', author, publishedTime } = Astro.props
 import '@fontsource/geist-mono'
 import '@/styles/global.css'
 import { ClientRouter } from 'astro:transitions'
@@ -16,11 +20,25 @@ import Footer from '@/components/layout/Footer.astro'
 
 const lang = getLocale(Astro)
 const htmlLang = lang === localeBr ? 'pt-BR' : lang
+const ogLocale = lang === localeBr ? 'pt_BR' : 'en_US'
 const currentPath = Astro.url.pathname
 const pathWithoutLocale = getPathnameWithoutLocale(currentPath)
 const enPath = getLocalizedPath(pathWithoutLocale, localeEn)
 const brPath = getLocalizedPath(pathWithoutLocale, localeBr)
 const xDefaultPath = withBase('/')
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://jaya.tech'
+const canonicalUrl = Astro.url.toString()
+const ogImage = image ?? `${siteUrl}/og-image.jpg`
+const ogTitle = `${title} :: Jaya`
+const ogImageAlt = image ? title : 'Jaya — Technology & Innovation'
+
+const articleTags = type === 'article'
+	? {
+		...(publishedTime ? { publishedTime } : {}),
+		...(author ? { authors: [author] } : {})
+	}
+	: {}
 ---
 
 <!doctype html>
@@ -32,19 +50,38 @@ const xDefaultPath = withBase('/')
 			title={title}
 			titleTemplate="%s :: Jaya"
 			description={description}
-			canonical={Astro.url.toString()}
+			canonical={canonicalUrl}
 			openGraph={{
 				basic: {
-					title: 'Jaya',
-					type: 'website',
-					image: 'https://jaya.tech/og-image.jpg'
+					title: ogTitle,
+					type: type,
+					image: ogImage,
+					url: canonicalUrl
 				},
 				image: {
-					alt: 'Jaya'
+					alt: ogImageAlt,
+					width: 1200,
+					height: 630
 				},
 				optional: {
-					description: description
-				}
+					description: description,
+					locale: ogLocale,
+					siteName: 'Jaya'
+				},
+				article: articleTags
+			}}
+			twitter={{
+				card: 'summary_large_image',
+				title: ogTitle,
+				description: description,
+				image: ogImage,
+				imageAlt: ogImageAlt
+			}}
+			extend={{
+				meta: [
+					{ name: 'robots', content: 'index, follow' },
+					...(author ? [{ name: 'author', content: author }] : [])
+				]
 			}}
 		/>
 
