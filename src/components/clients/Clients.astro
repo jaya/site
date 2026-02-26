@@ -77,10 +77,16 @@ const brasilClients = [
 	{ image: vagas, alt: 'Vagas' }
 ]
 import { getTranslations, t } from '@/i18n/translations'
-import { getLocale } from '@/i18n/utils'
+import { getLocale, localeEn } from '@/i18n/utils'
 
 const locale = getLocale(Astro)
 const translations = await getTranslations(locale)
+
+const clientTabs = [
+	{ flag: usaFlag, flagKey: 'home.clients.usaFlag' as const, clients: usaClients },
+	{ flag: brasilFlag, flagKey: 'home.clients.brazilFlag' as const, clients: brasilClients }
+]
+const orderedTabs = locale === localeEn ? clientTabs : [...clientTabs].reverse()
 ---
 
 <style>
@@ -161,33 +167,21 @@ const translations = await getTranslations(locale)
 		</p>
 
 		<div class="tabs tabs-lift">
-			<label class="tab">
-				<input type="radio" name="my_tabs_4" checked="checked" />
-				<Image src={usaFlag} alt={t(translations, 'home.clients.usaFlag')} class="flag" />
-			</label>
-			<div class="tab-content bg-base-100 border-base-300 p-6">
-				<div class="clients-grid">
-					{
-						usaClients.map((client) => (
-							<Image src={client.image} alt={client.alt} class="client-logo" />
-						))
-					}
-				</div>
-			</div>
-
-			<label class="tab">
-				<input type="radio" name="my_tabs_4" />
-				<Image src={brasilFlag} alt={t(translations, 'home.clients.brazilFlag')} class="flag" />
-			</label>
-			<div class="tab-content bg-base-100 border-base-300 p-6">
-				<div class="clients-grid">
-					{
-						brasilClients.map((client) => (
-							<Image src={client.image} alt={client.alt} class="client-logo" />
-						))
-					}
-				</div>
-			</div>
+			{orderedTabs.map((tab, index) => (
+				<>
+					<label class="tab">
+						<input type="radio" name="my_tabs_4" checked={index === 0} />
+						<Image src={tab.flag} alt={t(translations, tab.flagKey)} class="flag" />
+					</label>
+					<div class="tab-content bg-base-100 border-base-300 p-6">
+						<div class="clients-grid">
+							{tab.clients.map((client) => (
+								<Image src={client.image} alt={client.alt} class="client-logo" />
+							))}
+						</div>
+					</div>
+				</>
+			))}
 		</div>
 	</div>
 </section>
