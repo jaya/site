@@ -1,12 +1,12 @@
 ---
 import { Image } from 'astro:assets'
 import teamImg from '@/assets/home/team.png'
-import { socialLinks } from '@/data/social-links'
 import { getTranslations, t } from '@/i18n/translations'
-import { getLocale } from '@/i18n/utils'
+import { getLocale, getLocalizedPath } from '@/i18n/utils'
 
 const locale = getLocale(Astro)
 const translations = await getTranslations(locale)
+const culturePageUrl = getLocalizedPath('/culture', locale)
 ---
 
 <style>
@@ -67,7 +67,7 @@ const translations = await getTranslations(locale)
 		<p class="team-description">
 			{t(translations, 'home.team.description')}
 		</p>
-		<a href={socialLinks.linkedin} target="_blank" class="btn-see-more">{t(translations, 'home.team.cta')}</a>
+		<a href={culturePageUrl} class="btn-see-more">{t(translations, 'home.team.cta')}</a>
 	</div>
 	<div class="team-grid lg:container">
 		<Image src={teamImg} alt="Team Image" class="team-image" />
