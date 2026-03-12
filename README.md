@@ -308,7 +308,7 @@ Update social media links in `src/data/social-links.ts`:
 
 ```typescript
 export const socialLinks = {
-	linkedin: 'https://www.linkedin.com/company/jaya-apps',
+	linkedin: 'https://www.linkedin.com/company/jaya-tech',
 	github: 'https://github.com/jaya',
 	medium: 'https://medium.com/wearejaya'
 }
