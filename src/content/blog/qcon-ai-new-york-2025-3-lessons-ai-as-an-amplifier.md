@@ -202,4 +202,4 @@ That’s what “AI as an amplifier” looks like in practice: not a bigger mode
 
 If you’re working on complex migrations, AI-powered developer productivity, or want to bring these patterns into your organization, reach out to Jaya: https://en.jaya.tech/contact
 
-And if you’re a developer who wants to build this kind of work with us, check out our open roles: https://www.linkedin.com/company/jaya-apps/jobs/
+And if you’re a developer who wants to build this kind of work with us, check out our open roles: https://www.linkedin.com/company/jaya-tech/jobs/
