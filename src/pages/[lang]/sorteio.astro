@@ -1,5 +1,8 @@
 ---
 import { getLocaleParam, localeBr } from '@/i18n/utils'
+import heroLogo from '@/assets/sorteio/logo-jaya-hero-lp.png'
+import footerLogo from '@/assets/sorteio/logo-jaya-footer.png'
+import raybanImage from '@/assets/sorteio/rayban-jaya-sorteio.png'
 
 export function getStaticPaths() {
 	return [{ params: { lang: localeBr } }]
@@ -537,7 +540,7 @@ if (!lang) {
   <header>
     <div class="header-logo">
       <a href="https://jaya.tech/br/" aria-label="Jaya home">
-        <img src="/sorteio/logo-jaya-hero-lp.png" alt="Jaya no Tropical On Rails" class="header-logo-img" />
+        <img src={heroLogo.src} alt="Jaya no Tropical On Rails" class="header-logo-img" />
       </a>
     </div>
 
@@ -586,7 +589,7 @@ if (!lang) {
 
         <!-- Ray-Ban Meta foto real -->
         <div class="product-image">
-          <img src="/sorteio/rayban-jaya-sorteio.png" alt="Ray-Ban Meta Smart Glasses" class="rayban-glasses" />
+          <img src={raybanImage.src} alt="Ray-Ban Meta Smart Glasses" class="rayban-glasses" />
         </div>
 
         <!-- Form -->
@@ -733,7 +736,7 @@ if (!lang) {
     <!-- Footer logo -->
     <div class="footer-logo-section">
       <a href="https://jaya.tech/br/" aria-label="Jaya home">
-        <img src="/sorteio/logo-jaya-footer.png" alt="Jaya" class="footer-logo-img" />
+        <img src={footerLogo.src} alt="Jaya" class="footer-logo-img" />
       </a>
     </div>
   </section>
