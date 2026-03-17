@@ -81,6 +81,10 @@ if (!lang) {
     header {
       background: var(--teal-dark);
       border-bottom: 1px solid var(--border-white);
+    }
+    .header-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
       padding: 0 32px;
       height: 64px;
       display: flex;
@@ -548,7 +552,7 @@ if (!lang) {
       .footer-logo-section {
         justify-content: center;
       }
-      header { padding: 0 20px; }
+      .header-inner { padding: 0 20px; }
       .perguntas { padding: 56px 24px; }
       .white-section { padding: 56px 24px; }
     }
@@ -567,13 +571,17 @@ if (!lang) {
 
   <!-- ── HEADER ──────────────────────────────────────────── -->
   <header>
-    <div class="header-logo">
-      <a href="https://jaya.tech/br/" aria-label="Jaya home">
-        <img src={heroLogo.src} alt="Jaya no Tropical On Rails" class="header-logo-img" />
+    <div class="header-inner">
+      <div class="header-logo">
+        <a href="https://jaya.tech/br/" aria-label="Jaya home">
+          <img src={heroLogo.src} alt="Jaya no Tropical On Rails" class="header-logo-img" />
+        </a>
+      </div>
+
+      <a href="https://jaya.vagas.flashapp.com.br/desenvolvedor-ruby-on-rails-984" class="btn-pill" target="_blank" rel="noopener">
+        Vaga Ruby
       </a>
     </div>
-
-    <a href="https://jaya.vagas.flashapp.com.br/desenvolvedor-ruby-on-rails-984" class="btn-pill" target="_blank" rel="noopener">Vaga Ruby</a>
   </header>
 
   <!-- ── HERO ────────────────────────────────────────────── -->
