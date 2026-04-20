@@ -23,3 +23,5 @@ tmp/
 
 # macOS-specific files
 .DS_Store
+
+.idea
