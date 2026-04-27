@@ -12,7 +12,7 @@ Rails has long been criticized for its frontend story: "great for the backend, b
 
 Tropical on Rails 2026 showed that narrative is changing fast. Two talks in particular, taken together, paint a coherent picture of where Rails is headed on the frontend.
 
-> This post is part of a short series from Tropical on Rails 2026. The first entry covered [three talks on sustainable Rails engineering](/blog/tropical-on-rails-2026-3-talks-on-sustainable-rails).
+> This post is part of a short series from Tropical on Rails 2026. The first entry covered [three talks on sustainable Rails engineering](/blog/tropical-on-rails-2026-3-talks-on-sustainable-rails), and the third entry looks at [Rails security in 2026 — passkeys, OWASP, and privacy by design](/blog/tropical-on-rails-2026-rails-security-in-2026).
 
 ---
 
