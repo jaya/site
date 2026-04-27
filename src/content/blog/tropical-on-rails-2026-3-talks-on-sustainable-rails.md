@@ -14,6 +14,8 @@ Setting up a new developer in minutes instead of days. Handling production data 
 
 Here's what I took away from each one.
 
+> This post is part of a short series from Tropical on Rails 2026. The other entries cover [the new Rails frontend story](/blog/tropical-on-rails-2026-the-new-rails-frontend-story) and [Rails security in 2026 — passkeys, OWASP, and privacy by design](/blog/tropical-on-rails-2026-rails-security-in-2026).
+
 ---
 
 ## 1. Unboxing Devcontainers and Docker for Rubyists
