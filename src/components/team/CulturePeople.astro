@@ -110,7 +110,7 @@ const peopleOverrides: Record<string, Partial<{ name: string; role: string; desc
 	'ricardo-ferreira': { name: 'Ricardo Ferreira', role: '', desc: '' },
 	'ricardo-saggioni': { name: 'Ricardo Saggioni', role: '', desc: '' },
 	'rodrigo-cabral': { name: 'Rodrigo Cabral', role: '', desc: '' },
-	ro_matos: { name: 'Rodrigo Matos', role: 'Programaçao na veia', desc: '' },
+	'rodrigo-matos': { name: 'Rodrigo Matos', role: 'Programaçao na veia', desc: '' },
 	'rodrigo-de-paula': { name: 'Rodrigo de Paula', role: '', desc: '' },
 	'samuel-botelho': { name: 'Samuel Botelho', role: '', desc: '' },
 	'samuel-yamagata': { name: 'Samuel Yamagata', role: '', desc: '' },
@@ -238,7 +238,7 @@ const pagedPeople = Array.from({ length: Math.ceil(people.length / itemsPerPage)
 
 	.people-item-wrapper {
 		@apply flex flex-col items-center;
-		@apply md:w-auto lg:w-[200px]; /* Fixed width on mobile */
+		@apply min-w-0;
 	}
 
 	.person-card {
