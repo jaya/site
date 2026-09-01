@@ -10,9 +10,10 @@ Corporate website for Jaya Tech (nearshore software consulting). Built with **As
 
 ```bash
 pnpm install          # Install dependencies (pnpm 10.13+)
-pnpm dev              # Dev server at localhost:4321/jaya/
+pnpm dev              # Dev server at localhost:4321/ (redirects to /en/)
 pnpm build            # Production build
 pnpm preview          # Preview production build
+pnpm start            # Run the built server: node ./dist/server/entry.mjs
 ```
 
 Formatting: `pnpm prettier --write .` (tabs, single quotes, no semicolons, no trailing commas).
@@ -22,6 +23,8 @@ No test framework is configured.
 ## Architecture
 
 **Astro Islands**: Pages are static HTML by default. React components only hydrate when using `client:load` or `client:visible` directives.
+
+**Rendering model**: Output is static by default; only routes that explicitly opt out (`export const prerender = false`) are rendered on demand by the `@astrojs/node` adapter (standalone mode). Currently that's `src/pages/index.astro` (locale redirect) and `src/pages/[lang]/contact.astro` / `contato.astro` (need a live server for Astro Actions). This is why the site is deployed as a Node web service (see Deployment) rather than pure static hosting — a fully static host (e.g. GitHub Pages) cannot serve these routes.
 
 **i18n**: URL-prefix routing (`/en/*`, `/br/*`). Each `[lang]` page uses `getStaticPaths()` returning both locales. Translations live in `src/i18n/locales/{en,br}.json` with dot-notation keys accessed via `t(translations, 'key.path')`.
 
@@ -54,6 +57,9 @@ No test framework is configured.
 
 ## Deployment
 
-- **GitHub Pages**: Auto-deploys on push to `main` via `.github/workflows/deploy.yml`
-- **Docker**: Multi-stage Node 22 build, port 8080. Build args: `SITE_URL`, `ASTRO_BASE`
-- Site URL / base path are environment-aware (see `astro.config.mjs`)
+- **Render** (production): Docker **Web Service**, defined as code in `render.yaml` (Blueprint) at the repo root. Auto-deploys on push to `main`. Root domain, no base path (`jaya.tech`).
+- **Docker**: Multi-stage Node 22 build (`Dockerfile`). Render injects service env vars both as Docker build args (consumed via `ARG`/`ENV` in the Dockerfile: `SITE_URL`, `ASTRO_BASE`, `BASE_PATH`) and as runtime env vars for the running container (`RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_TO`).
+- **Port**: The server reads `process.env.PORT` (Render injects its own at runtime, overriding the Dockerfile's default of `8080`). No hardcoded port assumptions.
+- Site URL / base path are environment-aware (see `astro.config.mjs`) — `ASTRO_BASE` should stay unset for root-domain deploys like Render; only set it for subpath deployments.
+- `RESEND_API_KEY` is a secret (`sync: false` in `render.yaml`) — set once in the Render dashboard, never committed.
+- GitHub Pages deployment (`.github/workflows/deploy.yml`) was retired in favor of Render, since GitHub Pages is static-only and can't serve the on-demand routes described above (locale redirect, contact form Actions).

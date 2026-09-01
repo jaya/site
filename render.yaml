@@ -1,0 +1,39 @@
+# Render Blueprint (Infrastructure as Code)
+# Docs: https://render.com/docs/blueprint-spec
+#
+# Connect this repo on Render as a "Blueprint" (New + > Blueprint) and Render
+# will read this file to create/update the service below automatically on
+# every push to `branch`.
+#
+# Secrets (marked `sync: false`) are NOT stored here — Render will prompt for
+# them once in the dashboard on first deploy, then keep them encrypted there.
+
+services:
+  - type: web
+    name: jaya-site
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: starter
+    region: oregon
+    branch: main
+    healthCheckPath: /en/
+
+    # Render injects these as both Docker build args (consumed via ARG in the
+    # Dockerfile) and as runtime env vars for the running container.
+    envVars:
+      - key: SITE_URL
+        value: https://jaya.tech
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        value: noreply@jaya.tech
+      - key: EMAIL_TO
+        value: contact@jaya.tech
+
+    # Custom domain still needs DNS to be pointed manually (Render dashboard
+    # will give you the target CNAME/A record) — listing it here just tells
+    # the Blueprint to attach it once DNS is verified.
+    domains:
+      - jaya.tech
+      - www.jaya.tech

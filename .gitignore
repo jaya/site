@@ -8,6 +8,9 @@ build/
 # dependencies
 node_modules/
 
+# this project uses pnpm — don't let a stray `npm install` commit its lockfile
+package-lock.json
+
 # logs
 npm-debug.log*
 yarn-debug.log*
