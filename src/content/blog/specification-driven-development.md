@@ -4,7 +4,16 @@ description: 'A practical reflection on building Open Note, a Linux-first note-t
 pubDate: '2026-03-11'
 author: 'leco'
 image: '/blog/specification-driven-development/open-note-specification.png'
-tags: ['Tech', 'AI', 'Rust', 'Open_Source', 'Linux', 'AI_assisted_engineering', 'Specification_Driven_Development']
+tags:
+  [
+    'Tech',
+    'AI',
+    'Rust',
+    'Open_Source',
+    'Linux',
+    'AI_assisted_engineering',
+    'Specification_Driven_Development'
+  ]
 draft: false
 ---
 
@@ -14,7 +23,7 @@ About two years ago, I decided to study Rust.
 
 I like keeping this habit of picking one programming language each year and spending real time with it. Back then, Rust was the candidate. There were many things I liked about it, a few that I did not enjoy as much, but in the end, I never really built anything concrete with what I had studied.
 
-That changed when I started reading *Beyond Vibe Coding*.
+That changed when I started reading _Beyond Vibe Coding_.
 
 The book pushed me to think about something that tends to come naturally once you have spent enough time building software: before jumping into implementation, you start thinking about structure, boundaries, base files, phases, and the small details that shape a project. In other words, you start leaning toward a more specification-driven way of building.
 

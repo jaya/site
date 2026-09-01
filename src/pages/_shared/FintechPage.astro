@@ -37,7 +37,7 @@ const translations = await getTranslations(locale)
 				</i>
 				<b>${t(translations, 'fintech.hero.title4')}</b>
 			`}
-			></div>
+			/>
 			<div class="statistics-section" slot="hero-statistics">
 				<div class="statistic-item">
 					<div class="statistic-number-container">
@@ -46,7 +46,7 @@ const translations = await getTranslations(locale)
 					<div
 						class="statistic-text"
 						set:html={`<b>${t(translations, 'fintech.hero.stat1')}</b><br /><i>${t(translations, 'fintech.hero.stat1Label')}</i>`}
-					></div>
+					/>
 				</div>
 				<div class="statistic-item">
 					<div class="statistic-number-container">
@@ -55,7 +55,7 @@ const translations = await getTranslations(locale)
 					<div
 						class="statistic-text"
 						set:html={`<i>${t(translations, 'fintech.hero.stat2')}</i> <b>${t(translations, 'fintech.hero.stat2Label')}</b>`}
-					></div>
+					/>
 				</div>
 				<div class="statistic-item">
 					<div class="statistic-number-container">
@@ -64,7 +64,7 @@ const translations = await getTranslations(locale)
 					<div
 						class="statistic-text"
 						set:html={`<b>${t(translations, 'fintech.hero.stat3')}</b><br /><i>${t(translations, 'fintech.hero.stat3Label')}</i>`}
-					></div>
+					/>
 				</div>
 			</div>
 		</ServiceHero>
@@ -87,15 +87,22 @@ const translations = await getTranslations(locale)
 				<i>${t(translations, 'fintech.experience.title2')}</i>
 				<b>${t(translations, 'fintech.experience.title3')}</b>
 			`}
-			></h2>
-			<p class="experience-text" slot="experience-text" set:html={t(translations, 'fintech.experience.text')}></p>
+			/>
+			<p
+				class="experience-text"
+				slot="experience-text"
+				set:html={t(translations, 'fintech.experience.text')}
+			/>
 			<div class="experience-why" slot="experience-why">
-				<h2 class="experience-why-title" set:html={t(translations, 'fintech.experience.whyTitle')}></h2>
+				<h2
+					class="experience-why-title"
+					set:html={t(translations, 'fintech.experience.whyTitle')}
+				/>
 				<div class="experience-why-list">
-					<div class="experience-why-item" set:html={t(translations, 'fintech.experience.why1')}></div>
-					<div class="experience-why-item" set:html={t(translations, 'fintech.experience.why2')}></div>
-					<div class="experience-why-item" set:html={t(translations, 'fintech.experience.why3')}></div>
-					<div class="experience-why-item" set:html={t(translations, 'fintech.experience.why4')}></div>
+					<div class="experience-why-item" set:html={t(translations, 'fintech.experience.why1')} />
+					<div class="experience-why-item" set:html={t(translations, 'fintech.experience.why2')} />
+					<div class="experience-why-item" set:html={t(translations, 'fintech.experience.why3')} />
+					<div class="experience-why-item" set:html={t(translations, 'fintech.experience.why4')} />
 				</div>
 			</div>
 		</ServiceExperience>

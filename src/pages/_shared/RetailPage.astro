@@ -20,10 +20,7 @@ const { locale } = Astro.props
 const translations = await getTranslations(locale)
 ---
 
-<Layout
-	title={t(translations, 'retail.title')}
-	description={t(translations, 'retail.description')}
->
+<Layout title={t(translations, 'retail.title')} description={t(translations, 'retail.description')}>
 	<main class="nav-padding">
 		<ServiceHero>
 			<Image src={retailImg} alt="Retail" slot="hero-image" />

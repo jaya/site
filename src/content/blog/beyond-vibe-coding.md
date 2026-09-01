@@ -10,12 +10,11 @@ draft: false
 
 ## Going Beyond “Vibe Coding”: What I’ve Learned in Practice About Using AI in Software Development
 
-Recently, I started reading [*"Beyond Vibe Coding: From Coder to AI-Era Developer"*](https://www.amazon.com/Beyond-Vibe-Coding-AI-Era-Developer/dp/B0F6S5425Y/ref=pd_ci_mcx_mh_mcx_views_0_image?pd_rd_w=7pkvx&content-id=amzn1.sym.781fe6e1-9487-4a74-b81e-5a879e5ec273%3Aamzn1.symc.c3d5766d-b606-46b8-ab07-1d9d1da0638a&pf_rd_p=781fe6e1-9487-4a74-b81e-5a879e5ec273&pf_rd_r=ZF61KVJFQ1Y0HPW6B8A9&pd_rd_wg=hY8k7&pd_rd_r=fe69bd67-d326-4426-87a8-47e899b0a646&pd_rd_i=B0F6S5425Y) by Addy Osmani, and I'll admit I got curious: I wanted to understand how other people are dealing with this more "vibe" way of building with AI — and, more importantly, **how it fits into the real world**, with deadlines, requirements, quality, and everything we know actually matters.
+Recently, I started reading [_"Beyond Vibe Coding: From Coder to AI-Era Developer"_](https://www.amazon.com/Beyond-Vibe-Coding-AI-Era-Developer/dp/B0F6S5425Y/ref=pd_ci_mcx_mh_mcx_views_0_image?pd_rd_w=7pkvx&content-id=amzn1.sym.781fe6e1-9487-4a74-b81e-5a879e5ec273%3Aamzn1.symc.c3d5766d-b606-46b8-ab07-1d9d1da0638a&pf_rd_p=781fe6e1-9487-4a74-b81e-5a879e5ec273&pf_rd_r=ZF61KVJFQ1Y0HPW6B8A9&pd_rd_wg=hY8k7&pd_rd_r=fe69bd67-d326-4426-87a8-47e899b0a646&pd_rd_i=B0F6S5425Y) by Addy Osmani, and I'll admit I got curious: I wanted to understand how other people are dealing with this more "vibe" way of building with AI — and, more importantly, **how it fits into the real world**, with deadlines, requirements, quality, and everything we know actually matters.
 
 In the first chapters, something really stood out to me: he doesn't talk only about vibe coding. He also mentions a practice I didn't really know by name, but that I realized I've been doing for months: **AI-assisted engineering**.
 
 And that's when the reading started to feel like a mirror. I understood better why I had some resistance to "pure vibe" — and why, without even noticing, **I naturally pushed my use of AI toward a more structured approach**.
-
 
 ### Two Ways to Build With AI
 
@@ -30,10 +29,10 @@ But I'd add one honest disclaimer: **think of it as a draft, not the final versi
 #### AI-Assisted Engineering: Build With Precision
 
 AI-assisted engineering, the way I’ve experienced it, is a different conversation. Here, you invest more time upfront:
-	•	you describe the features more clearly
-	•	you build a roadmap and phases
-	•	you define rules, responsibilities, and expectations
-	•	you organize what the system should (and should not) do
+• you describe the features more clearly
+• you build a roadmap and phases
+• you define rules, responsibilities, and expectations
+• you organize what the system should (and should not) do
 
 Only after that do you move into implementation. In practice, **it's like AI becomes an engineering assistant**, not just a "pair of hands that types.”
 
@@ -62,7 +61,7 @@ There’s another point that has also caught my attention.
 
 I’ve noticed that AI-assisted development platforms have been trying to define standards — not only for documentation, but also for rules, workflows, and how a project should be organized. In the end, a lot of things look similar from one tool to another: sometimes it feels like more changes in naming than in the underlying idea.
 
-And something interesting is that, despite differences in marketing and "how they sell it," many of these standards lean on something we developers have been used to for a long time: **Markdown**. It's almost like the market is converging toward *a shared "contract" format between humans and AI* — simple, readable, versionable, and easy to keep next to the codebase.
+And something interesting is that, despite differences in marketing and "how they sell it," many of these standards lean on something we developers have been used to for a long time: **Markdown**. It's almost like the market is converging toward _a shared "contract" format between humans and AI_ — simple, readable, versionable, and easy to keep next to the codebase.
 
 And maybe that’s why, in day-to-day use, I often feel these tools are becoming more similar than different. In the end, the “final effect” is often close — what changes is where each one fits best, depending on project size, implementation type, and how much control you need over the output.
 

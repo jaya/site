@@ -43,6 +43,7 @@ No test framework is configured.
 **Colors**: Use Tailwind classes mapped to CSS variables (`text-primary`, `bg-primary-light`). Never hardcode hex values. Variables are defined in `src/styles/global.css`.
 
 **CSS @apply ordering** (see `.cursor/rules/jaya-style-guide.mdc` for full details):
+
 1. Base components (btn, card)
 2. Layout/Display (flex, grid, relative)
 3. Positioning (top, z-index)

@@ -29,17 +29,17 @@ const translations = await getTranslations(locale)
 	}
 
 	.copy-text {
-		@apply text-primary text-center text-2xl font-medium leading-tight tracking-[-0.02em] lg:text-4xl;
+		@apply text-primary text-center text-2xl leading-tight font-medium tracking-[-0.02em] lg:text-4xl;
 	}
 
 	.cta {
 		@apply btn btn-outline;
-		@apply mt-10 mx-auto;
+		@apply mx-auto mt-10;
 		@apply px-10 py-3;
 		@apply bg-transparent;
 		@apply text-primary-light text-sm font-semibold;
-		@apply border border-primary-light rounded-full;
-		@apply hover:bg-primary-light hover:text-white transition-colors;
+		@apply border-primary-light rounded-full border;
+		@apply hover:bg-primary-light transition-colors hover:text-white;
 	}
 </style>
 

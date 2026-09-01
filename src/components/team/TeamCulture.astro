@@ -17,15 +17,13 @@ const translations = await getTranslations(locale)
 		@apply bg-blue-light;
 		@apply text-white;
 
-		
-
 		.content {
 			@apply relative container;
 			@apply px-10 py-16;
 
 			.culture-title {
 				@apply text-center text-4xl leading-tight tracking-[-1px] lg:text-5xl;
-				@apply max-w-[700px] mx-auto;
+				@apply mx-auto max-w-[700px];
 			}
 
 			.pills {
@@ -36,13 +34,13 @@ const translations = await getTranslations(locale)
 
 			.pill {
 				@apply bg-white;
-				@apply text-primary-light font-medium uppercase text-lg;
+				@apply text-primary-light text-lg font-medium uppercase;
 				@apply h-[92px] w-[250px] rounded-tl-[20px] rounded-br-[20px];
 				@apply flex items-center justify-center;
 			}
 
 			.culture-description {
-				@apply max-w-[700px] mx-auto text-center text-base leading-relaxed lg:text-xl;
+				@apply mx-auto max-w-[700px] text-center text-base leading-relaxed lg:text-xl;
 			}
 		}
 

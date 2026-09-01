@@ -29,9 +29,10 @@ Escreva sua introdução aqui. Lembre-se de ser claro e direto.
 ## Seção Principal
 
 Use Markdown padrão para formatar seu texto.
+
 - Listas
 - **Negrito**
-- *Itálico*
+- _Itálico_
 
 ### Subtítulo
 

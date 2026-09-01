@@ -38,13 +38,13 @@ Open `http://localhost:4321/` - it redirects to the default locale at `/en/` (Po
 
 ## 📦 Available Commands
 
-| Command        | Action                                              |
-| :------------- | :--------------------------------------------------- |
-| `pnpm dev`     | Start local development server                       |
-| `pnpm build`   | Build site for production                             |
-| `pnpm preview` | Preview production build locally                      |
-| `pnpm start`   | Run the built server (`dist/server/entry.mjs`)         |
-| `pnpm astro`   | Run Astro CLI commands                                 |
+| Command        | Action                                         |
+| :------------- | :--------------------------------------------- |
+| `pnpm dev`     | Start local development server                 |
+| `pnpm build`   | Build site for production                      |
+| `pnpm preview` | Preview production build locally               |
+| `pnpm start`   | Run the built server (`dist/server/entry.mjs`) |
+| `pnpm astro`   | Run Astro CLI commands                         |
 
 Formatting: `pnpm prettier --write .` (see `.prettierrc`: tabs, single quotes, no semicolons, no trailing commas).
 
@@ -56,13 +56,13 @@ Locales: `en` (default) and `br`, URL-prefixed (`/en/*`, `/br/*`). Some Portugue
 
 See `.env.example`. Used by the contact form (`src/actions/index.ts`) and by the build (`astro.config.mjs`):
 
-| Variable          | Required | Purpose                                                          |
-| :----------------- | :------- | :---------------------------------------------------------------- |
-| `RESEND_API_KEY`   | For real emails | Resend API key. If unset, the contact form logs a warning and returns a mock success (safe for local dev). |
-| `EMAIL_FROM`       | No       | Sender address for contact form emails.                          |
-| `EMAIL_TO`         | No       | Recipient address for contact form emails.                       |
-| `SITE_URL`         | For prod builds | Canonical site URL, used for the sitemap and SEO tags.       |
-| `ASTRO_BASE`       | No       | Base path, only needed for subpath deployments (e.g. `/jaya/`). Leave unset for root-domain deploys. |
+| Variable         | Required        | Purpose                                                                                                    |
+| :--------------- | :-------------- | :--------------------------------------------------------------------------------------------------------- |
+| `RESEND_API_KEY` | For real emails | Resend API key. If unset, the contact form logs a warning and returns a mock success (safe for local dev). |
+| `EMAIL_FROM`     | No              | Sender address for contact form emails.                                                                    |
+| `EMAIL_TO`       | No              | Recipient address for contact form emails.                                                                 |
+| `SITE_URL`       | For prod builds | Canonical site URL, used for the sitemap and SEO tags.                                                     |
+| `ASTRO_BASE`     | No              | Base path, only needed for subpath deployments (e.g. `/jaya/`). Leave unset for root-domain deploys.       |
 
 ## 🎨 Design System
 

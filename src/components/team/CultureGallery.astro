@@ -51,7 +51,7 @@ const LAYOUT_SEQUENCE: LayoutPattern[] = [
 	{ type: 'stacked', width: 'wide' },
 	{ type: 'tall', width: 'normal' },
 	{ type: 'tall', width: 'wide' },
-	{ type: 'stacked', width: 'narrow' },
+	{ type: 'stacked', width: 'narrow' }
 ]
 
 // 3. Column Builder Logic
@@ -61,11 +61,12 @@ let currentLayoutIndex = 0
 
 while (currentImgIndex < images.length) {
 	const layout = LAYOUT_SEQUENCE[currentLayoutIndex % LAYOUT_SEQUENCE.length]
-	const itemsNeeded = layout.type === 'triple' ? 3 : (layout.type === 'stacked' ? 2 : 1)
-	
+	const itemsNeeded = layout.type === 'triple' ? 3 : layout.type === 'stacked' ? 2 : 1
+
 	// Grab requested slices, fall back if not enough images left
 	const colImages = images.slice(currentImgIndex, currentImgIndex + itemsNeeded)
-	const finalType: LayoutType = colImages.length === 3 ? 'triple' : (colImages.length === 2 ? 'stacked' : 'tall')
+	const finalType: LayoutType =
+		colImages.length === 3 ? 'triple' : colImages.length === 2 ? 'stacked' : 'tall'
 
 	columns.push({
 		widthClass: layout.width,
@@ -86,15 +87,15 @@ while (currentImgIndex < images.length) {
 	@reference '@/styles/global.css';
 
 	.culture-gallery {
-		@apply relative py-20 bg-blue-light text-white;
+		@apply bg-blue-light relative py-20 text-white;
 	}
 
 	.gallery-header {
-		@apply text-center max-w-3xl mx-auto py-20 px-10 lg:px-0;
+		@apply mx-auto max-w-3xl px-10 py-20 text-center lg:px-0;
 	}
 
 	.gallery-eyebrow {
-		@apply text-lg tracking-[0.25em] uppercase font-space-grotesk;
+		@apply font-space-grotesk text-lg tracking-[0.25em] uppercase;
 	}
 
 	.gallery-title {
@@ -106,42 +107,58 @@ while (currentImgIndex < images.length) {
 	}
 
 	.gallery-container {
-		@apply mt-12 relative w-full;
+		@apply relative mt-12 w-full;
 	}
 
 	.gallery-scroll-wrapper {
-		@apply overflow-x-auto overflow-y-hidden pb-6 scroll-smooth;
+		@apply overflow-x-auto overflow-y-hidden scroll-smooth pb-6;
 		@apply cursor-grab active:cursor-grabbing;
 		@apply select-none; /* Prevent text selection while dragging */
 		scrollbar-width: none;
 		-webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-		&::-webkit-scrollbar { display: none; }
+		&::-webkit-scrollbar {
+			display: none;
+		}
 	}
 
 	.masonry-grid {
-		@apply flex h-[500px] md:h-[700px] px-4 gap-2 md:gap-3;
+		@apply flex h-[500px] gap-2 px-4 md:h-[700px] md:gap-3;
 	}
 
 	.gallery-col {
-		@apply flex-shrink-0 h-full flex flex-col gap-2 md:gap-3;
-		
-		&.narrow { @apply w-[140px] md:w-[180px]; }
-		&.normal { @apply w-[220px] md:w-[300px]; }
-		&.wide   { @apply w-[300px] md:w-[420px]; }
+		@apply flex h-full flex-shrink-0 flex-col gap-2 md:gap-3;
+
+		&.narrow {
+			@apply w-[140px] md:w-[180px];
+		}
+		&.normal {
+			@apply w-[220px] md:w-[300px];
+		}
+		&.wide {
+			@apply w-[300px] md:w-[420px];
+		}
 
 		/* Specific layout heights */
-		&.tall > :global(.gallery-item) { @apply h-full; }
-		&.stacked > :global(.gallery-item) { @apply h-1/2; }
-		&.triple > :global(.gallery-item) { @apply h-1/2; }
+		&.tall > :global(.gallery-item) {
+			@apply h-full;
+		}
+		&.stacked > :global(.gallery-item) {
+			@apply h-1/2;
+		}
+		&.triple > :global(.gallery-item) {
+			@apply h-1/2;
+		}
 	}
 
 	.gallery-controls {
-		@apply flex items-center justify-center gap-6 mt-8;
+		@apply mt-8 flex items-center justify-center gap-6;
 	}
 
 	.gallery-btn {
-		@apply flex items-center justify-center h-10 w-10 bg-transparent text-white border border-white rounded-full transition-transform cursor-pointer;
-		&:hover { @apply scale-105 bg-white/10; }
+		@apply flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white bg-transparent text-white transition-transform;
+		&:hover {
+			@apply scale-105 bg-white/10;
+		}
 	}
 </style>
 
@@ -159,39 +176,50 @@ while (currentImgIndex < images.length) {
 	<div class="gallery-container">
 		<div class="gallery-scroll-wrapper" id="gallery-scroll">
 			<div class="masonry-grid" id="masonry-grid">
-				{columns.map((col) => (
-					<div class={`gallery-col ${col.widthClass} ${col.type}`}>
-						{col.type === 'tall' && (
-							<GalleryItem {...col.items[0]} index={col.items[0].globalIndex} />
-						)}
+				{
+					columns.map((col) => (
+						<div class={`gallery-col ${col.widthClass} ${col.type}`}>
+							{col.type === 'tall' && (
+								<GalleryItem {...col.items[0]} index={col.items[0].globalIndex} />
+							)}
 
-						{col.type === 'stacked' && col.items.map((item) => (
-							<GalleryItem {...item} index={item.globalIndex} />
-						))}
+							{col.type === 'stacked' &&
+								col.items.map((item) => <GalleryItem {...item} index={item.globalIndex} />)}
 
-						{col.type === 'triple' && (
-							<>
-								<div class="flex gap-2 md:gap-3 h-1/2">
-									<GalleryItem {...col.items[0]} index={col.items[0].globalIndex} class="w-1/2" />
-									<GalleryItem {...col.items[1]} index={col.items[1].globalIndex} class="w-1/2" />
-								</div>
-								<GalleryItem {...col.items[2]} index={col.items[2].globalIndex} class="h-1/2" />
-							</>
-						)}
-					</div>
-				))}
+							{col.type === 'triple' && (
+								<>
+									<div class="flex h-1/2 gap-2 md:gap-3">
+										<GalleryItem {...col.items[0]} index={col.items[0].globalIndex} class="w-1/2" />
+										<GalleryItem {...col.items[1]} index={col.items[1].globalIndex} class="w-1/2" />
+									</div>
+									<GalleryItem {...col.items[2]} index={col.items[2].globalIndex} class="h-1/2" />
+								</>
+							)}
+						</div>
+					))
+				}
 			</div>
 		</div>
 
 		<div class="gallery-controls">
 			<button class="gallery-btn" type="button" id="prev-btn" aria-label="Previous photos">
 				<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-					<path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path
+						d="M15 6L9 12L15 18"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"></path>
 				</svg>
 			</button>
 			<button class="gallery-btn" type="button" id="next-btn" aria-label="Next photos">
 				<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-					<path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path
+						d="M9 6L15 12L9 18"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"></path>
 				</svg>
 			</button>
 		</div>
@@ -202,108 +230,103 @@ while (currentImgIndex < images.length) {
 
 <script>
 	// Constants
-	const SCROLL_AMOUNT = 400;
-	const DRAG_THRESHOLD = 5;
-	const SCROLL_SPEED_MULTIPLIER = 2;
+	const SCROLL_AMOUNT = 400
+	const DRAG_THRESHOLD = 5
+	const SCROLL_SPEED_MULTIPLIER = 2
 
 	// DOM Elements
-	const scrollContainer = document.getElementById('gallery-scroll') as HTMLElement | null;
-	const prevBtn = document.getElementById('prev-btn');
-	const nextBtn = document.getElementById('next-btn');
+	const scrollContainer = document.getElementById('gallery-scroll') as HTMLElement | null
+	const prevBtn = document.getElementById('prev-btn')
+	const nextBtn = document.getElementById('next-btn')
 
 	// ============================================
 	// Button Controls
 	// ============================================
 	const setupButtonControls = () => {
-		if (!scrollContainer) return;
+		if (!scrollContainer) return
 
 		const scroll = (direction: 'prev' | 'next') => {
-			const amount = direction === 'prev' ? -SCROLL_AMOUNT : SCROLL_AMOUNT;
-			scrollContainer.scrollBy({ left: amount, behavior: 'smooth' });
-		};
+			const amount = direction === 'prev' ? -SCROLL_AMOUNT : SCROLL_AMOUNT
+			scrollContainer.scrollBy({ left: amount, behavior: 'smooth' })
+		}
 
-		prevBtn?.addEventListener('click', () => scroll('prev'));
-		nextBtn?.addEventListener('click', () => scroll('next'));
-	};
+		prevBtn?.addEventListener('click', () => scroll('prev'))
+		nextBtn?.addEventListener('click', () => scroll('next'))
+	}
 
 	// ============================================
 	// Prevent Native Image Dragging
 	// ============================================
 	const disableImageDragging = () => {
-		if (!scrollContainer) return;
+		if (!scrollContainer) return
 
-		scrollContainer.querySelectorAll('img').forEach(img => {
-			img.addEventListener('dragstart', (e) => e.preventDefault());
-		});
-	};
+		scrollContainer.querySelectorAll('img').forEach((img) => {
+			img.addEventListener('dragstart', (e) => e.preventDefault())
+		})
+	}
 
 	// ============================================
 	// Mouse Drag Scrolling
 	// ============================================
 	const setupDragScrolling = () => {
-		if (!scrollContainer) return;
+		if (!scrollContainer) return
 
 		const state = {
 			isDown: false,
 			startX: 0,
 			scrollLeft: 0,
 			hasMoved: false
-		};
+		}
 
 		const handleMouseDown = (e: MouseEvent) => {
-			if (e.button !== 0) return; // Only left mouse button
+			if (e.button !== 0) return // Only left mouse button
 
-			state.isDown = true;
-			state.hasMoved = false;
-			scrollContainer.classList.add('active');
-			state.startX = e.pageX - scrollContainer.offsetLeft;
-			state.scrollLeft = scrollContainer.scrollLeft;
-		};
+			state.isDown = true
+			state.hasMoved = false
+			scrollContainer.classList.add('active')
+			state.startX = e.pageX - scrollContainer.offsetLeft
+			state.scrollLeft = scrollContainer.scrollLeft
+		}
 
 		const handleMouseUp = () => {
-			state.isDown = false;
-			scrollContainer.classList.remove('active');
-		};
+			state.isDown = false
+			scrollContainer.classList.remove('active')
+		}
 
 		const handleMouseMove = (e: MouseEvent) => {
-			if (!state.isDown) return;
-			e.preventDefault();
+			if (!state.isDown) return
+			e.preventDefault()
 
-			const x = e.pageX - scrollContainer.offsetLeft;
-			const distance = (x - state.startX) * SCROLL_SPEED_MULTIPLIER;
+			const x = e.pageX - scrollContainer.offsetLeft
+			const distance = (x - state.startX) * SCROLL_SPEED_MULTIPLIER
 
 			// Mark as drag if moved beyond threshold
 			if (Math.abs(distance) > DRAG_THRESHOLD) {
-				state.hasMoved = true;
+				state.hasMoved = true
 			}
 
-			scrollContainer.scrollLeft = state.scrollLeft - distance;
-		};
+			scrollContainer.scrollLeft = state.scrollLeft - distance
+		}
 
 		const preventClickAfterDrag = (e: MouseEvent) => {
 			if (state.hasMoved) {
-				e.preventDefault();
-				e.stopPropagation();
+				e.preventDefault()
+				e.stopPropagation()
 			}
-		};
+		}
 
 		// Attach listeners
-		scrollContainer.addEventListener('mousedown', handleMouseDown);
-		scrollContainer.addEventListener('mouseleave', handleMouseUp);
-		scrollContainer.addEventListener('mouseup', handleMouseUp);
-		scrollContainer.addEventListener('mousemove', handleMouseMove);
-		scrollContainer.addEventListener('click', preventClickAfterDrag, true);
-	};
+		scrollContainer.addEventListener('mousedown', handleMouseDown)
+		scrollContainer.addEventListener('mouseleave', handleMouseUp)
+		scrollContainer.addEventListener('mouseup', handleMouseUp)
+		scrollContainer.addEventListener('mousemove', handleMouseMove)
+		scrollContainer.addEventListener('click', preventClickAfterDrag, true)
+	}
 
 	// ============================================
 	// Initialize
 	// ============================================
-	setupButtonControls();
-	disableImageDragging();
-	setupDragScrolling();
+	setupButtonControls()
+	disableImageDragging()
+	setupDragScrolling()
 </script>
-
-
-
-
-

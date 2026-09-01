@@ -4,7 +4,8 @@ description: 'Why token usage in AI-assisted development is not just about cost,
 pubDate: '2026-03-12'
 author: 'leco'
 image: '/blog/token-economy/token-economy.png'
-tags: ['Tech', 'AI', 'AI_assisted_engineering', 'token_economy', 'architecture', 'software_development']
+tags:
+  ['Tech', 'AI', 'AI_assisted_engineering', 'token_economy', 'architecture', 'software_development']
 draft: false
 ---
 

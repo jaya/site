@@ -50,7 +50,7 @@ const translations = await getTranslations(locale)
 		@apply overflow-hidden;
 
 		img {
-			@apply w-full h-full;
+			@apply h-full w-full;
 			@apply object-cover;
 		}
 	}
@@ -65,7 +65,7 @@ const translations = await getTranslations(locale)
 
 	.guides-title {
 		@apply text-primary text-2xl leading-tight lg:text-3xl;
-		@apply  lg:text-right;
+		@apply lg:text-right;
 		@apply mb-4;
 	}
 
@@ -106,7 +106,7 @@ const translations = await getTranslations(locale)
 	}
 
 	.value-title {
-		@apply text-3xl lg:text-4xl font-bold leading-8;
+		@apply text-3xl leading-8 font-bold lg:text-4xl;
 	}
 
 	.value-text {
@@ -115,14 +115,14 @@ const translations = await getTranslations(locale)
 	}
 
 	.values-action {
-		@apply flex flex-col lg:flex-row items-center justify-center;
+		@apply flex flex-col items-center justify-center lg:flex-row;
 		@apply gap-6;
 		@apply mt-16 lg:mt-24;
 		@apply text-center;
 	}
 
 	.values-action-label {
-		@apply text-primary text-center text-base lg:text-lg tracking-[0.2em];
+		@apply text-primary text-center text-base tracking-[0.2em] lg:text-lg;
 		@apply font-space-grotesk uppercase;
 		@apply max-w-[300px] lg:max-w-none;
 	}
@@ -132,8 +132,8 @@ const translations = await getTranslations(locale)
 		@apply px-8 py-3;
 		@apply bg-transparent;
 		@apply text-primary-light text-sm font-semibold;
-		@apply border border-primary-light rounded-full;
-		@apply hover:bg-primary-light hover:text-white transition-colors;
+		@apply border-primary-light rounded-full border;
+		@apply hover:bg-primary-light transition-colors hover:text-white;
 	}
 </style>
 
@@ -165,7 +165,9 @@ const translations = await getTranslations(locale)
 		</div>
 
 		<div class="values-block">
-			<p class="values-eyebrow"><Fragment set:html={t(translations, 'culture.valuesSection.valuesEyebrow')} /></p>
+			<p class="values-eyebrow">
+				<Fragment set:html={t(translations, 'culture.valuesSection.valuesEyebrow')} />
+			</p>
 			<div class="values-grid">
 				<div class="value-card">
 					<div class="value-title">

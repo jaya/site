@@ -31,10 +31,7 @@ export async function getTranslations(locale: Locale): Promise<Translations> {
 /**
  * Get a translation value by key path (e.g., "nav.services" or "home.hero.title")
  */
-export function getTranslation(
-	translations: Translations,
-	key: string
-): string {
+export function getTranslation(translations: Translations, key: string): string {
 	const keys = key.split('.')
 	let value: any = translations
 
@@ -66,4 +63,3 @@ export function createHtmlFragment(html: string) {
 		__html: html
 	}
 }
-
