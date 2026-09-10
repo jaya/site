@@ -25,9 +25,9 @@ No test framework is configured.
 
 **i18n**: URL-prefix routing (`/en/*`, `/br/*`). Each `[lang]` page uses `getStaticPaths()` returning both locales. Translations live in `src/i18n/locales/{en,br}.json` with dot-notation keys accessed via `t(translations, 'key.path')`.
 
-**Page pattern**: Language-specific pages in `src/pages/[lang]/` import shared templates from `src/pages/_shared/`. The root `index.astro` redirects to the default locale.
+**Page pattern**: Language-specific pages in `src/pages/[lang]/` import shared templates from `src/pages/_shared/`. The root `/` redirects to the default locale via the static `redirects` config in `astro.config.mjs` (no `index.astro` page).
 
-**Server actions**: Contact form uses Astro Actions (`src/actions/index.ts`) with Zod validation and Resend email API. Requires `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_TO` env vars.
+**Contact form**: Fully static — submits directly to [Web3Forms](https://web3forms.com) via client-side `fetch` (see `<script>` in `src/pages/_shared/ContactPage.astro`), no backend of our own. Requires `PUBLIC_WEB3FORMS_ACCESS_KEY` (must be `PUBLIC_`-prefixed, it's read in the browser).
 
 **Content collections**: Blog posts are Markdown in `src/content/blog/`, schema defined in `src/content.config.ts`.
 
@@ -54,6 +54,7 @@ No test framework is configured.
 
 ## Deployment
 
-- **GitHub Pages**: Auto-deploys on push to `main` via `.github/workflows/deploy.yml`
-- **Docker**: Multi-stage Node 22 build, port 8080. Build args: `SITE_URL`, `ASTRO_BASE`
+- **GitHub Pages** (primary): Auto-deploys on push to `main` via `.github/workflows/deploy.yml`. Build gets `SITE_URL`/`ASTRO_BASE` derived from the repo (`https://<owner>.github.io` / `/<repo>/`) and `PUBLIC_WEB3FORMS_ACCESS_KEY` from the `WEB3FORMS_ACCESS_KEY` repo secret.
+- Site is 100% static (no adapter, no SSR routes) — required for Pages.
+- **Docker**: Multi-stage Node 22 build, port 8080, serves the static `dist/` output (`serve`). Build args: `SITE_URL`, `ASTRO_BASE`. Kept as an alternative hosting path, not the primary deployment.
 - Site URL / base path are environment-aware (see `astro.config.mjs`)

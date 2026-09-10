@@ -22,12 +22,10 @@ jobs:
         uses: actions/checkout@v4
       - name: Install, build, and upload your site
         uses: withastro/action@v3
-        # with:
-        # path: . # The root location of your Astro project inside the repository. (optional)
-        # node-version: 20 # The specific version of Node that should be used to build your site. Defaults to 20. (optional)
-        # package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile. (optional)
-        # env:
-        # PUBLIC_POKEAPI: 'https://pokeapi.co/api/v2' # Use single quotation marks for the variable value. (optional)
+        env:
+          SITE_URL: https://${{ github.repository_owner }}.github.io
+          ASTRO_BASE: /${{ github.event.repository.name }}/
+          PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.WEB3FORMS_ACCESS_KEY }}
 
   deploy:
     needs: build
