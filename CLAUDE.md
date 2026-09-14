@@ -54,7 +54,7 @@ No test framework is configured.
 
 ## Deployment
 
-- **GitHub Pages** (primary): Auto-deploys on push to `main` via `.github/workflows/deploy.yml`. Build gets `SITE_URL`/`ASTRO_BASE` derived from the repo (`https://<owner>.github.io` / `/<repo>/`) and `PUBLIC_WEB3FORMS_ACCESS_KEY` from the `WEB3FORMS_ACCESS_KEY` repo secret.
+- **GitHub Pages** (primary): Auto-deploys on push to `main` via `.github/workflows/deploy.yml`. Served on the custom domain `https://jaya.tech` (DNS on Cloudflare, CNAME → `jaya.github.io`), so the build sets `SITE_URL=https://jaya.tech` with no `ASTRO_BASE`, and gets `PUBLIC_WEB3FORMS_ACCESS_KEY` from the `WEB3FORMS_ACCESS_KEY` repo secret.
 - Site is 100% static (no adapter, no SSR routes) — required for Pages.
 - **Docker**: Multi-stage Node 22 build, port 8080, serves the static `dist/` output (`serve`). Build args: `SITE_URL`, `ASTRO_BASE`. Kept as an alternative hosting path, not the primary deployment.
 - Site URL / base path are environment-aware (see `astro.config.mjs`)
