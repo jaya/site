@@ -23,8 +23,8 @@ jobs:
       - name: Install, build, and upload your site
         uses: withastro/action@v3
         env:
-          SITE_URL: https://${{ github.repository_owner }}.github.io
-          ASTRO_BASE: /${{ github.event.repository.name }}/
+          # Custom domain (configured in Settings → Pages); served from the root, so no ASTRO_BASE
+          SITE_URL: https://jaya.tech
           PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.WEB3FORMS_ACCESS_KEY }}
 
   deploy:
