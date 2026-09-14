@@ -51,5 +51,5 @@ ENV HOST=0.0.0.0
 EXPOSE 8080
 USER nodeuser
 
-# Serve estático (pnpm no runtime não é necessário)
-CMD ["node", "./dist/server/entry.mjs"]
+# Site é 100% estático (GitHub Pages) — serve os arquivos gerados em dist/
+CMD ["sh", "-c", "node_modules/.bin/serve dist -l tcp://0.0.0.0:${PORT}"]

@@ -5,12 +5,15 @@ import type { Locale } from '@/i18n/utils'
 
 interface Props {
 	locale: Locale
-	action: any
-	result?: any
 }
 
-const { locale, action, result } = Astro.props
+const { locale } = Astro.props
 const translations = await getTranslations(locale)
+
+// Static form submission via Web3Forms (https://web3forms.com) — no server
+// required, works on GitHub Pages. Set PUBLIC_WEB3FORMS_ACCESS_KEY in your
+// env / repo secrets with the access key from your Web3Forms dashboard.
+const web3formsAccessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY ?? ''
 ---
 
 <style>
@@ -195,19 +198,18 @@ const translations = await getTranslations(locale)
 					</div>
 
 					<div class="form-column">
-						<form class="contact-form" action={action} method="POST">
-							{
-								result && result.error && (
-									<div class="form-message error">
-										{result.error.message || t(translations, 'contact.form.error')}
-									</div>
-								)
-							}
-							{
-								result && result.data && (
-									<div class="form-message success">{t(translations, 'contact.form.success')}</div>
-								)
-							}
+						<form
+							class="contact-form"
+							action="https://api.web3forms.com/submit"
+							method="POST"
+							data-success-text={t(translations, 'contact.form.success')}
+							data-error-text={t(translations, 'contact.form.error')}
+						>
+							<input type="hidden" name="access_key" value={web3formsAccessKey} />
+							<input type="hidden" name="subject" value="New Contact Form Submission" />
+							<input type="checkbox" name="botcheck" class="hidden" style="display:none" />
+
+							<div class="form-message-container" role="status" aria-live="polite"></div>
 
 							<div class="form-group">
 								<label for="name">{t(translations, 'contact.form.name')}</label>
@@ -234,3 +236,46 @@ const translations = await getTranslations(locale)
 		</div>
 	</main>
 </Layout>
+
+<script>
+	// Progressive enhancement: submit the contact form via fetch to Web3Forms
+	// so we can show inline success/error messages without a page reload.
+	// Falls back to a normal HTML POST (page redirect) if JS is disabled.
+	const form = document.querySelector<HTMLFormElement>('.contact-form')
+
+	form?.addEventListener('submit', async (event) => {
+		event.preventDefault()
+
+		const submitButton = form.querySelector<HTMLButtonElement>('.btn-submit')
+		const messageContainer = form.querySelector('.form-message-container')
+		const successText = form.dataset.successText ?? 'Message sent successfully.'
+		const errorText = form.dataset.errorText ?? 'Something went wrong. Please try again.'
+
+		if (submitButton) submitButton.disabled = true
+		if (messageContainer) messageContainer.innerHTML = ''
+
+		try {
+			const response = await fetch(form.action, {
+				method: 'POST',
+				body: new FormData(form),
+				headers: { Accept: 'application/json' }
+			})
+			const result = await response.json()
+
+			if (result.success) {
+				if (messageContainer) {
+					messageContainer.innerHTML = `<div class="form-message success">${successText}</div>`
+				}
+				form.reset()
+			} else {
+				throw new Error(result.message || errorText)
+			}
+		} catch {
+			if (messageContainer) {
+				messageContainer.innerHTML = `<div class="form-message error">${errorText}</div>`
+			}
+		} finally {
+			if (submitButton) submitButton.disabled = false
+		}
+	})
+</script>

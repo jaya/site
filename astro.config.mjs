@@ -3,7 +3,6 @@ import react from '@astrojs/react'
 import tailwindcss from '@tailwindcss/vite'
 import sitemap from '@astrojs/sitemap'
 import robotsTxt from 'astro-robots-txt'
-import node from '@astrojs/node'
 import partytown from '@astrojs/partytown'
 import mermaid from 'astro-mermaid'
 
@@ -36,6 +35,13 @@ export default defineConfig({
 			redirectToDefaultLocale: false
 		}
 	},
+	// Site is fully static (GitHub Pages). The root `/` has no locale prefix,
+	// so it's resolved via a build-time redirect instead of an SSR page.
+	// Astro's `redirects` targets aren't base-prefixed automatically, so we
+	// prepend BASE ourselves (e.g. `/site/en/` when deployed under a subpath).
+	redirects: {
+		'/': `${BASE ?? '/'}en/`
+	},
 	integrations: [
 		react(),
 		sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en-US', br: 'pt-BR' } } }),
@@ -47,8 +53,5 @@ export default defineConfig({
 		plugins: [tailwindcss()],
 		server: { watch: { usePolling: true } },
 		css: { modules: { localsConvention: 'camelCaseOnly' } }
-	},
-	adapter: node({
-		mode: 'standalone'
-	})
+	}
 })
